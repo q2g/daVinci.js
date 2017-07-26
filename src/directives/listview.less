@@ -1,0 +1,55 @@
+﻿.q2glistview {
+    position: relative;
+    width: 100%;
+    overflow-y: hidden;
+
+    ul {
+        width: 100%;
+        overflow: hidden;
+
+        li {
+            border-bottom: 1px solid #d9d9d9;
+            padding-left: 5px;
+            vertical-align: central;
+            display: -webkit-box; 
+            -webkit-box-align: center;
+            height: 32px;            
+        }
+                
+        .selected {
+            background-color: #52CC52;
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+        .alternative {
+            background-color: #dddddd;
+            color: #595959;
+            border-bottom-color: #ffffff;
+        }
+        .optional {
+            background-color: #ffffff;
+            color: #595959;
+        }
+        .excluded {
+            background-color: #A9A9A9;
+            color: #ffffff;
+            border-bottom-color: #ffffff;
+        }
+
+        .list-element-focussed {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            border: 1.5px solid black;
+        }                
+    }
+
+    .invisibleOutput {
+        clip: rect(1px, 1px, 1px, 1px);
+        height: 1px;
+        overflow: hidden;
+        position: absolute;
+        white-space: nowrap;
+        width: 1px;
+    }
+}
