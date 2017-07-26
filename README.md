@@ -32,7 +32,7 @@ And know of at least some these web technologies:
 
 # Docu
 
-[List of (Visual)-Elements](docs/elemenst.md)
+[List of (Visual)-Elements](docs/elements.md)
 
 [Architecture](docs/architecture.md)
 
