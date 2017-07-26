@@ -1,4 +1,4 @@
-# Elemnts of the Framework
+# Elements of the Framework
 
 ## angular
 
