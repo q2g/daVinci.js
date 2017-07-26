@@ -1,0 +1,24 @@
+﻿<div class="lui-search search-bar">
+
+    <span class="lui-search__search-icon"></span>
+    {{vm.shortcuts.esc.name}}
+    <input class="lui-search__input"
+           placeholder="{{vm.placeholder}}"
+           spellcheck="false"
+           tabindex="0"           
+           type="text"
+
+           ng-model="vm.textSearch"
+           
+           q2g-shortcut
+           shortcut="[{name:'setFocus', shortcut:vm.shortcutSetFocus, action:'focus'}]"/>
+
+    <span class="lui-search__clear-icon"
+          tabindex="0"
+
+          ng-show="vm.textSearch.length > 0"
+          ng-click="vm.textSearch = ''"          
+           
+          q2g-shortcut
+          shortcut="[{name:vm.overrideStandarsShortcuts.esc.name, shortcut:vm.overrideStandarsShortcuts.esc.shortcut, action:vm.overrideStandarsShortcuts.esc.action}]"></span>
+</div>
