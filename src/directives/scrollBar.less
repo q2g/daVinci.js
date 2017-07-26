@@ -1,0 +1,61 @@
+﻿@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+
+.q2gScrollBar {
+    position: absolute;
+    height: 100%;
+    right: 0;
+    top: 0px;
+
+    
+    .fadeIn {
+        animation-name: fadeIn;
+        animation-duration: 1s;
+        opacity: 1;
+    }
+
+    .fadeOut {
+        opacity: 0;
+        animation-name: fadeOut;
+        animation-duration: 2s;        
+    }
+	
+    .scrollBarContainer {
+        top: 0px;
+        right: 0;
+        position: absolute;
+        width: 11px;
+        height: 100%;
+        z-index: 2;
+        overflow: visible;
+
+        
+
+        .scrollBarTracker {
+            top: 0;
+            height: 12px;
+            width: 11px;
+            border-radius: 10px;
+            background: rgba(50, 50, 50, 0.3);
+            position: absolute;
+            z-index: 3;
+            overflow: visible;
+        }
+    }
+}

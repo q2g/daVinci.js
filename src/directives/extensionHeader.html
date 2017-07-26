@@ -1,0 +1,79 @@
+﻿<div class="q2gmainmenu">
+
+    <table class="header">
+        <tr>
+            <!-- INPUT FIELD -->
+            <td ng-show="vm.showSearchField"
+                q2g-shortcut
+                shortcut="[{name:'focus', shortcut:vm.shortcutSearchfield}]"
+                shortcut-action="vm.shortcutHandlerExtensionHeader(objectShortcut)">
+                <q2g-search-bar text-search="vm.textSearch"
+                                placeholder="search "{{title}}
+                                shortcut-set-focus="vm.shortcutSearchfield">
+                </q2g-search-bar>
+            </td>
+
+            <!-- SEARCH ICON AND TITLE -->
+            <td ng-show="!vm.showSearchField"
+                class="lui-list__header"
+                ng-click="vm.showButtons = true">
+                <span class="searchObject lui-icon lui-icon--search"
+                      ng-click="vm.showSearchField = true"></span>
+                <span class="listTitle lui-list__text">{{vm.title}}</span>
+            </td>
+
+            <!-- BUTTON GROUP -->
+            <td ng-show="vm.showButtons">
+                <table  class="menutable">
+                    <tr>
+                        <td class="buttonGroup normalButton"
+                            ng-if="vm.popOverList.length>0">
+                            <button class="lui-fade-button"
+                                    title="Selection menu"
+                                    ng-click="vm.showPopoverMenu = !vm.showPopoverMenu;">
+                                <span class="lui-button__icon lui-icon lui-icon--more"></span>
+                            </button>
+                        </td>
+
+                        <td class="buttonGroup normalButton" 
+                            ng-repeat="item in vm.displayList">
+                            <div ng-class="{'separatorV': item.hasSeparator}"
+                                 ng-click="item.isEnabled || vm.callbackMainMenuButton({item: item.name})"                                        
+                                 ng-attr-title="{{item.name}}">
+                                <button ng-class="{'lui-fade-button': item.type.length===0, 'lui-button': item.type.length>0, 'lui-disabled': item.isEnabled}"
+                                        class="lui-button--{{item.type}}">
+                                    <span class="lui-button__icon lui-icon lui-icon--{{item.icon}}"></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+
+    </table>
+
+    <ul class="popOverList lui-list"
+        ng-show="vm.showPopoverMenu"
+        style="width:{{vm.popOverWidth}}px">
+
+        <li class="lui-list__item"
+            ng-class="{'lui-disabled': item.isEnabled, 'separatorH': item.hasSeparator}"
+            ng-click="item.isEnabled || vm.callbackMainMenuButton({item: item.name}); vm.showPopoverMenu = false"
+            ng-repeat="item in vm.popOverList"
+            ng-attr-title="{{item.name}}">
+
+            <span class="listCellfirst lui-list__aside lui-icon lui-icon--{{item.icon}}"></span>
+            <span class="lui-list__text">{{item.name}}</span>
+
+        </li>
+    </ul>
+</div>
+
+
+
+
+
+
+
+

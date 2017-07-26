@@ -1,0 +1,45 @@
+<div class="q2glistview"
+      ng-mouseover="vm.showScrollBar = true" ng-mouseleave="vm.showScrollBar = false">
+
+    <div q2g-shortcut
+         shortcut="[
+            {name:vm.overrideStandarsShortcuts.up.name, shortcut:vm.overrideStandarsShortcuts.up.shortcut},
+            {name:vm.overrideStandarsShortcuts.down.name, shortcut:vm.overrideStandarsShortcuts.down.shortcut},
+            {name:vm.overrideStandarsShortcuts.enter.name, shortcut:vm.overrideStandarsShortcuts.enter.shortcut},
+            {name:vm.overrideStandarsShortcuts.enterAll.name, shortcut:vm.overrideStandarsShortcuts.enterAll.shortcut},
+            {name:vm.overrideStandarsShortcuts.pageUp.name, shortcut:vm.overrideStandarsShortcuts.pageUp.shortcut},
+            {name:vm.overrideStandarsShortcuts.pageDown.name, shortcut:vm.overrideStandarsShortcuts.pageDown.shortcut}]"
+         shortcut-action="vm.shortcutHandler(objectShortcut)">
+        <ul>
+            <li class="{{item.status | qstatusfilter}}"
+                style="height: {{vm.itemHeight + 'px'}};"
+                tabindex="0"
+                role="application"
+                aria-hidden="{{vm.ieItemsReadable}}"
+                ng-repeat="item in vm.items track by $index"                
+                ng-class="{ 'list-element-focussed': vm.hasFocus($index) && vm.showFocused }"
+                ng-click="vm.callbackListviewObjects({pos: $index, event:$event})"
+                ng-keydown="vm.itemKeypressed($event, $index)"                
+                >
+                {{item.title}}
+            </li>
+        </ul>
+    </div>
+
+    <div class="invisibleOutput"
+         role="status"
+         aria-live="assertive"
+         aria-atomic="true"
+         aria-relevant="additions"
+         aria-hidden="false">
+        {{vm.readingText}}
+    </div>
+
+    <q2g-scroll-bar items-count="vm.itemsCount" 
+                    items-page-top="vm.itemsPageTop" 
+                    items-page-height="vm.itemsPageHeight" 
+                    vertical="0"
+                    show="vm.showScrollBar">
+    </q2g-scroll-bar>
+</div>
+
