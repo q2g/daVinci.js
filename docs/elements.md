@@ -4,19 +4,19 @@
 
 ### directive
 
-* [extension header](docs/extensionheader.md)
-* [identifier](docs/identifier.md)
-* [listview](docs/listview.md)
-* [scrollbar](docs/scrollbar.md)
-* [searchbar](docs/searchbar.md)
-* [shortcut](docs/shortcut.md)
-* [statustext](docs/statustext.md)
+* [extension header](extensionheader.md)
+* [identifier](identifier.md)
+* [listview](listview.md)
+* [scrollbar](scrollbar.md)
+* [searchbar](searchbar.md)
+* [shortcut](shortcut.md)
+* [statustext](statustext.md)
 
 ### filter
 
-* [translate](docs/translate.md)
+* [translate](translate.md)
 
 ### service
 
-* [translationProvider & translate](docs/translate.md)
-* [registration](docs/registration.md)
+* [translationProvider & translate](translate.md)
+* [registration](registration.md)
