@@ -12,7 +12,7 @@ class AkquinetIdentifierController implements ng.IController {
     }
 
     //#region Variables
-    show: boolean;
+    show: boolean; 
     //#endregion
 
     //#region logger

@@ -87,6 +87,7 @@ class ExtensionHeaderCuntroller implements ng.IController {
      * @param scope scope element to get the watcher in class
      */
     constructor(timeout: ng.ITimeoutService, element: JQuery, scope: ng.IScope) {
+        logger.info("init of List View Controller");
 
         this.element = element;
         this.timeout = timeout;
