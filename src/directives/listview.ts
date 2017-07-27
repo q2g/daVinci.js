@@ -1,7 +1,7 @@
 ﻿//#region Imports
 import { Logging } from "../utils/logger";
 import { qStatusFilter } from "../filter/statusFilter";
-import { ShortCutDirectiveFactory } from "./shortcut";
+import { ShortCutDirectiveFactory, IShortcutObject } from "./shortcut";
 import { templateReplacer, checkDirectiveIsRegistrated } from "../utils/utils";
 import * as template from "text!./listview.html";
 import "css!./listview.css";
@@ -47,6 +47,7 @@ class ListViewController implements ng.IController {
     showFocused: boolean = false;
     showScrollBar: boolean = false;
     timeout: ng.ITimeoutService;
+    overrideShortcuts: Array<IShortcutObject>
     //#endregion
 
     //#region logger
@@ -74,20 +75,7 @@ class ListViewController implements ng.IController {
         }
     }
     //#endregion
-
-    //#region OverrideStandardsShortcut
-    private _overrideStandarsShortcuts: any;
-    get overrideStandarsShortcuts(): any {
-        return this._overrideStandarsShortcuts;
-    }
-    set overrideStandarsShortcuts(value: any) {
-        if (!value) {
-            this._overrideStandarsShortcuts = this.setDefaultShortcuts();
-        } else {
-            this._overrideStandarsShortcuts = value;
-        }
-    }
-    //#endregion
+       
 
     static $inject = ["$timeout", "$element"];
 
@@ -100,41 +88,8 @@ class ListViewController implements ng.IController {
         this.element = element;
         this.timeout = timeout;
         this.ieItemsReadable = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
-        this.overrideStandarsShortcuts = this.setDefaultShortcuts();
     }
-
-    /**
-     * sets the default shortcuts when no other got entered
-     */
-    private setDefaultShortcuts() {
-        return {
-            up: {
-                name: "up",
-                shortcut: "40"
-            },
-            down: {
-                name: "down",
-                shortcut: "38"
-            },
-            enter: {
-                name: "enter",
-                shortcut: "32"
-            },
-            enterAll: {
-                name: "enterAll",
-                shortcut: "strg + 32"
-            },
-            pageUp: {
-                name: "pageUp",
-                shortcut: "34"
-            },
-            pageDown: {
-                name: "pageDown",
-                shortcut: "33"
-            }
-        }
-    }
-
+    
     /**
      * calculates the new selected Positiion. Focus will will be set out of bounds (root div Element)
      * when the the selectet Value is less then 0 and heigher then the max value
@@ -274,7 +229,7 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 itemFocused: "=",
                 showFocused: "<",
                 callbackListviewObjects: "&",
-                overrideStandarsShortcuts: "=?"
+                overrideShortcuts: "<?"
             },
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");

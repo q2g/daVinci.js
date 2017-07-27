@@ -16,12 +16,12 @@ class ShortcutInputObject implements IShortcutObject {
     }
 }
 
-interface IShortcutObject {
+export interface IShortcutObject {
     shortcut: string;
     name: string;
-    preventdefault: boolean;
-    action: string;
-    rootscope: string;
+    preventdefault?: boolean;
+    action?: string;
+    rootscope?: string;
 }
 
 class ShortCutController implements ng.IController {
@@ -32,6 +32,24 @@ class ShortCutController implements ng.IController {
     private shortcutObject: Array<IShortcutObject> = [];
     public shortcutAction: (object: any) => void;
     element: JQuery;
+    //#endregion
+
+    //#region shortcutOverride
+    private _shortcutOverride: Array<IShortcutObject> = [];
+    get shortcutOverride(): Array<IShortcutObject> {
+        return this._shortcutOverride;
+    }
+    set shortcutOverride(value: Array<IShortcutObject>) {
+        if (value !== this._shortcutOverride) {
+            try {
+                this._shortcutOverride = value;
+
+                this.shortcutObject = this.implementOverriceShortcuts(this.shortcutObject, value);
+            } catch (e) {
+                this.logger.error("error in Setter of shortcutOverride", e);
+            }
+        }
+    }
     //#endregion
 
     //#region shortcut 
@@ -48,27 +66,12 @@ class ShortCutController implements ng.IController {
 
                     this.shortcutObject = [];
                     for (var i: number = 0; i < value.length; i++) {
-
-                        let assistShortcutInputObject = new ShortcutInputObject(value[i].name);
-                        assistShortcutInputObject.shortcut = value[i].shortcut.toString();
-
-                        assistShortcutInputObject.rootscope = "|local|";
-                        if (typeof assitsVal[i].rootscope !== "undefined") {
-                            assistShortcutInputObject.rootscope = assitsVal[i].rootscope;
-                        }
-
-                        assistShortcutInputObject.preventdefault = true;
-                        if (typeof assitsVal[i].preventdefault !== "undefined") {
-                            assistShortcutInputObject.preventdefault = assitsVal[i].preventdefault;
-                        }
-
-                        assistShortcutInputObject.action = "";
-                        if (typeof assitsVal[i].action !== "undefined") {
-                            assistShortcutInputObject.action = assitsVal[i].action;
-                        }
-
-                        this.shortcutObject.push(assistShortcutInputObject);
+                        
+                        this.shortcutObject.push(this.checksShortcutProperties(value[i]));
                     }
+
+
+                    
 
                 } else if (typeof value === "string") {
                     if (!this.shortcutObject || this.shortcutObject.length === 0) {
@@ -180,6 +183,9 @@ class ShortCutController implements ng.IController {
         }
         //#endregion
 
+
+        
+
         this.keyDownFunction = (e: JQueryKeyEventObject) => {
             this.keydownHandler(e);
         };
@@ -187,6 +193,50 @@ class ShortCutController implements ng.IController {
         if (this.shortcut) {
             $(document).on("keydown", this.keyDownFunction);
         }
+    }
+
+    private checksShortcutProperties(value): IShortcutObject {
+        let assistShortcutInputObject = new ShortcutInputObject(value.name);
+        assistShortcutInputObject.shortcut = value.shortcut.toString();
+        
+        assistShortcutInputObject.rootscope = "|local|";
+        if (typeof value.rootscope !== "undefined") {
+            assistShortcutInputObject.rootscope = value.rootscope;
+        }
+
+        assistShortcutInputObject.preventdefault = true;
+        if (typeof value.preventdefault !== "undefined") {
+            assistShortcutInputObject.preventdefault = value.preventdefault;
+        }
+
+        assistShortcutInputObject.action = "";
+        if (typeof value.action !== "undefined") {
+            assistShortcutInputObject.action = value.action;
+        }
+
+        return assistShortcutInputObject;
+    }
+
+    private implementOverriceShortcuts(rootArray: Array<IShortcutObject>, override: Array<IShortcutObject>): Array<IShortcutObject> {
+        let newArray: Array<IShortcutObject> = [];
+
+        // 1. liste mit namen aus override
+        // 2. liste 
+
+        rootArray.forEach((x) => {
+            override.forEach((y) => {
+                if (y.name && y.shortcut && x.name === y.name) {
+                    let assistObj: IShortcutObject = this.checksShortcutProperties(y);
+                    x.name = assistObj.name;
+                    x.shortcut = assistObj.shortcut;
+                    x.action = y.action ? assistObj.action : x.action;
+                    x.preventdefault = y.preventdefault ? assistObj.preventdefault : x.preventdefault;
+                    x.rootscope = y.rootscope ? assistObj.rootscope : x.rootscope;
+                }
+            });
+            newArray.push(x);
+        });
+        return newArray;
     }
 
     /**
@@ -209,6 +259,8 @@ class ShortCutController implements ng.IController {
      */
     private keydownHandler(event: JQueryKeyEventObject) {
         this.logger.debug("Function keyDownHandler", this.shortcutObject);
+
+        
 
         this.shortcutObject.forEach((shortcut) => {
             if (this.checkShortcutsEqual(this.getArrayInsertetShortcut(shortcut.shortcut), this.getArrayKeydownShortcut(event))) {
@@ -385,7 +437,8 @@ export function ShortCutDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 shortcut: "<",
                 shortcutRootscope: "<?",
                 shortcutAction: "&?",
-                shortcutPreventdefault: "<?"
+                shortcutPreventdefault: "<?",
+                shortcutOverride: "<?"
             },
             link: function (scope: ng.IScope) {
                 (scope as any).vmShortcut.rootNameSpace = rootNameSpace;

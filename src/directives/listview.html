@@ -3,12 +3,14 @@
 
     <div q2g-shortcut
          shortcut="[
-            {name:vm.overrideStandarsShortcuts.up.name, shortcut:vm.overrideStandarsShortcuts.up.shortcut},
-            {name:vm.overrideStandarsShortcuts.down.name, shortcut:vm.overrideStandarsShortcuts.down.shortcut},
-            {name:vm.overrideStandarsShortcuts.enter.name, shortcut:vm.overrideStandarsShortcuts.enter.shortcut},
-            {name:vm.overrideStandarsShortcuts.enterAll.name, shortcut:vm.overrideStandarsShortcuts.enterAll.shortcut},
-            {name:vm.overrideStandarsShortcuts.pageUp.name, shortcut:vm.overrideStandarsShortcuts.pageUp.shortcut},
-            {name:vm.overrideStandarsShortcuts.pageDown.name, shortcut:vm.overrideStandarsShortcuts.pageDown.shortcut}]"
+                {name:'up', shortcut:'40'},
+                {name:'down', shortcut:'38'},
+                {name:'enter', shortcut:'32'},
+                {name:'enterAll', shortcut:'strg + 32'},
+                {name:'pageUp', shortcut:'34'},
+                {name:'pageDown', shortcut:'33'}                
+             ]"
+         shortcut-override="vm.overrideShortcuts"
          shortcut-action="vm.shortcutHandler(objectShortcut)">
         <ul>
             <li class="{{item.status | qstatusfilter}}"
