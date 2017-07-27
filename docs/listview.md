@@ -6,7 +6,7 @@ Because of the paging the interface is a little bit more complex, but you will f
 a wrapper class in the utils that make binding from engima.JS objects very easyily
 to that directive.
 
-# Shortcuts / Keyboard
+## Shortcuts / Keyboard
 
 In the default the element allows the following usage with keyboard.
 
@@ -20,7 +20,7 @@ space           | equivalent to left mouseclick on element
 space + ctrl    | equivalent to left mouseclick + ctrl on element
 
 
-# Attributes
+## Attributes
 
 D* | Name            |  Description
 ---|-----------------|--------------------------------------------
