@@ -33,4 +33,5 @@ D* | Name            |  Description
 <  | showFocused     | Defines if the focused Element is marked with a small boarder.
 &  | callbackListviewObjects | Callback if an Element is clicked
 =  | overrrideShortCuts | possibility to override default shortcuts
+
 D* for further description see angular directives
