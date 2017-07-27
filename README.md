@@ -10,6 +10,7 @@ The rest design principals:
 * accessibility, screenreader ready and keybord usage / shortcuts
 * ready for versioning, possibility to run different versions of the plugin or elements
   in one page
+* stay close to the qlik ux
 
 The plan is in the end to get even angular 1.x and angular 4+ elements out
 of one codebase.
