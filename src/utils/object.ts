@@ -17,12 +17,14 @@ interface q2gIListObject extends Event {
 //#endregion
 
 export class q2gListAdapter {
-    
+
+    //#region Variables
     obj: q2gIListObject;
     itemsCounter: number;
+    //#endregion
 
     //#region collection
-    private _collection: Array<any>;
+    private _collection: Array<any> = [];
     get collection(): Array<any> {
         return this._collection;
     }
@@ -80,25 +82,30 @@ export class q2gListAdapter {
         this.itemsPagingHeight = itemsPagingHeight;
         this.itemsCounter = itemsCounter;
         this.itemsPagingTop = 0;
-        obj.on("changed", (args) => {
-            this.itemsPagingHeight = args as any;
-            this.callData()
-        });
-        this.obj.emit("changed", this.itemsPagingHeight);
+
+        this.registrateChangeEvent();
     }
 
     /**
      * writes the new data page in the collection
      */
     private callData(): void {
+        logger.debug("callData", "");
+
         this.obj.getDataPage(this.itemsPagingTop, this.itemsPagingHeight)
             .then((collection: Array<any>) => {
                 
                 if (!this._collection || !checkEqualityOfArrays(this._collection, collection)) {
-                    this._collection = collection;
-                }
 
-                
+                    let counter: number = 0;
+                    collection.forEach((x) => {
+                        if (counter >= this.collection.length || JSON.stringify(x) !== JSON.stringify(this._collection[counter])) {
+                            this._collection[counter] = x;
+                        }
+                        counter++;
+                    });
+                    this._collection.splice(counter, this._collection.length);
+                }
             })
             .catch((e) => {
                 logger.error("ERROR in getDataPages", e);
@@ -115,10 +122,24 @@ export class q2gListAdapter {
         this.obj = obj;
         this.itemsPagingHeight = itemsPagingHeight;
         this.itemsCounter = itemsCounter;
+        this.callData();
+        this.registrateChangeEvent();
+    }
+
+    /**
+     * registrates the on change event
+     */
+    registrateChangeEvent() {
+        this.obj.on("changed", (args) => {
+            this.itemsPagingHeight = args as any;
+            this.callData()
+        });
+        this.obj.emit("changed", this.itemsPagingHeight);
     }
 }
 
 export class q2gDimensionObject extends Event implements q2gIListObject {
+
     model: any;
 
     /**
@@ -162,7 +183,7 @@ export class q2gDimensionObject extends Event implements q2gIListObject {
                 });
         })
     }
-
+    
     /**
      * search for the enterd string in the root Object
      * @param searchString string to search for
@@ -181,6 +202,7 @@ export class q2gDimensionObject extends Event implements q2gIListObject {
 }
 
 export class q2gListObject extends Event implements q2gIListObject {
+
     model: EngineAPI.IGenericObject;
 
     /**

@@ -1,6 +1,9 @@
 ﻿
+//#region Import
 import { Logging } from "./logger";
+//#endregion
 
+//#region interfaces
 interface IPropertiesDefault {
     ref: string | boolean;
     defaultValue: string;
@@ -21,6 +24,7 @@ export interface IRegisterDirective {
     directive(name: string, directiveFactory: ng.Injectable<ng.IDirectiveFactory>): void;
     directive(object: { [directiveName: string]: ng.Injectable<ng.IDirectiveFactory> }): void;
 }
+//#endregion
 
 //#region Logger 
 let logger = new Logging.Logger("utils");
@@ -145,7 +149,6 @@ export function checkDirectiveIsRegistrated(
 }
 
 
-
 export class AssistHypercube {
 
     rootCube: any;
@@ -260,7 +263,7 @@ export function checkEqualityOfArrays(array1: Array < string >, array2: Array<st
         if (array1 && array2) {
             for (var i: number = 0; i < array1.length; i++) {
 
-                if (JSON.stringify(array1[i]).indexOf(JSON.stringify(array2)[i]) === -1) {
+                if (JSON.stringify(array1[i]).indexOf(JSON.stringify(array2[i])) === -1) {
                     return false;
                 }
             }
@@ -271,7 +274,6 @@ export function checkEqualityOfArrays(array1: Array < string >, array2: Array<st
         return true;
     }
 }
-
 
 function sort(a, b) {
     if (a.id > b.id) {
