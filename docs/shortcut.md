@@ -10,16 +10,13 @@ TBD
 
 ## Attributes
 
-D* | Name            |  Description
----|-----------------|--------------------------------------------
-<  | items           | Array of Items that are current visible 
-=  | itemsCount      | Total count of possible items to show
-=  | itemsPageTop    | Index of the first visible item on the current page
-<  | itemsPageHeight | Height of the current page
-=  | itemHeight      | Height an item in px
-=  | itemFocused     | The index of the 
-<  | showFocused     | Defines if the focused Element is marked with a small boarder.
-&  | callbackListviewObjects | Callback if an Element is clicked
-=  | overrrideShortCuts | possibility to override default shortcuts
+D*  | Name             |  Description
+----|------------------|--------------------------------------------
+ <  | shortcut         | the shortcut(s)
+ <  | shortcutOverride | same like shortcuts but easy possibility to merge / override only some shortcuts / parts
+ \<\? | shortcutRootscope| optional Rootscope for the shortcut
+ \&\? | shortcutAction   | action that is called for shortcut
+ \<\? | shortcutPreventdefault | TBD
 
 D* for further description see angular directives
+
