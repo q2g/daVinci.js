@@ -195,6 +195,10 @@ class ShortCutController implements ng.IController {
         }
     }
 
+    /**
+     * checks the Shortcut Object and set default values
+     * @param value
+     */
     private checksShortcutProperties(value): IShortcutObject {
         let assistShortcutInputObject = new ShortcutInputObject(value.name);
         assistShortcutInputObject.shortcut = value.shortcut.toString();
@@ -217,14 +221,16 @@ class ShortCutController implements ng.IController {
         return assistShortcutInputObject;
     }
 
+    /**
+     * merges two arrays
+     * @param rootArray
+     * @param override
+     */
     private implementOverriceShortcuts(rootArray: Array<IShortcutObject>, override: Array<IShortcutObject>): Array<IShortcutObject> {
         let newArray: Array<IShortcutObject> = [];
 
-        // 1. liste mit namen aus override
-        // 2. liste 
-
-        rootArray.forEach((x) => {
-            override.forEach((y) => {
+        for (let x of rootArray) {
+            for (let y of override) {
                 if (y.name && y.shortcut && x.name === y.name) {
                     let assistObj: IShortcutObject = this.checksShortcutProperties(y);
                     x.name = assistObj.name;
@@ -233,9 +239,11 @@ class ShortCutController implements ng.IController {
                     x.preventdefault = y.preventdefault ? assistObj.preventdefault : x.preventdefault;
                     x.rootscope = y.rootscope ? assistObj.rootscope : x.rootscope;
                 }
-            });
+            }
             newArray.push(x);
-        });
+        }
+
+        this.logger.info("ges", newArray)
         return newArray;
     }
 
