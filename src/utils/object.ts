@@ -22,7 +22,7 @@ export class q2gListAdapter {
     itemsCounter: number;
 
     //#region collection
-    private _collection: Array<any>;
+    private _collection: Array<any> = [];
     get collection(): Array<any> {
         return this._collection;
     }
@@ -95,10 +95,16 @@ export class q2gListAdapter {
             .then((collection: Array<any>) => {
                 
                 if (!this._collection || !checkEqualityOfArrays(this._collection, collection)) {
-                    this._collection = collection;
-                }
 
-                
+                    let counter: number = 0;
+                    collection.forEach((x) => {
+                        if (counter >= this.collection.length || JSON.stringify(x) !== JSON.stringify(this._collection[counter])) {
+                            this._collection[counter] = x;
+                        }
+                        counter++;
+                    });
+                    this._collection.splice(counter, this._collection.length);
+                }
             })
             .catch((e) => {
                 logger.error("ERROR in getDataPages", e);
@@ -115,6 +121,7 @@ export class q2gListAdapter {
         this.obj = obj;
         this.itemsPagingHeight = itemsPagingHeight;
         this.itemsCounter = itemsCounter;
+        this.callData();
     }
 }
 

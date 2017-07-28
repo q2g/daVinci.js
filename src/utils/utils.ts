@@ -260,7 +260,7 @@ export function checkEqualityOfArrays(array1: Array < string >, array2: Array<st
         if (array1 && array2) {
             for (var i: number = 0; i < array1.length; i++) {
 
-                if (JSON.stringify(array1[i]).indexOf(JSON.stringify(array2)[i]) === -1) {
+                if (JSON.stringify(array1[i]).indexOf(JSON.stringify(array2[i])) === -1) {
                     return false;
                 }
             }
