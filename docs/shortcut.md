@@ -20,3 +20,21 @@ D*  | Name             |  Description
 
 D* for further description see angular directives
 
+### Shortcut element(s)
+
+Type | Name |   Description
+-----|------|---------------------------------
+string | shortcut | tbd
+string | name | tbd
+boolean? | preventdefault | optional tbd
+string? | action | tbd
+string? | rootscope | tbd
+
+### possible Actions
+
+focus
+onClick
+...text
+
+## Example
+
