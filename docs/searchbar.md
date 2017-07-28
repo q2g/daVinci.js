@@ -13,11 +13,16 @@ esc             | if searchtext is filled, searchtext is cleared
 
 ## Attributes
 
-D* | Name            |  Description
----|-----------------|--------------------------------------------
- = | textSearch      | the text for search
- < | placeholder     | placeholder if no search text is written
- < | shortcutSetFocus| ?
-=? | overrideStandarsShortcuts | possibility to override default shortcuts
+D* | Name             |  Description
+---|------------------|--------------------------------------------
+ < | shortcut         | the shortcut(s)
+ < | shortcutOverride | same like shortcut(s) but easy possibility to merge / override only some shortcut(s) / parts
+ <?| shortcutRootscope| optional Rootscope for the shortcut
+ &?| shortcutAction   | action that is called for shortcut
+ <?| shortcutPreventdefault | TBD
 
 D* for further description see angular directives
+
+## Examples
+
+TBD
