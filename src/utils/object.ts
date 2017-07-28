@@ -17,9 +17,11 @@ interface q2gIListObject extends Event {
 //#endregion
 
 export class q2gListAdapter {
-    
+
+    //#region Variables
     obj: q2gIListObject;
     itemsCounter: number;
+    //#endregion
 
     //#region collection
     private _collection: Array<any> = [];
@@ -80,17 +82,16 @@ export class q2gListAdapter {
         this.itemsPagingHeight = itemsPagingHeight;
         this.itemsCounter = itemsCounter;
         this.itemsPagingTop = 0;
-        obj.on("changed", (args) => {
-            this.itemsPagingHeight = args as any;
-            this.callData()
-        });
-        this.obj.emit("changed", this.itemsPagingHeight);
+
+        this.registrateChangeEvent();
     }
 
     /**
      * writes the new data page in the collection
      */
     private callData(): void {
+        logger.debug("callData", "");
+
         this.obj.getDataPage(this.itemsPagingTop, this.itemsPagingHeight)
             .then((collection: Array<any>) => {
                 
@@ -122,10 +123,23 @@ export class q2gListAdapter {
         this.itemsPagingHeight = itemsPagingHeight;
         this.itemsCounter = itemsCounter;
         this.callData();
+        this.registrateChangeEvent();
+    }
+
+    /**
+     * registrates the on change event
+     */
+    registrateChangeEvent() {
+        this.obj.on("changed", (args) => {
+            this.itemsPagingHeight = args as any;
+            this.callData()
+        });
+        this.obj.emit("changed", this.itemsPagingHeight);
     }
 }
 
 export class q2gDimensionObject extends Event implements q2gIListObject {
+
     model: any;
 
     /**
@@ -169,7 +183,7 @@ export class q2gDimensionObject extends Event implements q2gIListObject {
                 });
         })
     }
-
+    
     /**
      * search for the enterd string in the root Object
      * @param searchString string to search for
@@ -188,6 +202,7 @@ export class q2gDimensionObject extends Event implements q2gIListObject {
 }
 
 export class q2gListObject extends Event implements q2gIListObject {
+
     model: EngineAPI.IGenericObject;
 
     /**

@@ -1,6 +1,9 @@
 ﻿
+//#region Import
 import { Logging } from "./logger";
+//#endregion
 
+//#region interfaces
 interface IPropertiesDefault {
     ref: string | boolean;
     defaultValue: string;
@@ -21,6 +24,7 @@ export interface IRegisterDirective {
     directive(name: string, directiveFactory: ng.Injectable<ng.IDirectiveFactory>): void;
     directive(object: { [directiveName: string]: ng.Injectable<ng.IDirectiveFactory> }): void;
 }
+//#endregion
 
 //#region Logger 
 let logger = new Logging.Logger("utils");
@@ -143,7 +147,6 @@ export function checkDirectiveIsRegistrated(
         console.error("Error in checkForExistingDirective", e)
     }
 }
-
 
 
 export class AssistHypercube {
@@ -271,7 +274,6 @@ export function checkEqualityOfArrays(array1: Array < string >, array2: Array<st
         return true;
     }
 }
-
 
 function sort(a, b) {
     if (a.id > b.id) {
