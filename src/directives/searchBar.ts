@@ -1,7 +1,7 @@
 ﻿//#region IMPORT
 import { templateReplacer, checkDirectiveIsRegistrated } from "../utils/utils";
 import { Logging } from "../utils/logger";
-import { ShortCutDirectiveFactory } from "./shortcut";
+import { ShortCutDirectiveFactory, IShortcutObject } from "./shortcut";
 import * as template from "text!./searchBar.html";
 //#endregion
 
@@ -19,29 +19,15 @@ class SearchBarController implements ng.IController {
     placeholder: string = "";
     shortcutSetFocus: string;
     textSearch: string = "";
+    overrideShortcuts: Array<IShortcutObject>;
     //#endregion
 
-    //#region OverrideStandardsShortcut
-    private _overrideStandarsShortcuts: any;
-    get overrideStandarsShortcuts(): any {
-        return this._overrideStandarsShortcuts;
-    }
-    set overrideStandarsShortcuts(value: any) {
-        if (!value) {
-            this._overrideStandarsShortcuts = this.setDefaultShortcuts();
-        } else {
-            this._overrideStandarsShortcuts = value;
-        }
-    }
-    //#endregion
-    
     static $inject = ["$element", "$scope"];
 
     /** 
      * init of List View Controller
      */
     constructor(element: JQuery, scope: ng.IScope) {
-        this.overrideStandarsShortcuts = this.setDefaultShortcuts();
 
         scope.$watch(function () { return element.is(':visible') }, function () {
             try {
@@ -53,19 +39,7 @@ class SearchBarController implements ng.IController {
             }          
         });
     }
-
-    /**
-     * sets the default values for the shortcuts, when no override gots entered
-     */
-    private setDefaultShortcuts() {
-        return {
-            esc: {
-                name: "esc",
-                shortcut: "27",
-                action: "onClick"
-            }
-        }
-    }
+    
 }
 
 export function SearchBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
