@@ -8,6 +8,11 @@
         overflow: hidden;
 
         li {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            border: 1.5px solid #ffffff;
+            padding-bottom: 0.5px;
             border-bottom: 1px solid #d9d9d9;
             padding-left: 5px;
             vertical-align: central;
@@ -19,27 +24,33 @@
         .selected {
             background-color: #52CC52;
             color: #ffffff;
-            border-bottom-color: #ffffff;
+            border-color: #52CC52;            
+            border-bottom: 1px solid #ffffff;
         }
+
         .alternative {
             background-color: #dddddd;
             color: #595959;
-            border-bottom-color: #ffffff;
+            border-color: #dddddd;            
+            border-bottom: 1px solid #ffffff;
         }
+
         .optional {
             background-color: #ffffff;
-            color: #595959;
+            color: #595959;            
+            border-color: #ffffff;            
+            border-bottom: 1px solid #d9d9d9;
         }
+
         .excluded {
             background-color: #A9A9A9;
-            color: #ffffff;
-            border-bottom-color: #ffffff;
+            color: #ffffff;            
+            border-color: #A9A9A9;            
+            border-bottom: 1px solid #ffffff;
         }
 
         .list-element-focussed {
-            box-sizing: border-box;
-            -moz-box-sizing: border-box;
-            -webkit-box-sizing: border-box;
+            padding-bottom: 0px;
             border: 1.5px solid black;
         }                
     }
