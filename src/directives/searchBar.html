@@ -11,7 +11,9 @@
            ng-model="vm.textSearch"
            
            q2g-shortcut
-           shortcut="[{name:'setFocus', shortcut:vm.shortcutSetFocus, action:'focus'}]"/>
+           shortcut="[
+                {name:'setFocus', shortcut:vm.shortcutSetFocus, action:'focus'}
+           ]"/>
 
     <span class="lui-search__clear-icon"
           tabindex="0"
@@ -20,5 +22,7 @@
           ng-click="vm.textSearch = ''"          
            
           q2g-shortcut
-          shortcut="[{name:vm.overrideStandarsShortcuts.esc.name, shortcut:vm.overrideStandarsShortcuts.esc.shortcut, action:vm.overrideStandarsShortcuts.esc.action}]"></span>
+          shortcut="[
+                {name:'esc', shortcut: '27', action: 'onClick'}
+          ]"></span>
 </div>
