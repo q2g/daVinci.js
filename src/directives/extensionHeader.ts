@@ -1,7 +1,7 @@
 ﻿
 //#region IMPORT
 import { Logging } from "../utils/logger";
-import { templateReplacer, checkDirectiveIsRegistrated } from "../utils/utils";
+import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
 import { ShortCutDirectiveFactory } from "./shortcut";
 import { SearchBarDirectiveFactory } from "./searchBar";
 import * as template from "text!./extensionHeader.html";
@@ -164,7 +164,7 @@ class ExtensionHeaderCuntroller implements ng.IController {
 
 export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
     "use strict";
-    return ($document: ng.IAugmentedJQuery, $injector: ng.auto.IInjectorService, $registrationProvider) => {
+    return ($document: ng.IAugmentedJQuery, $injector: ng.auto.IInjectorService, $registrationProvider: IRegisterDirective) => {
         return {
             restrict: "E",
             replace: true,

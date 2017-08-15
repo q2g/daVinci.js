@@ -2,7 +2,7 @@
 import { Logging } from "../utils/logger";
 import { qStatusFilter } from "../filter/statusFilter";
 import { ShortCutDirectiveFactory, IShortcutObject } from "./shortcut";
-import { templateReplacer, checkDirectiveIsRegistrated } from "../utils/utils";
+import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
 import * as template from "text!./listview.html";
 import "css!./listview.css";
 //#endregion
@@ -212,7 +212,7 @@ class ListViewController implements ng.IController {
 
 export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
     "use strict";
-    return ($document: ng.IAugmentedJQuery, $injector: ng.auto.IInjectorService, $registrationProvider) => {
+    return ($document: ng.IAugmentedJQuery, $injector: ng.auto.IInjectorService, $registrationProvider: IRegisterDirective) => {
         return {
             restrict: "E",
             replace: true,

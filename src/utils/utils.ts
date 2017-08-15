@@ -23,6 +23,8 @@ export interface IRegisterDirective {
     */
     directive(name: string, directiveFactory: ng.Injectable<ng.IDirectiveFactory>): void;
     directive(object: { [directiveName: string]: ng.Injectable<ng.IDirectiveFactory> }): void;
+    filter(name: string, filterFactoryFunction: ng.Injectable<Function>): ng.IModule;
+    filter(object: { [name: string]: ng.Injectable<Function> }): ng.IModule;
 }
 //#endregion
 
@@ -134,7 +136,7 @@ export function regEscaper(string) {
  */
 export function checkDirectiveIsRegistrated(
     injector: ng.auto.IInjectorService,
-    regDirective: IRegisterDirective,
+    regDirective: IRegisterDirective | IQVAngular,
     rootNameSpace: string,
     factory: ng.IDirectiveFactory,
     directiveName: string) {
