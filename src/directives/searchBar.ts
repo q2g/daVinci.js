@@ -16,7 +16,7 @@ class SearchBarController implements ng.IController {
     }
 
     //#region Variables
-    placeholder: string = "";
+    placeholder: string;
     shortcutSetFocus: string;
     textSearch: string = "";
     overrideShortcuts: Array<IShortcutObject>;
