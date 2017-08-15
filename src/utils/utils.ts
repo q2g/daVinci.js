@@ -102,9 +102,9 @@ export class SimplifierDefinitionObject {
 }
 
 /**
- * replace and creates namespace for the directives in the templates
- * @param template
- * @param rootNameSpace
+ * replace and creates namespace for the directives in the templates, to ensure multiple use of directives
+ * @param template basic template for the directive
+ * @param rootNameSpace naming of the extension, to ensure multiple use of directives
  */
 export function templateReplacer(template: string, rootNameSpace: string) {
     let newTemplate: string = template.replace(/([< /]q2g\-)|(\nq2g\-)/g, (a, b, c) => {
