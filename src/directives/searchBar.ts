@@ -21,7 +21,7 @@ class SearchBarController implements ng.IController {
     textSearch: string = "";
     overrideShortcuts: Array<IShortcutObject>;
     //#endregion
-
+    
     static $inject = ["$element", "$scope"];
 
     /** 
