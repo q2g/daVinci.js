@@ -106,7 +106,7 @@ class ExtensionHeaderCuntroller implements ng.IController {
     private listRefactoring(value: Array<any>) {
         this.menuListRefactored = [];
         try {
-            value.forEach((x) => {
+            for (let x of value) {
                 let assistElement: ListElement = new ListElement();
 
                 assistElement.hasSeparator = x.hasSeparator ? x.hasSeparator : assistElement.hasSeparator;
@@ -117,7 +117,7 @@ class ExtensionHeaderCuntroller implements ng.IController {
                 assistElement.type = x.type ? x.type : assistElement.type;
 
                 this.menuListRefactored.push(assistElement);
-            });
+            }            
         } catch (e) {
             logger.error("error in listRefactoring", e);
         }        
@@ -133,14 +133,14 @@ class ExtensionHeaderCuntroller implements ng.IController {
         this.popOverList = [];
 
         try {
-            this.menuListRefactored.forEach((x) => {
+            for (let x of this.menuListRefactored) {
                 counter++;
                 if (counter < this.maxNumberOfElements && counter < numberOfVisibleElements) {
                     this.displayList.unshift(x);
                 } else {
                     this.popOverList.push(x);
                 }
-            })
+            }            
         } catch (e) {
             logger.error("error in calcLists", e);
         }

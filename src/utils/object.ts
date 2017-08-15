@@ -96,14 +96,13 @@ export class q2gListAdapter {
             .then((collection: Array<any>) => {
                 
                 if (!this._collection || !checkEqualityOfArrays(this._collection, collection)) {
-
                     let counter: number = 0;
-                    collection.forEach((x) => {
+                    for (let x of collection) {
                         if (counter >= this.collection.length || JSON.stringify(x) !== JSON.stringify(this._collection[counter])) {
                             this._collection[counter] = x;
                         }
                         counter++;
-                    });
+                    }
                     this._collection.splice(counter, this._collection.length);
                 }
             })

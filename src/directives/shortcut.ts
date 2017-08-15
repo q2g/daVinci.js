@@ -268,9 +268,7 @@ class ShortCutController implements ng.IController {
     private keydownHandler(event: JQueryKeyEventObject) {
         this.logger.debug("Function keyDownHandler", this.shortcutObject);
 
-        
-
-        this.shortcutObject.forEach((shortcut) => {
+        for (let shortcut of this.shortcutObject) {
             if (this.checkShortcutsEqual(this.getArrayInsertetShortcut(shortcut.shortcut), this.getArrayKeydownShortcut(event))) {
                 if (shortcut.preventdefault) {
                     try {
@@ -288,7 +286,7 @@ class ShortCutController implements ng.IController {
 
                 }
             }
-        })
+        }
     }
 
     /**
