@@ -5,7 +5,7 @@ import * as utils from "../utils/utils";
 import "css!./identifier.css";
 //#endregion
 
-class AkquinetIdentifierController implements ng.IController {
+class IdentifierController implements ng.IController {
 
     public $onInit(): void {
         this.logger.debug("initial Run of AkquinetIdentifierController");
@@ -20,7 +20,7 @@ class AkquinetIdentifierController implements ng.IController {
     private get logger(): Logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("StatusTextController");
+                this._logger = new Logging.Logger("IdentifierController");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }
@@ -37,14 +37,14 @@ class AkquinetIdentifierController implements ng.IController {
     }    
 }
 
-export function AkquinetIdentifierDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
+export function IdentifierDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
     "use strict";
     return ($document: ng.IAugmentedJQuery, $injector: ng.auto.IInjectorService) => {
         return {
             restrict: "E",
             replace: true,
             template: utils.templateReplacer(template, rootNameSpace),
-            controller: AkquinetIdentifierController,
+            controller: IdentifierController,
             controllerAs: "vm",
             scope: {},
             bindToController: {
