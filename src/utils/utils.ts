@@ -23,6 +23,8 @@ export interface IRegisterDirective {
     */
     directive(name: string, directiveFactory: ng.Injectable<ng.IDirectiveFactory>): void;
     directive(object: { [directiveName: string]: ng.Injectable<ng.IDirectiveFactory> }): void;
+    filter(name: string, filterFactoryFunction: ng.Injectable<Function>): ng.IModule;
+    filter(object: { [name: string]: ng.Injectable<Function> }): ng.IModule;
 }
 //#endregion
 
@@ -100,9 +102,9 @@ export class SimplifierDefinitionObject {
 }
 
 /**
- * replace and creates namespace for the directives in the templates
- * @param template
- * @param rootNameSpace
+ * replace and creates namespace for the directives in the templates, to ensure multiple use of directives
+ * @param template basic template for the directive
+ * @param rootNameSpace naming of the extension, to ensure multiple use of directives
  */
 export function templateReplacer(template: string, rootNameSpace: string) {
     let newTemplate: string = template.replace(/([< /]q2g\-)|(\nq2g\-)/g, (a, b, c) => {
@@ -134,7 +136,7 @@ export function regEscaper(string) {
  */
 export function checkDirectiveIsRegistrated(
     injector: ng.auto.IInjectorService,
-    regDirective: IRegisterDirective,
+    regDirective: IRegisterDirective | IQVAngular,
     rootNameSpace: string,
     factory: ng.IDirectiveFactory,
     directiveName: string) {
@@ -154,11 +156,7 @@ export class AssistHypercube {
     rootCube: any;
     calcCube: Array<any> = [];
 
-    constructor(rootCube: any) {
-        this.rootCube = rootCube;
-        this.searchListObjectFor("");        
-    }
-
+    //#region searchString
     private _searchString: string = "";
     get searchString(): string {
         return this._searchString;
@@ -167,6 +165,12 @@ export class AssistHypercube {
         if (value !== this.searchString) {
             this._searchString = value;
         }
+    }
+    //#endregion
+
+    constructor(rootCube: any) {
+        this.rootCube = rootCube;
+        this.searchListObjectFor("");        
     }
     
     getListObjectData(string: string, qPages: EngineAPI.INxPage): Promise<any> {

@@ -80,7 +80,7 @@ export class q2gListAdapter {
     constructor(obj: q2gIListObject, itemsPagingHeight: number, itemsCounter: number) {
         this.obj = obj;
         this.itemsPagingHeight = itemsPagingHeight;
-        this.itemsCounter = itemsCounter;
+        this.itemsCounter = itemsCounter; 
         this.itemsPagingTop = 0;
 
         this.registrateChangeEvent();
@@ -89,21 +89,20 @@ export class q2gListAdapter {
     /**
      * writes the new data page in the collection
      */
-    private callData(): void {
+    private callData(): void {   
         logger.debug("callData", "");
 
         this.obj.getDataPage(this.itemsPagingTop, this.itemsPagingHeight)
             .then((collection: Array<any>) => {
                 
                 if (!this._collection || !checkEqualityOfArrays(this._collection, collection)) {
-
                     let counter: number = 0;
-                    collection.forEach((x) => {
+                    for (let x of collection) {
                         if (counter >= this.collection.length || JSON.stringify(x) !== JSON.stringify(this._collection[counter])) {
                             this._collection[counter] = x;
                         }
                         counter++;
-                    });
+                    }
                     this._collection.splice(counter, this._collection.length);
                 }
             })
@@ -122,7 +121,6 @@ export class q2gListAdapter {
         this.obj = obj;
         this.itemsPagingHeight = itemsPagingHeight;
         this.itemsCounter = itemsCounter;
-        this.callData();
         this.registrateChangeEvent();
     }
 

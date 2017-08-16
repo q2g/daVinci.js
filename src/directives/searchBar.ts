@@ -1,5 +1,5 @@
 ﻿//#region IMPORT
-import { templateReplacer, checkDirectiveIsRegistrated } from "../utils/utils";
+import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
 import { Logging } from "../utils/logger";
 import { ShortCutDirectiveFactory, IShortcutObject } from "./shortcut";
 import * as template from "text!./searchBar.html";
@@ -16,12 +16,12 @@ class SearchBarController implements ng.IController {
     }
 
     //#region Variables
-    placeholder: string = "";
+    placeholder: string;
     shortcutSetFocus: string;
     textSearch: string = "";
     overrideShortcuts: Array<IShortcutObject>;
     //#endregion
-
+    
     static $inject = ["$element", "$scope"];
 
     /** 
@@ -44,7 +44,7 @@ class SearchBarController implements ng.IController {
 
 export function SearchBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
     "use strict";
-    return ($document: ng.IAugmentedJQuery, $injector: ng.auto.IInjectorService, $registrationProvider) => {
+    return ($document: ng.IAugmentedJQuery, $injector: ng.auto.IInjectorService, $registrationProvider: IRegisterDirective) => {
         return {
             restrict: "E",
             replace: true,
