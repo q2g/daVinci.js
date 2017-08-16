@@ -80,7 +80,7 @@ export class q2gListAdapter {
     constructor(obj: q2gIListObject, itemsPagingHeight: number, itemsCounter: number) {
         this.obj = obj;
         this.itemsPagingHeight = itemsPagingHeight;
-        this.itemsCounter = itemsCounter;
+        this.itemsCounter = itemsCounter; 
         this.itemsPagingTop = 0;
 
         this.registrateChangeEvent();
@@ -89,7 +89,7 @@ export class q2gListAdapter {
     /**
      * writes the new data page in the collection
      */
-    private callData(): void {
+    private callData(): void {   
         logger.debug("callData", "");
 
         this.obj.getDataPage(this.itemsPagingTop, this.itemsPagingHeight)
@@ -121,7 +121,6 @@ export class q2gListAdapter {
         this.obj = obj;
         this.itemsPagingHeight = itemsPagingHeight;
         this.itemsCounter = itemsCounter;
-        this.callData();
         this.registrateChangeEvent();
     }
 

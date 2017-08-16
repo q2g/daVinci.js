@@ -156,11 +156,7 @@ export class AssistHypercube {
     rootCube: any;
     calcCube: Array<any> = [];
 
-    constructor(rootCube: any) {
-        this.rootCube = rootCube;
-        this.searchListObjectFor("");        
-    }
-
+    //#region searchString
     private _searchString: string = "";
     get searchString(): string {
         return this._searchString;
@@ -169,6 +165,12 @@ export class AssistHypercube {
         if (value !== this.searchString) {
             this._searchString = value;
         }
+    }
+    //#endregion
+
+    constructor(rootCube: any) {
+        this.rootCube = rootCube;
+        this.searchListObjectFor("");        
     }
     
     getListObjectData(string: string, qPages: EngineAPI.INxPage): Promise<any> {
