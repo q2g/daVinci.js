@@ -23,10 +23,10 @@ class ListElement {
 
 }
 
-class ExtensionHeaderCuntroller implements ng.IController {
+class ExtensionHeaderController implements ng.IController {
 
     public $onInit(): void {
-        logger.debug("initial Run of MainMenuCuntroller");
+        logger.debug("initial Run of MainMenuController");
     }
 
     //#region VARIABLES
@@ -169,7 +169,7 @@ export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDire
             restrict: "E",
             replace: true,
             template: templateReplacer(template, rootNameSpace),
-            controller: ExtensionHeaderCuntroller,
+            controller: ExtensionHeaderController,
             controllerAs: "vm",
             scope: {},
             bindToController: {
