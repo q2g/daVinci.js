@@ -55,7 +55,6 @@ export function SearchBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveF
             bindToController: {
                 textSearch: "=",
                 placeholder: "<",
-                shortcutSetFocus: "<",
                 overrideStandarsShortcuts: "=?"
             },
             compile: function () {

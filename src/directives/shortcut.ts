@@ -294,21 +294,13 @@ class ShortCutController implements ng.IController {
      * @param object selected Shortcut Object
      */
     private runAction(objectShortcut: IShortcutObject, event?: JQueryKeyEventObject): boolean {
-        this.logger.debug("Function runAction", "");
+        this.logger.debug("Function runAction", objectShortcut);
 
         try {
-
-            if (objectShortcut.action === "focus") {
-                
-                this.element.focus();
+            if (objectShortcut.action === "focus" || objectShortcut.action === "click") {
+                this.element.triggerHandler(objectShortcut.action);
                 return;
             }
-
-            if (objectShortcut.action === "onClick") {
-                this.element.triggerHandler("click")
-                return;
-            }
-
             this.shortcutAction({
                 objectShortcut: {
                     objectShortcut: objectShortcut,
