@@ -10,6 +10,7 @@ class ShortcutInputObject implements IShortcutObject {
     preventdefault: boolean;
     action: string;
     rootscope: string;
+    triggerHandler: string;
 
     constructor(name: string) {
         this.name = name;
@@ -22,16 +23,19 @@ export interface IShortcutObject {
     preventdefault?: boolean;
     action?: string;
     rootscope?: string;
+    triggerHandler?: string;
 }
 
 class ShortCutController implements ng.IController {
     static $inject = ["$element"];
 
     //#region Variables
+    element: JQuery;
+    shortcutAction: (object: any) => void;
+    shortcutTriggerHandler: string;
+
     private rootNameSpace: string = "";
     private shortcutObject: Array<IShortcutObject> = [];
-    public shortcutAction: (object: any) => void;
-    element: JQuery;
     //#endregion
 
     //#region shortcutOverride
@@ -61,6 +65,7 @@ class ShortCutController implements ng.IController {
         if (this._shortcut !== value) {
             try {
                 this._shortcut = value;
+
                 if (typeof value === "object" && value[0].shortcut) {
                     let assitsVal: Array<IShortcutObject> = value;                    
 
@@ -69,9 +74,6 @@ class ShortCutController implements ng.IController {
                         
                         this.shortcutObject.push(this.checksShortcutProperties(value[i]));
                     }
-
-
-                    
 
                 } else if (typeof value === "string") {
                     if (!this.shortcutObject || this.shortcutObject.length === 0) {
@@ -162,7 +164,7 @@ class ShortCutController implements ng.IController {
 
         this.element = element;
 
-        //#region Setting string call of q2gShortcut
+        //#region Setting default values of q2gShortcut
         if (typeof this.shortcutPreventdefault === "undefined") {
             this.shortcutPreventdefault = true;
         }
@@ -171,21 +173,25 @@ class ShortCutController implements ng.IController {
             this.shortcutRootscope = "|local|";
         }
 
+        if (typeof this.shortcutTriggerHandler === "undefined") {
+            this.shortcutTriggerHandler = "";
+        }
+
         if (typeof this.shortcutAction === "undefined") {
             for (var i: number = 0; i < this.shortcutObject.length; i++) {
-                this.shortcutObject[i].action = "focus";
+                this.shortcutObject[i].action = "";
+                if (this.shortcutTriggerHandler = "") {
+                    this.shortcutTriggerHandler = "focus";
+                }
             }
-         }
+        }
 
         if (this.shortcutObject && typeof this.shortcut === "string") {
             this.shortcutObject[0].preventdefault = this.shortcutPreventdefault;
             this.shortcutObject[0].rootscope = this.shortcutRootscope;
         }
         //#endregion
-
-
         
-
         this.keyDownFunction = (e: JQueryKeyEventObject) => {
             this.keydownHandler(e);
         };
@@ -197,9 +203,10 @@ class ShortCutController implements ng.IController {
 
     /**
      * checks the Shortcut Object and set default values
-     * @param value
+     * @param value shortcut object to be checked for default
      */
-    private checksShortcutProperties(value): IShortcutObject {
+    private checksShortcutProperties(value: IShortcutObject): IShortcutObject {
+
         let assistShortcutInputObject = new ShortcutInputObject(value.name);
         assistShortcutInputObject.shortcut = value.shortcut.toString();
         
@@ -216,6 +223,11 @@ class ShortCutController implements ng.IController {
         assistShortcutInputObject.action = "";
         if (typeof value.action !== "undefined") {
             assistShortcutInputObject.action = value.action;
+        }
+
+        assistShortcutInputObject.triggerHandler = "";
+        if (typeof value.triggerHandler !== "undefined") {
+            assistShortcutInputObject.triggerHandler = value.triggerHandler;
         }
 
         return assistShortcutInputObject;
@@ -241,9 +253,7 @@ class ShortCutController implements ng.IController {
                 }
             }
             newArray.push(x);
-        }
-
-        this.logger.info("ges", newArray)
+        }        
         return newArray;
     }
 
@@ -293,21 +303,24 @@ class ShortCutController implements ng.IController {
      * checks if Action is predefined, otherwise run q2gShortcutAction
      * @param object selected Shortcut Object
      */
-    private runAction(objectShortcut: IShortcutObject, event?: JQueryKeyEventObject): boolean {
+    private runAction(objectShortcut: IShortcutObject, event?: JQueryKeyEventObject): void {
         this.logger.debug("Function runAction", objectShortcut);
 
         try {
-            if (objectShortcut.action === "focus" || objectShortcut.action === "click") {
-                this.element.triggerHandler(objectShortcut.action);
-                return;
+
+            if (objectShortcut.triggerHandler !== "") {
+                this.element.triggerHandler(objectShortcut.triggerHandler);
             }
-            this.shortcutAction({
-                objectShortcut: {
-                    objectShortcut: objectShortcut,
-                    element: this.element,
-                    event: event,
-                },
-            });
+
+            if (typeof this.shortcutAction !== "undefined") {
+                this.shortcutAction({
+                    objectShortcut: {
+                        objectShortcut: objectShortcut,
+                        element: this.element,
+                        event: event,
+                    },
+                });
+            }
         } catch (e) {
             this.logger.error("ERROR in function runAction", e);
         }
@@ -436,7 +449,8 @@ export function ShortCutDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 shortcutRootscope: "<?",
                 shortcutAction: "&?",
                 shortcutPreventdefault: "<?",
-                shortcutOverride: "<?"
+                shortcutOverride: "<?",
+                shortcutTriggerHandler: "<?"
             },
             link: function (scope: ng.IScope) {
                 (scope as any).vmShortcut.rootNameSpace = rootNameSpace;
