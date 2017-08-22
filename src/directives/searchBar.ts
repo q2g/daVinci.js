@@ -27,7 +27,7 @@ class SearchBarController implements ng.IController {
      * init of List View Controller
      */
     constructor(element: JQuery, scope: ng.IScope) {
-
+                
         scope.$watch(function () { return element.is(':visible') }, function () {
             try {
                 if (element.is(':visible')) {
