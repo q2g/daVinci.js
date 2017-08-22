@@ -1,7 +1,7 @@
 ﻿//#region IMPORT
 import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
 import { Logging } from "../utils/logger";
-import { ShortCutDirectiveFactory, IShortcutObject } from "./shortcut";
+import { ShortCutDirectiveFactory } from "./shortcut";
 import * as template from "text!./searchBar.html";
 //#endregion
 
@@ -18,7 +18,6 @@ class SearchBarController implements ng.IController {
     //#region Variables
     placeholder: string;
     textSearch: string = "";
-    overrideShortcuts: Array<IShortcutObject>;
     //#endregion
     
     static $inject = ["$element", "$scope"];
@@ -53,8 +52,7 @@ export function SearchBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveF
             scope: {},
             bindToController: {
                 textSearch: "=",
-                placeholder: "<",
-                overrideStandarsShortcuts: "=?"
+                placeholder: "<"
             },
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
