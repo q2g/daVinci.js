@@ -17,7 +17,6 @@ class SearchBarController implements ng.IController {
 
     //#region Variables
     placeholder: string;
-    shortcutSetFocus: string;
     textSearch: string = "";
     overrideShortcuts: Array<IShortcutObject>;
     //#endregion
@@ -28,7 +27,7 @@ class SearchBarController implements ng.IController {
      * init of List View Controller
      */
     constructor(element: JQuery, scope: ng.IScope) {
-
+                
         scope.$watch(function () { return element.is(':visible') }, function () {
             try {
                 if (element.is(':visible')) {
@@ -55,7 +54,6 @@ export function SearchBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveF
             bindToController: {
                 textSearch: "=",
                 placeholder: "<",
-                shortcutSetFocus: "<",
                 overrideStandarsShortcuts: "=?"
             },
             compile: function () {

@@ -3,13 +3,10 @@
     <table class="header">
         <tr>
             <!-- INPUT FIELD -->
-            <td ng-show="vm.showSearchField"
-                q2g-shortcut
-                shortcut="[{name:'focus', shortcut:vm.shortcutSearchfield}]"
-                shortcut-action="vm.shortcutHandlerExtensionHeader(objectShortcut)">
+            <td>
                 <q2g-search-bar text-search="vm.textSearch"
                                 placeholder="'search '+vm.title"
-                                shortcut-set-focus="vm.shortcutSearchfield">
+                                ng-show="vm.showSearchField">
                 </q2g-search-bar>
             </td>
 
@@ -18,7 +15,9 @@
                 class="lui-list__header"
                 ng-click="vm.showButtons = true">
                 <span class="searchObject lui-icon lui-icon--search"
-                      ng-click="vm.showSearchField = true"></span>
+                      ng-click="vm.showSearchField = true"
+                      q2g-shortcut
+                      shortcut="[{name:'focus', shortcut:vm.shortcutSearchfield, triggerHandler:'click'}]"></span>
                 <span class="listTitle lui-list__text">{{vm.title}}</span>
             </td>
 

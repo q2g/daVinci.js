@@ -145,21 +145,7 @@ class ExtensionHeaderController implements ng.IController {
             logger.error("error in calcLists", e);
         }
     }
-
-    /**
-     * manage all shortcut events on this directive
-     * @param objectShortcut element which is returned from the shortcut directive
-     */
-    shortcutHandlerExtensionHeader(objectShortcut: any): boolean {
-        switch (objectShortcut.objectShortcut.name) {
-            case "focus":
-                this.showSearchField = true;
-                this.timeout();
-                return true;
-        }
-        return false;
-
-    }
+    
 }
 
 export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
