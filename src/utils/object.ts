@@ -72,7 +72,7 @@ export class Q2gListAdapter {
     //#endregion
 
     /**
-     * init constructor q2gListAdapter 
+     * init constructor q2gListAdapter
      * @param obj object with the specific implementation for Values, Dimension, Bookmarks, ...
      * @param itemsPagingHeight number of items visible on Page
      * @param itemsCounter number of items in the whole list
@@ -91,8 +91,6 @@ export class Q2gListAdapter {
      */
     private callData(): void {
         logger.debug("callData", "");
-
-        
 
         this.obj.getDataPage(this.itemsPagingTop, this.itemsPagingHeight)
             .then((collection: Array<any>) => {

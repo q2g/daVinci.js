@@ -27,11 +27,11 @@ export interface IDataModel {
 }
 
 class ListViewController implements ng.IController {
-    
+
     public $onInit(): void {
         this.logger.debug("initial Run of ListViewController");
     }
-        
+
     //#region Variables
     element: JQuery;
     hasFocusSearchField: boolean = false;
@@ -47,7 +47,7 @@ class ListViewController implements ng.IController {
     showFocused: boolean = false;
     showScrollBar: boolean = false;
     timeout: ng.ITimeoutService;
-    overrideShortcuts: Array<IShortcutObject>
+    overrideShortcuts: Array<IShortcutObject>;
     //#endregion
 
     //#region logger
@@ -75,11 +75,11 @@ class ListViewController implements ng.IController {
         }
     }
     //#endregion
-       
+
 
     static $inject = ["$timeout", "$element"];
 
-    /** 
+    /**
      * init of List View Controller
      * @param timeout angular timeout, to maual trigger dom events
      * @param element element of the List View Controller
@@ -89,7 +89,7 @@ class ListViewController implements ng.IController {
         this.timeout = timeout;
         this.ieItemsReadable = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
     }
-    
+
     /**
      * calculates the new selected Positiion. Focus will will be set out of bounds (root div Element)
      * when the the selectet Value is less then 0 and heigher then the max value
@@ -172,7 +172,8 @@ class ListViewController implements ng.IController {
             case "pageDown":
                 try {
                     this.itemsPageTop -= this.itemsPageHeight;
-                    if (this.itemFocused >= this.itemsPageTop + this.itemsPageHeight && this.itemFocused <= this.itemsPageTop + this.itemsPageHeight * 2) {
+                    if (this.itemFocused >= this.itemsPageTop + this.itemsPageHeight && this.itemFocused
+                            <= this.itemsPageTop + this.itemsPageHeight * 2) {
                         if (this.itemFocused - this.itemsPageHeight < 0) {
                             this.itemFocused = 0;
                         } else {
@@ -184,7 +185,7 @@ class ListViewController implements ng.IController {
                 } catch (e) {
                     this.logger.error("Error in shortcutHandler pageDown", e);
                 }
-                
+
             case "enter":
                 this.callbackListviewObjects({ pos: this.itemFocused - this.itemsPageTop});
                 return true;
@@ -207,7 +208,6 @@ class ListViewController implements ng.IController {
             return false;
         }
     }
-    
 }
 
 export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
@@ -237,4 +237,4 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
             }
         };
     };
-};
+}

@@ -15,12 +15,6 @@ interface IDefinitionObject {
 }
 
 export interface IRegisterDirective {
-    /**
-    * Register a new directive with the compiler.
-    *
-    * @param name Name of the directive in camel-case (i.e. ngBind which will match as ng-bind)
-    * @param directiveFactory An injectable directive factory function.
-    */
     directive(name: string, directiveFactory: ng.Injectable<ng.IDirectiveFactory>): void;
     directive(object: { [directiveName: string]: ng.Injectable<ng.IDirectiveFactory> }): void;
     filter(name: string, filterFactoryFunction: ng.Injectable<Function>): ng.IModule;
@@ -28,7 +22,7 @@ export interface IRegisterDirective {
 }
 //#endregion
 
-//#region Logger 
+//#region Logger
 let logger = new Logging.Logger("utils");
 //#endregion
 
@@ -46,7 +40,7 @@ export class SimplifierDefinitionObject {
 
     /**
      * recorsive function to generate relevant Object Properties(ref and defaultValue)
-     * @param objectArr Array of stringified Property names 
+     * @param objectArr Array of stringified Property names
      * @param object object of which the property names where stringified
      * @param propName search string for the ref definition of properties
      */
@@ -66,7 +60,7 @@ export class SimplifierDefinitionObject {
                 }
             }
         } catch (e) {
-            console.error("error in function getObjectsRec", e)
+            console.error("error in function getObjectsRec", e);
         }
     }
 
@@ -112,7 +106,7 @@ export function templateReplacer(template: string, rootNameSpace: string) {
             return c + rootNameSpace + "-";
         }
         return b + rootNameSpace + "-";
-    })    
+    });
     return newTemplate;
 }
 
@@ -120,8 +114,8 @@ export function templateReplacer(template: string, rootNameSpace: string) {
  * check and replace additional characters
  * @param string
  */
-export function regEscaper(string) {
-    return string.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, "\\$&"); 
+export function regEscaper(string: string) {
+    return string.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, "\\$&");
 }
 
 
@@ -146,7 +140,7 @@ export function checkDirectiveIsRegistrated(
             regDirective.directive("q2g" + rootNameSpace + directiveName, factory);
         }
     } catch (e) {
-        console.error("Error in checkForExistingDirective", e)
+        console.error("Error in checkForExistingDirective", e);
     }
 }
 
@@ -170,9 +164,9 @@ export class AssistHypercube {
 
     constructor(rootCube: any) {
         this.rootCube = rootCube;
-        this.searchListObjectFor("");        
+        this.searchListObjectFor("");
     }
-    
+
     getListObjectData(string: string, qPages: EngineAPI.INxPage): Promise<any> {
 
         return new Promise((resolve, reject) => {
@@ -188,7 +182,6 @@ export class AssistHypercube {
 
     }
 
-    
     searchListObjectFor(qMatch: string): Promise<boolean> {
 
         return new Promise((resolve, reject) => {
@@ -217,9 +210,7 @@ export class AssistHypercube {
                 reject(e);
             }
         });
-
     }
-    
 }
 
 
@@ -279,7 +270,7 @@ export function checkEqualityOfArrays(array1: Array < string >, array2: Array<st
     }
 }
 
-function sort(a, b) {
+function sort(a: any, b: any) {
     if (a.id > b.id) {
         return 1;
     }

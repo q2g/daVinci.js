@@ -46,14 +46,14 @@ class ExtensionHeaderController implements ng.IController {
     private menuListRefactored: Array<ListElement>;
     private popOverList: Array<ListElement> = [];
     //#endregion
-    
+
     //#region showButtons
     private _showButtons: boolean = false;
     get showButtons(): boolean {
         return this._showButtons;
     }
     set showButtons(value: boolean) {
-        if (this.showButtons != value) {
+        if (this.showButtons !== value) {
             this._showButtons = value;
             if (!value) {
                 this.showPopoverMenu = false;
@@ -66,7 +66,7 @@ class ExtensionHeaderController implements ng.IController {
     private _menuList: Array<any>;
     get menuList(): Array<any> {
         return this._menuList;
-    };
+    }
     set menuList(value: Array<any>) {
         if (this._menuList !== value) {
             try {
@@ -76,12 +76,12 @@ class ExtensionHeaderController implements ng.IController {
                 logger.error("Error in setter of menuList");
             }
         }
-    };
+    }
     //#endregion
 
     static $inject = ["$timeout", "$element", "$scope"];
 
-    /** 
+    /**
      * init of List View Controller
      * @param element element of the List View Controller
      * @param scope scope element to get the watcher in class
@@ -93,10 +93,10 @@ class ExtensionHeaderController implements ng.IController {
         this.popOverWidth = element.width();
 
         scope.$watch(() => {
-            return this.element.width()
+            return this.element.width();
         }, () => {
             this.calcLists();
-        });        
+        });
     }
 
     /**
@@ -117,10 +117,10 @@ class ExtensionHeaderController implements ng.IController {
                 assistElement.type = x.type ? x.type : assistElement.type;
 
                 this.menuListRefactored.push(assistElement);
-            }            
+            }
         } catch (e) {
             logger.error("error in listRefactoring", e);
-        }        
+        }
     }
 
     /**
@@ -140,12 +140,11 @@ class ExtensionHeaderController implements ng.IController {
                 } else {
                     this.popOverList.push(x);
                 }
-            }            
+            }
         } catch (e) {
             logger.error("error in calcLists", e);
         }
     }
-    
 }
 
 export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
@@ -169,10 +168,11 @@ export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDire
                 title: "<",
                 shortcutSearchfield: "<",
             },
-            compile: function () {                        
-                checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, SearchBarDirectiveFactory(rootNameSpace), "SearchBar");
+            compile: function () {
+                checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
+                        SearchBarDirectiveFactory(rootNameSpace), "SearchBar");
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
             }
-        }
-    }
+        };
+    };
 }
