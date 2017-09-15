@@ -29,7 +29,7 @@ class ExtensionHeaderController implements ng.IController {
         logger.debug("initial Run of MainMenuController");
     }
 
-    //#region VARIABLES
+    //#region variables
     callbackMainMenuButton: (item: string) => void;
     maxNumberOfElements: number;
     popOverWidth: number = 0;
@@ -40,6 +40,7 @@ class ExtensionHeaderController implements ng.IController {
     textSearch: string;
     title: string;
     timeout: ng.ITimeoutService;
+    inverseDesign: boolean = false;
 
     private element: JQuery;
     private displayList: Array<ListElement> = [];
@@ -168,6 +169,7 @@ export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDire
                 showSearchField: "=",
                 title: "<",
                 shortcutSearchfield: "<",
+                inverseDesign: "<?"
             },
             compile: function () {                        
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, SearchBarDirectiveFactory(rootNameSpace), "SearchBar");

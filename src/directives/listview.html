@@ -12,8 +12,8 @@
              ]"
          shortcut-override="vm.overrideShortcuts"
          shortcut-action="vm.shortcutHandler(objectShortcut)">
-        <ul>
-            <li class="{{item.status | qstatusfilter}}"
+        <ul class="lui-list">
+            <li class=" {{item.status | qstatusfilter}}"
                 style="height: {{vm.itemHeight + 'px'}};"
                 tabindex="0"
                 role="application"
@@ -23,8 +23,8 @@
                 ng-click="vm.callbackListviewObjects({pos: $index, event:$event})"
                 ng-keydown="vm.itemKeypressed($event, $index)"                
                 >
-                {{item.title}}
-            </li>
+                <span class="lui-list__text">{{item.title}}</span>
+</li>
         </ul>
     </div>
 
