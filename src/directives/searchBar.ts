@@ -18,6 +18,7 @@ class SearchBarController implements ng.IController {
     //#region Variables
     placeholder: string;
     textSearch: string = "";
+    inverseDesign: boolean;
     //#endregion
     
     static $inject = ["$element", "$scope"];
@@ -52,7 +53,8 @@ export function SearchBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveF
             scope: {},
             bindToController: {
                 textSearch: "=",
-                placeholder: "<"
+                placeholder: "<",
+                inverseDesign: "<?"
             },
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");

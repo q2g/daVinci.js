@@ -13,7 +13,7 @@
          shortcut-override="vm.overrideShortcuts"
          shortcut-action="vm.shortcutHandler(objectShortcut)">
         <ul class="lui-list">
-            <li class=" {{item.status | qstatusfilter}}"
+            <li class="listDesignInverse {{item.status | qstatusfilter}}"
                 style="height: {{vm.itemHeight + 'px'}};"
                 tabindex="0"
                 role="application"
@@ -21,7 +21,7 @@
                 ng-repeat="item in vm.items track by $index"                
                 ng-class="{ 'list-element-focussed': vm.hasFocus($index) && vm.showFocused }"
                 ng-click="vm.callbackListviewObjects({pos: $index, event:$event})"
-                ng-keydown="vm.itemKeypressed($event, $index)"                
+                ng-keydown="vm.itemKeypressed($event, $index)"
                 >
                 <span class="lui-list__text">{{item.title}}</span>
 </li>

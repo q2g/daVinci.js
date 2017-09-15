@@ -40,7 +40,7 @@ class ExtensionHeaderController implements ng.IController {
     textSearch: string;
     title: string;
     timeout: ng.ITimeoutService;
-    inverseDesign: boolean = false;
+    inverseDesign: boolean;
 
     private element: JQuery;
     private displayList: Array<ListElement> = [];
