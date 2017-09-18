@@ -1,6 +1,5 @@
 <div class="q2glistview"
       ng-mouseover="vm.showScrollBar = true" ng-mouseleave="vm.showScrollBar = false">
-
     <div q2g-shortcut
          shortcut="[
                 {name:'up', shortcut:'40'},
@@ -12,8 +11,7 @@
              ]"
          shortcut-override="vm.overrideShortcuts"
          shortcut-action="vm.shortcutHandler(objectShortcut)">
-        <ul class="lui-list"
-            ng-class="{'listDesignInverse': vm.inverseDesign, 'listDesign': !vm.inverseDesign,}">
+        <ul class="lui-list list-theme-{{vm.theme}}">
             <li class="{{item.status | qstatusfilter}}"
                 style="height: {{vm.itemHeight + 'px'}};"
                 tabindex="0"
@@ -42,7 +40,8 @@
                     items-page-top="vm.itemsPageTop" 
                     items-page-height="vm.itemsPageHeight" 
                     vertical="0"
-                    show="vm.showScrollBar">
+                    show="vm.showScrollBar"
+                    theme="vm.theme">
     </q2g-scroll-bar>
 </div>
 

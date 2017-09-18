@@ -48,6 +48,21 @@ class StatusTextController implements ng.IController {
     }
     //#endregion
 
+    //#region theme
+    private _theme: string;
+    get theme(): string {
+        if (this._theme) {
+            return this._theme;
+        }
+        return "default";
+    }
+    set theme(value: string) {
+        if (value !== this._theme) {
+            this._theme = value;
+        }
+    }
+    //#endregion
+
     /**
      * init for the Status Text Controller
      * @param timeout angular timeout, to maual trigger dom events
@@ -86,7 +101,8 @@ export function StatusTextDirectiveFactory(rootNameSpace: string): ng.IDirective
             scope: {},
             bindToController: {
                 statustext: "<",
-                statustime: "<?"
+                statustime: "<?",
+                theme: "<?"
             }
         };
     };

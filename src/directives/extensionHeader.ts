@@ -40,14 +40,29 @@ class ExtensionHeaderController implements ng.IController {
     textSearch: string;
     title: string;
     timeout: ng.ITimeoutService;
-    inverseDesign: boolean;
 
     private element: JQuery;
     private displayList: Array<ListElement> = [];
     private menuListRefactored: Array<ListElement>;
     private popOverList: Array<ListElement> = [];
     //#endregion
-    
+
+    //#region theme
+    private _theme: string;
+    get theme(): string {
+        if (this._theme) {
+            return this._theme;
+        }
+        return "default";
+    }
+    set theme(value: string) {
+        if (value !== this._theme) {
+            logger.info("THEME", value);
+            this._theme = value;
+        }
+    }
+    //#endregion
+
     //#region showButtons
     private _showButtons: boolean = false;
     get showButtons(): boolean {
@@ -169,7 +184,7 @@ export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDire
                 showSearchField: "=",
                 title: "<",
                 shortcutSearchfield: "<",
-                inverseDesign: "<?"
+                theme: "<?"
             },
             compile: function () {                        
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, SearchBarDirectiveFactory(rootNameSpace), "SearchBar");

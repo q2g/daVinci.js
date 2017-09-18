@@ -243,6 +243,21 @@ class ScrollBarController implements ng.IController {
     }
     //#endregion
 
+    //#region theme
+    private _theme: string;
+    get theme(): string {
+        if (this._theme) {
+            return this._theme;
+        }
+        return "default";
+    }
+    set theme(value: string) {
+        if (value !== this._theme) {
+            this._theme = value;
+        }
+    }
+    //#endregion
+
     /**
      * init of the Scroll Bar controller
      * @param $element element in which the ScrollbarController is placed
@@ -351,7 +366,8 @@ export function ScrollBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveF
                 itemsPageTop: "=",
                 itemsPageHeight: "<",
                 vertical: "<",
-                show: "<"
+                show: "<",
+                theme: "<?"
             }
         };
     };

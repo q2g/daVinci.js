@@ -47,7 +47,6 @@ class ListViewController implements ng.IController {
     showScrollBar: boolean = false;
     timeout: ng.ITimeoutService;
     overrideShortcuts: Array<IShortcutObject>;
-    inverseDesign: boolean;
     //#endregion
 
     //#region logger
@@ -84,6 +83,21 @@ class ListViewController implements ng.IController {
     set items(value: IDataModelItem[]) {
         this._items = value;
         this.logger.info("ITEMS", this);
+    }
+    //#endregion
+
+    //#region theme
+    private _theme: string;
+    get theme(): string {
+        if (this._theme) {
+            return this._theme;
+        }
+        return "default";
+    }
+    set theme(value: string) {
+        if (value !== this._theme) {
+            this._theme = value;
+        }
     }
     //#endregion
 
@@ -241,7 +255,7 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 showFocused: "<",
                 callbackListviewObjects: "&",
                 overrideShortcuts: "<?",
-                inverseDesign: "<?"
+                theme: "<?"
             },
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
