@@ -14,6 +14,8 @@ export function qStatusFilter() {
                 return "optional";
             case "X":
                 return "excluded";
+            case "XS":
+                return "selectedExcluded";
         }
         return "option";
     };
