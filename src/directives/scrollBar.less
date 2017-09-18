@@ -23,7 +23,7 @@
     right: 0;
     top: 0px;
 
-    
+
     .fadeIn {
         animation-name: fadeIn;
         animation-duration: 1s;
@@ -33,9 +33,9 @@
     .fadeOut {
         opacity: 0;
         animation-name: fadeOut;
-        animation-duration: 2s;        
+        animation-duration: 2s;
     }
-	
+
     .scrollBarContainer {
         top: 0px;
         right: 0;
@@ -45,17 +45,24 @@
         z-index: 2;
         overflow: visible;
 
-        
+
 
         .scrollBarTracker {
             top: 0;
             height: 12px;
             width: 11px;
             border-radius: 10px;
-            background: rgba(50, 50, 50, 0.3);
             position: absolute;
             z-index: 3;
             overflow: visible;
+        }
+
+        .theme-default {
+            background: rgba(50, 50, 50, 0.3);
+        }
+
+        .theme-inverse {
+            background: rgba(255, 255, 255, 0.4);
         }
     }
 }

@@ -1,6 +1,5 @@
 <div class="q2glistview"
       ng-mouseover="vm.showScrollBar = true" ng-mouseleave="vm.showScrollBar = false">
-
     <div q2g-shortcut
          shortcut="[
                 {name:'up', shortcut:'40'},
@@ -12,19 +11,19 @@
              ]"
          shortcut-override="vm.overrideShortcuts"
          shortcut-action="vm.shortcutHandler(objectShortcut)">
-        <ul>
+        <ul class="lui-list list-theme-{{vm.theme}}">
             <li class="{{item.status | qstatusfilter}}"
                 style="height: {{vm.itemHeight + 'px'}};"
                 tabindex="0"
                 role="application"
                 aria-hidden="{{vm.ieItemsReadable}}"
                 ng-repeat="item in vm.items track by $index"                
-                ng-class="{ 'list-element-focussed': vm.hasFocus($index) && vm.showFocused }"
+                ng-class="{'list-element-focussed': vm.hasFocus($index) && vm.showFocused}"
                 ng-click="vm.callbackListviewObjects({pos: $index, event:$event})"
-                ng-keydown="vm.itemKeypressed($event, $index)"                
+                ng-keydown="vm.itemKeypressed($event, $index)"
                 >
-                {{item.title}}
-            </li>
+                <span class="lui-list__text">{{item.title}}</span>
+</li>
         </ul>
     </div>
 
@@ -41,7 +40,8 @@
                     items-page-top="vm.itemsPageTop" 
                     items-page-height="vm.itemsPageHeight" 
                     vertical="0"
-                    show="vm.showScrollBar">
+                    show="vm.showScrollBar"
+                    theme="vm.theme">
     </q2g-scroll-bar>
 </div>
 

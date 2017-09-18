@@ -44,7 +44,7 @@
 
         /**
          * Log a Message with a certain loglevel to the browser console if the global filter allows that seetin
-         * 
+         *
          * @param loglevel the minimum loglevelt (e.g. trace, debug, info, warn, error, fatal, off)
          * @param text the message text
          * @param obj a object to log to the console
@@ -84,7 +84,7 @@
                     default:
                         console.trace(message, arrObj);
                 }
-            };
+            }
         }
 
         trace(text: string, ...arrObj: any[]): void {

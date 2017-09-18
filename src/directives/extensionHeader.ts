@@ -29,7 +29,7 @@ class ExtensionHeaderController implements ng.IController {
         logger.debug("initial Run of MainMenuController");
     }
 
-    //#region VARIABLES
+    //#region variables
     callbackMainMenuButton: (item: string) => void;
     maxNumberOfElements: number;
     popOverWidth: number = 0;
@@ -46,7 +46,23 @@ class ExtensionHeaderController implements ng.IController {
     private menuListRefactored: Array<ListElement>;
     private popOverList: Array<ListElement> = [];
     //#endregion
-    
+
+    //#region theme
+    private _theme: string;
+    get theme(): string {
+        if (this._theme) {
+            return this._theme;
+        }
+        return "default";
+    }
+    set theme(value: string) {
+        if (value !== this._theme) {
+            logger.info("THEME", value);
+            this._theme = value;
+        }
+    }
+    //#endregion
+
     //#region showButtons
     private _showButtons: boolean = false;
     get showButtons(): boolean {
@@ -168,6 +184,7 @@ export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDire
                 showSearchField: "=",
                 title: "<",
                 shortcutSearchfield: "<",
+                theme: "<?"
             },
             compile: function () {                        
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, SearchBarDirectiveFactory(rootNameSpace), "SearchBar");

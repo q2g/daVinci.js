@@ -5,14 +5,15 @@
             <!-- INPUT FIELD -->
             <td>
                 <q2g-search-bar text-search="vm.textSearch"
-                                placeholder="'search '+vm.title"
+                                placeholder="'search '+vm.title"                                
+                                theme="vm.theme"
                                 ng-show="vm.showSearchField">
                 </q2g-search-bar>
             </td>
 
             <!-- SEARCH ICON AND TITLE -->
             <td ng-show="!vm.showSearchField"
-                class="lui-list__header"
+                class="lui-list__header header-theme-{{vm.theme}}"
                 ng-click="vm.showButtons = true">
                 <span class="searchObject lui-icon lui-icon--search"
                       ng-click="vm.showSearchField = true"
@@ -27,7 +28,7 @@
                     <tr>
                         <td class="buttonGroup normalButton"
                             ng-if="vm.popOverList.length>0">
-                            <button class="lui-fade-button"
+                            <button class="lui-fade-button button-theme-{{vm.theme}}"
                                     title="Selection menu"
                                     ng-click="vm.showPopoverMenu = !vm.showPopoverMenu;">
                                 <span class="lui-button__icon lui-icon lui-icon--more"></span>
@@ -39,7 +40,7 @@
                             <div ng-class="{'separatorV': item.hasSeparator}"
                                  ng-click="item.isEnabled || vm.callbackMainMenuButton({item: item.name})"                                        
                                  ng-attr-title="{{item.name}}">
-                                <button ng-class="{'lui-fade-button': item.type.length===0, 'lui-button': item.type.length>0, 'lui-disabled': item.isEnabled}"
+                                <button ng-class="{'lui-fade-button': item.type.length===0, 'lui-button': item.type.length>0, 'lui-disabled': item.isEnabled, 'button-theme-{{vm.theme}}': (item.type.length===0), 'button-disabled-theme-inverse': (item.isEnabled && vm.theme === 'inverse')}"
                                         class="lui-button--{{item.type}}">
                                     <span class="lui-button__icon lui-icon lui-icon--{{item.icon}}"></span>
                                 </button>

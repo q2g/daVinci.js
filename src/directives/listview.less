@@ -6,53 +6,106 @@
     ul {
         width: 100%;
         overflow: hidden;
+        padding: 0px;
 
         li {
             box-sizing: border-box;
             -moz-box-sizing: border-box;
             -webkit-box-sizing: border-box;
-            border: 1.5px solid #ffffff;
+            border: 1.5px solid rgba(255, 255, 255, .0);
             padding-bottom: 0.5px;
             border-bottom: 1px solid #d9d9d9;
             padding-left: 5px;
             vertical-align: central;
-            display: -webkit-box; 
+            display: -webkit-box;
             -webkit-box-align: center;
-            height: 32px;            
+            height: 30px;
+            word-wrap: normal;
+            white-space: nowrap;
+            overflow: hidden;
+            background-color: #ffffff;
         }
-                
+    }
+
+    .list-theme-default {
+
         .selected {
             background-color: #52CC52;
             color: #ffffff;
-            border-color: #52CC52;            
+            border-color: #52CC52;
             border-bottom: 1px solid #ffffff;
         }
 
         .alternative {
             background-color: #dddddd;
             color: #595959;
-            border-color: #dddddd;            
+            border-color: #dddddd;
             border-bottom: 1px solid #ffffff;
         }
 
         .optional {
             background-color: #ffffff;
-            color: #595959;            
-            border-color: #ffffff;            
+            color: #595959;
+            border-color: #ffffff;
             border-bottom: 1px solid #d9d9d9;
         }
 
         .excluded {
             background-color: #A9A9A9;
-            color: #ffffff;            
-            border-color: #A9A9A9;            
+            color: #ffffff;
+            border-color: #A9A9A9;
             border-bottom: 1px solid #ffffff;
         }
 
-        .list-element-focussed {
-            padding-bottom: 0px;
-            border: 1.5px solid black;
-        }                
+        .selectedExcluded {
+            background-color: #A9A9A9;
+            color: #ffffff;
+            border-color: #A9A9A9;
+            border-bottom: 1px solid #ffffff;
+        }
+    }
+
+    .list-element-focussed {
+        padding-bottom: 0px;
+        border: 1.5px solid black;
+    }
+
+    .list-theme-inverse {
+
+        .selected {
+            background-color: #44751d;
+            color: #ffffff;
+            border-color: #44751d;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        .alternative {
+            background-color: #404040;
+            color: #ffffff;
+            border-color: #404040;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        .optional {
+            background-color: #595959;
+            color: #ffffff;
+            border-color: #595959;
+            border-bottom: 1px solid #d9d9d9;
+        }
+
+        .excluded {
+            background-color: #333333;
+            color: #ffffff;
+            border-color: #333333;
+            border-bottom: 1px solid #ffffff;
+        }
+
+        .selectedExcluded {
+            background-color: #333333;
+            color: #ffffff;
+            border-color: #333333;
+            border-bottom: 1px solid #ffffff;
+        }
     }
 
     .invisibleOutput {

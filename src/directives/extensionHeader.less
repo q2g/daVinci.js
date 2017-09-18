@@ -1,6 +1,7 @@
 ﻿.q2gExtensionHeader {
 
     .header {
+        width: 100%;
 
         tr, td {
             height: 42px;
@@ -10,7 +11,7 @@
         .searchObject {
             font-size: 12px;
             text-align: center;
-            color: #595959;
+            /*color: #595959;*/
             width: 22px;
             opacity: 0.6;
             margin: auto;
@@ -19,9 +20,9 @@
                 padding: 0px;
             }
         }
-        
-        .menutable{
-            float:right;
+
+        .menutable {
+            float: right;
             width: 1px;
 
             .buttonGroup {
@@ -39,6 +40,18 @@
                 width: 46px !important
             }
         }
+
+        .header-theme-inverse {
+            color: #ffffff
+        }
+    }
+
+    .button-theme-inverse {
+        color: #FFFFFF;
+    }
+
+    .button-disabled-theme-inverse {
+        opacity: 0.5;
     }
 
     .popOverList {
@@ -50,7 +63,7 @@
         -webkit-box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3);
         -moz-box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3);
         box-shadow: 0px 10px 10px -5px rgba(0, 0, 0, 0.3);
-        
+
 
         .separatorH {
             border-bottom: 1px solid black !important;

@@ -28,6 +28,22 @@ class IdentifierController implements ng.IController {
         return this._logger;
     }
     //#endregion
+
+    //#region theme
+    private _theme: string;
+    get theme(): string {
+        if (this._theme) {
+            return this._theme;
+        }
+        return "default";
+    }
+    set theme(value: string) {
+        if (value !== this._theme) {
+            logger.info("THEME", value);
+            this._theme = value;
+        }
+    }
+    //#endregion
     
     /**
      * init of AkquinetIdentifierController
@@ -48,7 +64,8 @@ export function IdentifierDirectiveFactory(rootNameSpace: string): ng.IDirective
             controllerAs: "vm",
             scope: {},
             bindToController: {
-                show: "<"
+                show: "<",
+                theme: "<?"
             }
         };
     };
