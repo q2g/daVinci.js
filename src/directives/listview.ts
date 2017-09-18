@@ -37,7 +37,6 @@ class ListViewController implements ng.IController {
     hasFocusSearchField: boolean = false;
     ieItemsReadable: boolean = false;
     itemHeight: number;
-    items: IDataModelItem[];
     itemsCount: number = 0;
     itemsPageHeight: number;
     itemsPageTop: number;
@@ -47,7 +46,8 @@ class ListViewController implements ng.IController {
     showFocused: boolean = false;
     showScrollBar: boolean = false;
     timeout: ng.ITimeoutService;
-    overrideShortcuts: Array<IShortcutObject>
+    overrideShortcuts: Array<IShortcutObject>;
+    inverseDesign: boolean;
     //#endregion
 
     //#region logger
@@ -75,7 +75,18 @@ class ListViewController implements ng.IController {
         }
     }
     //#endregion
-       
+
+    //#region items
+    private _items: IDataModelItem[];
+    get items(): IDataModelItem[] {
+        return this._items;
+    }
+    set items(value: IDataModelItem[]) {
+        this._items = value;
+        this.logger.info("ITEMS", this);
+    }
+    //#endregion
+
 
     static $inject = ["$timeout", "$element"];
 
@@ -229,7 +240,8 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 itemFocused: "=",
                 showFocused: "<",
                 callbackListviewObjects: "&",
-                overrideShortcuts: "<?"
+                overrideShortcuts: "<?",
+                inverseDesign: "<?"
             },
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
