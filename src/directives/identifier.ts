@@ -39,7 +39,6 @@ class IdentifierController implements ng.IController {
     }
     set theme(value: string) {
         if (value !== this._theme) {
-            logger.info("THEME", value);
             this._theme = value;
         }
     }

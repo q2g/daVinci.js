@@ -21,6 +21,7 @@ export class Q2gListAdapter {
     //#region Variables
     obj: Iq2gIListObject;
     itemsCounter: number;
+    type: string
     //#endregion
 
     //#region collection
@@ -77,8 +78,9 @@ export class Q2gListAdapter {
      * @param itemsPagingHeight number of items visible on Page
      * @param itemsCounter number of items in the whole list
      */
-    constructor(obj: Iq2gIListObject, itemsPagingHeight: number, itemsCounter: number) {
+    constructor(obj: Iq2gIListObject, itemsPagingHeight: number, itemsCounter: number, type: string) {
         this.obj = obj;
+        this.type = type;
         this.itemsPagingHeight = itemsPagingHeight;
         this.itemsCounter = itemsCounter;
         this.itemsPagingTop = 0;
@@ -90,14 +92,11 @@ export class Q2gListAdapter {
      * writes the new data page in the collection
      */
     private callData(): void {
-        logger.debug("callData", "");
-
-        
+        logger.info("callData", "");
 
         this.obj.getDataPage(this.itemsPagingTop, this.itemsPagingHeight)
             .then((collection: Array<any>) => {
-
-                if (!this._collection || !checkEqualityOfArrays(this._collection, collection)) {
+                if (!this._collection || !checkEqualityOfArrays(this._collection, collection, (this.type === "qlik"? true: false))) {
                     let counter: number = 0;
                     for (let x of collection) {
                         if (counter >= this.collection.length || JSON.stringify(x) !== JSON.stringify(this._collection[counter])) {
@@ -120,6 +119,7 @@ export class Q2gListAdapter {
      * @param itemsCounter
      */
     updateList(obj: Iq2gIListObject, itemsPagingHeight: number, itemsCounter: number) {
+        logger.info("UPDATELIST");
         this.obj = obj;
         this.itemsPagingHeight = itemsPagingHeight;
         this.itemsCounter = itemsCounter;
@@ -169,7 +169,7 @@ export class Q2gDimensionObject extends Event implements Iq2gIListObject {
                     for (var j: number = 0; j < res.length; j++) {
                         let matrix = res[j];
                         collection.push({
-                            status: matrix.qStateCounts.qSelected,
+                            status: matrix.qState,
                             id: matrix.cId,
                             defs: matrix.qGroupFieldDefs,
                             title: matrix.qFallbackTitle,

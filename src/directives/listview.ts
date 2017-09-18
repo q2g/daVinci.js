@@ -82,7 +82,6 @@ class ListViewController implements ng.IController {
     }
     set items(value: IDataModelItem[]) {
         this._items = value;
-        this.logger.info("ITEMS", this);
     }
     //#endregion
 

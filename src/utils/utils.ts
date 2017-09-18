@@ -177,7 +177,8 @@ export class AssistHypercube {
 
         return new Promise((resolve, reject) => {
             try {
-                resolve(this.calcCube.slice(qPages[0].qTop, qPages[0].qTop + qPages[0].qHeight));
+                let val = this.calcCube.slice(qPages[0].qTop, qPages[0].qTop + qPages[0].qHeight);
+                resolve(this.calculateDimensionCubeElement(val));
             } catch (e) {
                 console.error("Error in getListObjectData", e);
                 reject(e);
@@ -187,8 +188,7 @@ export class AssistHypercube {
 
 
     }
-
-    
+        
     searchListObjectFor(qMatch: string): Promise<boolean> {
 
         return new Promise((resolve, reject) => {
@@ -219,7 +219,24 @@ export class AssistHypercube {
         });
 
     }
-    
+
+    calculateDimensionCubeElement(elements: any) {
+        //logger.info("element", elements);
+
+        let resElement: Array<any> = [];
+
+        for (let element of elements) {
+            resElement.push({
+                qState: "O",
+                cId: element.cId,
+                qGroupFieldDefs: element.qGroupFieldDefs,
+                qFallbackTitle: element.qFallbackTitle
+            })
+        }
+
+        //logger.info("resElement", resElement);
+        return resElement
+    }
 }
 
 
@@ -256,7 +273,7 @@ export function getEnigma(scope: IVMScope<any>): EngineAPI.IGenericObject {
  * @param array1
  * @param array2
  */
-export function checkEqualityOfArrays(array1: Array < string >, array2: Array<string>): boolean {
+export function checkEqualityOfArrays(array1: Array <any>, array2: Array<any>, checkOnlyId: boolean): boolean {
     logger.debug("Function checkEqualityOfArrays", "");
 
     try {
@@ -266,8 +283,14 @@ export function checkEqualityOfArrays(array1: Array < string >, array2: Array<st
 
         if (array1 && array2) {
             for (var i: number = 0; i < array1.length; i++) {
+                //logger.info("intense check - 1", JSON.stringify(array1[i]));
+                //logger.info("intense check - 2", JSON.stringify(array2[i]));
 
-                if (JSON.stringify(array1[i]).indexOf(JSON.stringify(array2[i])) === -1) {
+                if (checkOnlyId && array1[i].id.indexOf(array2[i].id) === -1) {
+                    return false;
+                }
+
+                if (!checkOnlyId && JSON.stringify(array1[i]).indexOf(JSON.stringify(array2[i])) === -1) {
                     return false;
                 }
             }
