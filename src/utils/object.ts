@@ -96,8 +96,7 @@ export class Q2gListAdapter {
 
         this.obj.getDataPage(this.itemsPagingTop, this.itemsPagingHeight)
             .then((collection: Array<any>) => {
-
-                if (!this._collection || !checkEqualityOfArrays(this._collection, collection, (this.type === "qlik"? true: false))) {
+                if (!this._collection || !checkEqualityOfArrays(this._collection, collection, (this.type === "qlik" ? true : false))) {
                     let counter: number = 0;
                     for (let x of collection) {
                         if (counter >= this.collection.length || JSON.stringify(x) !== JSON.stringify(this._collection[counter])) {
@@ -120,7 +119,6 @@ export class Q2gListAdapter {
      * @param itemsCounter
      */
     updateList(obj: Iq2gIListObject, itemsPagingHeight: number, itemsCounter: number) {
-        logger.info("UPDATELIST");
         this.obj = obj;
         this.itemsPagingHeight = itemsPagingHeight;
         this.itemsCounter = itemsCounter;

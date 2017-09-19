@@ -218,7 +218,6 @@ export class AssistHypercube {
         });
     }
     calculateDimensionCubeElement(elements: any) {
-        //logger.info("element", elements);
 
         let resElement: Array<any> = [];
 
@@ -230,8 +229,6 @@ export class AssistHypercube {
                 qFallbackTitle: element.qFallbackTitle
             })
         }
-
-        //logger.info("resElement", resElement);
         return resElement
     }
 }
@@ -279,14 +276,11 @@ export function checkEqualityOfArrays(array1: Array <any>, array2: Array<any>, c
 
         if (array1 && array2) {
             for (var i: number = 0; i < array1.length; i++) {
-                //logger.info("intense check - 1", JSON.stringify(array1[i]));
-                //logger.info("intense check - 2", JSON.stringify(array2[i]));
-
-                if (checkOnlyId && array1[i].id.indexOf(array2[i].id) === -1) {
+                if (!checkOnlyId && array1[i].id !== array2[i].id) {
                     return false;
                 }
 
-                if (!checkOnlyId && JSON.stringify(array1[i]).indexOf(JSON.stringify(array2[i])) === -1) {
+                if (checkOnlyId && JSON.stringify(array1[i]).indexOf(JSON.stringify(array2[i])) === -1) {
                     return false;
                 }
             }
@@ -297,6 +291,7 @@ export function checkEqualityOfArrays(array1: Array <any>, array2: Array<any>, c
         return true;
     }
 }
+
 
 function sort(a: any, b: any) {
     if (a.id > b.id) {
