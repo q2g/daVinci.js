@@ -68,7 +68,7 @@ class ExtensionHeaderController implements ng.IController {
         return this._showButtons;
     }
     set showButtons(value: boolean) {
-        if (this.showButtons != value) {
+        if (this.showButtons !== value) {
             this._showButtons = value;
             if (!value) {
                 this.showPopoverMenu = false;
@@ -108,7 +108,7 @@ class ExtensionHeaderController implements ng.IController {
         this.popOverWidth = element.width();
 
         scope.$watch(() => {
-            return this.element.width()
+            return this.element.width();
         }, () => {
             this.calcLists();
         });        
@@ -160,7 +160,6 @@ class ExtensionHeaderController implements ng.IController {
             logger.error("error in calcLists", e);
         }
     }
-    
 }
 
 export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
@@ -186,9 +185,10 @@ export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDire
                 theme: "<?"
             },
             compile: function () {                        
-                checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, SearchBarDirectiveFactory(rootNameSpace), "SearchBar");
+                checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
+                        SearchBarDirectiveFactory(rootNameSpace), "SearchBar");
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
             }
-        }
-    }
+        };
+    };
 }

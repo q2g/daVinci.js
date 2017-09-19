@@ -66,7 +66,7 @@ export class SimplifierDefinitionObject {
                 }
             }
         } catch (e) {
-            console.error("error in function getObjectsRec", e)
+            console.error("error in function getObjectsRec", e);
         }
     }
 
@@ -112,7 +112,7 @@ export function templateReplacer(template: string, rootNameSpace: string) {
             return c + rootNameSpace + "-";
         }
         return b + rootNameSpace + "-";
-    })    
+    });
     return newTemplate;
 }
 
@@ -120,7 +120,7 @@ export function templateReplacer(template: string, rootNameSpace: string) {
  * check and replace additional characters
  * @param string
  */
-export function regEscaper(string) {
+export function regEscaper(string: string) {
     return string.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, "\\$&"); 
 }
 
@@ -146,7 +146,7 @@ export function checkDirectiveIsRegistrated(
             regDirective.directive("q2g" + rootNameSpace + directiveName, factory);
         }
     } catch (e) {
-        console.error("Error in checkForExistingDirective", e)
+        console.error("Error in checkForExistingDirective", e);
     }
 }
 
@@ -188,7 +188,6 @@ export class AssistHypercube {
 
 
     }
-        
     searchListObjectFor(qMatch: string): Promise<boolean> {
 
         return new Promise((resolve, reject) => {
@@ -217,9 +216,7 @@ export class AssistHypercube {
                 reject(e);
             }
         });
-
     }
-
     calculateDimensionCubeElement(elements: any) {
         //logger.info("element", elements);
 
@@ -238,7 +235,6 @@ export class AssistHypercube {
         return resElement
     }
 }
-
 
 /**
  * calculates the number of Visible Rows
@@ -302,7 +298,7 @@ export function checkEqualityOfArrays(array1: Array <any>, array2: Array<any>, c
     }
 }
 
-function sort(a, b) {
+function sort(a: any, b: any) {
     if (a.id > b.id) {
         return 1;
     }

@@ -92,10 +92,11 @@ export class Q2gListAdapter {
      * writes the new data page in the collection
      */
     private callData(): void {
-        logger.info("callData", "");
+        logger.debug("callData", "");
 
         this.obj.getDataPage(this.itemsPagingTop, this.itemsPagingHeight)
             .then((collection: Array<any>) => {
+
                 if (!this._collection || !checkEqualityOfArrays(this._collection, collection, (this.type === "qlik"? true: false))) {
                     let counter: number = 0;
                     for (let x of collection) {
