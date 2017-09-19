@@ -83,13 +83,17 @@ class ExtensionHeaderController implements ng.IController {
         return this._menuList;
     };
     set menuList(value: Array<any>) {
-        if (this._menuList !== value) {
-            try {
-                this._menuList = value;
-                this.listRefactoring(value);
-            } catch (e) {
-                logger.error("Error in setter of menuList");
+        logger.debug("menuList change", value);
+        try {
+            // workaround
+            if (typeof value === "string") {
+                value = JSON.parse(value);
             }
+            // end workaround
+            this._menuList = value;
+            this.listRefactoring(value);
+        } catch (e) {
+            logger.error("Error in setter of menuList");
         }
     };
     //#endregion
@@ -132,7 +136,12 @@ class ExtensionHeaderController implements ng.IController {
                 assistElement.type = x.type ? x.type : assistElement.type;
 
                 this.menuListRefactored.push(assistElement);
-            }            
+            }
+
+            if (this.element) {
+                this.calcLists();
+            }
+            
         } catch (e) {
             logger.error("error in listRefactoring", e);
         }        
@@ -146,7 +155,6 @@ class ExtensionHeaderController implements ng.IController {
         let counter: number = 0;
         this.displayList = [];
         this.popOverList = [];
-
         try {
             for (let x of this.menuListRefactored) {
                 counter++;
