@@ -56,7 +56,7 @@ class ListViewController implements ng.IController {
             try {
                 this._logger = new Logging.Logger("ListViewController");
             } catch (e) {
-                console.error("Error in initialising Logger", e);
+                this.logger.error("Error in initialising Logger", e);
             }
         }
         return this._logger;

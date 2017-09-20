@@ -60,7 +60,7 @@ export class SimplifierDefinitionObject {
                 }
             }
         } catch (e) {
-            console.error("error in function getObjectsRec", e);
+            logger.error("error in function getObjectsRec", e);
         }
     }
 
@@ -90,7 +90,7 @@ export class SimplifierDefinitionObject {
                 }
             }
         } catch (e) {
-            console.error("error in function getPropertyValue", e);
+            logger.error("error in function getPropertyValue", e);
         }
     }
 }
@@ -140,7 +140,7 @@ export function checkDirectiveIsRegistrated(
             regDirective.directive("q2g" + rootNameSpace + directiveName, factory);
         }
     } catch (e) {
-        console.error("Error in checkForExistingDirective", e);
+        logger.error("Error in checkForExistingDirective", e);
     }
 }
 
@@ -174,7 +174,7 @@ export class AssistHypercube {
                 let val = this.calcCube.slice(qPages[0].qTop, qPages[0].qTop + qPages[0].qHeight);
                 resolve(this.calculateDimensionCubeElement(val));
             } catch (e) {
-                console.error("Error in getListObjectData", e);
+                logger.error("Error in getListObjectData", e);
                 reject(e);
             }
         });
@@ -206,7 +206,7 @@ export class AssistHypercube {
 
                 resolve(true);
             } catch (e) {
-                console.error("Error in seachListObjectData", e);
+                logger.error("Error in seachListObjectData", e);
                 reject(e);
             }
         });
