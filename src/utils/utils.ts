@@ -66,7 +66,7 @@ export class SimplifierDefinitionObject {
                 }
             }
         } catch (e) {
-            console.error("error in function getObjectsRec", e)
+            console.error("error in function getObjectsRec", e);
         }
     }
 
@@ -112,7 +112,7 @@ export function templateReplacer(template: string, rootNameSpace: string) {
             return c + rootNameSpace + "-";
         }
         return b + rootNameSpace + "-";
-    })    
+    });
     return newTemplate;
 }
 
@@ -120,7 +120,7 @@ export function templateReplacer(template: string, rootNameSpace: string) {
  * check and replace additional characters
  * @param string
  */
-export function regEscaper(string) {
+export function regEscaper(string: string) {
     return string.replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, "\\$&"); 
 }
 
@@ -146,7 +146,7 @@ export function checkDirectiveIsRegistrated(
             regDirective.directive("q2g" + rootNameSpace + directiveName, factory);
         }
     } catch (e) {
-        console.error("Error in checkForExistingDirective", e)
+        console.error("Error in checkForExistingDirective", e);
     }
 }
 
@@ -177,7 +177,8 @@ export class AssistHypercube {
 
         return new Promise((resolve, reject) => {
             try {
-                resolve(this.calcCube.slice(qPages[0].qTop, qPages[0].qTop + qPages[0].qHeight));
+                let val = this.calcCube.slice(qPages[0].qTop, qPages[0].qTop + qPages[0].qHeight);
+                resolve(this.calculateDimensionCubeElement(val));
             } catch (e) {
                 console.error("Error in getListObjectData", e);
                 reject(e);
@@ -187,8 +188,6 @@ export class AssistHypercube {
 
 
     }
-
-    
     searchListObjectFor(qMatch: string): Promise<boolean> {
 
         return new Promise((resolve, reject) => {
@@ -217,11 +216,22 @@ export class AssistHypercube {
                 reject(e);
             }
         });
-
     }
-    
-}
+    calculateDimensionCubeElement(elements: any) {
 
+        let resElement: Array<any> = [];
+
+        for (let element of elements) {
+            resElement.push({
+                qState: "O",
+                cId: element.cId,
+                qGroupFieldDefs: element.qGroupFieldDefs,
+                qFallbackTitle: element.qFallbackTitle
+            })
+        }
+        return resElement
+    }
+}
 
 /**
  * calculates the number of Visible Rows
@@ -256,7 +266,7 @@ export function getEnigma(scope: IVMScope<any>): EngineAPI.IGenericObject {
  * @param array1
  * @param array2
  */
-export function checkEqualityOfArrays(array1: Array < string >, array2: Array<string>): boolean {
+export function checkEqualityOfArrays(array1: Array <any>, array2: Array<any>, checkOnlyId: boolean): boolean {
     logger.debug("Function checkEqualityOfArrays", "");
 
     try {
@@ -266,8 +276,11 @@ export function checkEqualityOfArrays(array1: Array < string >, array2: Array<st
 
         if (array1 && array2) {
             for (var i: number = 0; i < array1.length; i++) {
+                if (!checkOnlyId && array1[i].id !== array2[i].id) {
+                    return false;
+                }
 
-                if (JSON.stringify(array1[i]).indexOf(JSON.stringify(array2[i])) === -1) {
+                if (checkOnlyId && JSON.stringify(array1[i]).indexOf(JSON.stringify(array2[i])) === -1) {
                     return false;
                 }
             }
@@ -279,7 +292,8 @@ export function checkEqualityOfArrays(array1: Array < string >, array2: Array<st
     }
 }
 
-function sort(a, b) {
+
+function sort(a: any, b: any) {
     if (a.id > b.id) {
         return 1;
     }

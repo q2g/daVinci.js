@@ -1,6 +1,6 @@
 ﻿
 /**
- * Filter to check which selection state is active 
+ * Filter to check which selection state is active
  */
 export function qStatusFilter() {
     "use strict";

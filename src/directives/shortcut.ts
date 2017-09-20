@@ -56,7 +56,7 @@ class ShortCutController implements ng.IController {
     }
     //#endregion
 
-    //#region shortcut 
+    //#region shortcut
     private _shortcut: string | Array<IShortcutObject>;
     get shortcut(): string | Array<IShortcutObject> {
         return this._shortcut;
@@ -67,11 +67,11 @@ class ShortCutController implements ng.IController {
                 this._shortcut = value;
 
                 if (typeof value === "object" && value[0].shortcut) {
-                    let assitsVal: Array<IShortcutObject> = value;                    
+                    let assitsVal: Array<IShortcutObject> = value;
 
                     this.shortcutObject = [];
                     for (var i: number = 0; i < value.length; i++) {
-                        
+
                         this.shortcutObject.push(this.checksShortcutProperties(value[i]));
                     }
 
@@ -150,11 +150,11 @@ class ShortCutController implements ng.IController {
         }
     }
     //#endregion
-    
+
     //#region keyDownFunction
     private keyDownFunction: (e: JQueryKeyEventObject) => void;
     //#endregion
-    
+
     /**
      * init Constructor of Shortcut Controller
      * @param element element of the List View Controller
@@ -191,7 +191,7 @@ class ShortCutController implements ng.IController {
             this.shortcutObject[0].rootscope = this.shortcutRootscope;
         }
         //#endregion
-        
+
         this.keyDownFunction = (e: JQueryKeyEventObject) => {
             this.keydownHandler(e);
         };
@@ -209,7 +209,7 @@ class ShortCutController implements ng.IController {
 
         let assistShortcutInputObject = new ShortcutInputObject(value.name);
         assistShortcutInputObject.shortcut = value.shortcut.toString();
-        
+
         assistShortcutInputObject.rootscope = "|local|";
         if (typeof value.rootscope !== "undefined") {
             assistShortcutInputObject.rootscope = value.rootscope;
@@ -253,7 +253,7 @@ class ShortCutController implements ng.IController {
                 }
             }
             newArray.push(x);
-        }        
+        }
         return newArray;
     }
 
@@ -341,7 +341,7 @@ class ShortCutController implements ng.IController {
 
             for (let i: number = 0; i < maxCount; i++) {
                 let elem: NamedNodeMap = element.parent()[0].attributes;
-                if (element.parent().is(document) || element === lastElement) {
+                if (element.parent().is((document as any) || element === lastElement)) {
                     return false;
                 }
 

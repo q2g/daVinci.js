@@ -42,9 +42,9 @@ class SearchBarController implements ng.IController {
      */
     constructor(element: JQuery, scope: ng.IScope) {
                 
-        scope.$watch(function () { return element.is(':visible') }, function () {
+        scope.$watch(function () { return element.is(":visible"); }, function () {
             try {
-                if (element.is(':visible')) {
+                if (element.is(":visible")) {
                     element.children().eq(1).focus();
                 }
             } catch (e) {
@@ -73,8 +73,8 @@ export function SearchBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveF
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
             }
+        };
+    };
         }
-    }
-}
 
 

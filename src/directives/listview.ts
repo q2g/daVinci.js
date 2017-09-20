@@ -82,7 +82,6 @@ class ListViewController implements ng.IController {
     }
     set items(value: IDataModelItem[]) {
         this._items = value;
-        this.logger.info("ITEMS", this);
     }
     //#endregion
 
@@ -197,7 +196,8 @@ class ListViewController implements ng.IController {
             case "pageDown":
                 try {
                     this.itemsPageTop -= this.itemsPageHeight;
-                    if (this.itemFocused >= this.itemsPageTop + this.itemsPageHeight && this.itemFocused <= this.itemsPageTop + this.itemsPageHeight * 2) {
+                    if (this.itemFocused >= this.itemsPageTop + this.itemsPageHeight && this.itemFocused
+                            <= this.itemsPageTop + this.itemsPageHeight * 2) {
                         if (this.itemFocused - this.itemsPageHeight < 0) {
                             this.itemFocused = 0;
                         } else {
@@ -232,7 +232,6 @@ class ListViewController implements ng.IController {
             return false;
         }
     }
-    
 }
 
 export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
