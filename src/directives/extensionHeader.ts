@@ -85,11 +85,6 @@ class ExtensionHeaderController implements ng.IController {
     set menuList(value: Array<any>) {
         logger.debug("menuList change", value);
         try {
-            // workaround
-            if (typeof value === "string") {
-                value = JSON.parse(value);
-            }
-            // end workaround
             this._menuList = value;
             this.listRefactoring(value);
         } catch (e) {

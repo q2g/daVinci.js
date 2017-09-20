@@ -1,7 +1,7 @@
 ﻿<div class="lui-search"
      ng-class="{'lui-search--{{vm.theme}}': vm.theme === 'inverse'}">
 
-    <span class="lui-search__search-icon"></span>
+    <span class="{{vm.icon}}"></span>
     {{vm.shortcuts.esc.name}}
     <input class="lui-search__input"
            placeholder="{{vm.placeholder}}"

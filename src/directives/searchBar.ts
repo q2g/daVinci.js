@@ -35,6 +35,22 @@ class SearchBarController implements ng.IController {
     }
     //#endregion
 
+    //#region icon
+    private _icon: string;
+    get icon(): string {
+        return this._icon;
+    }
+    set icon(value: string) {
+        if (!value) {
+            value = "lui-search__search-icon";
+        }
+        if (value !== this._icon) {
+
+            this._icon = value;
+        }
+    }
+    //#endregion
+
     static $inject = ["$element", "$scope"];
 
     /**
@@ -67,7 +83,8 @@ export function SearchBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveF
             bindToController: {
                 textSearch: "=",
                 placeholder: "<",
-                theme: "<?"
+                theme: "<?",
+                icon: "<?"
             },
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
