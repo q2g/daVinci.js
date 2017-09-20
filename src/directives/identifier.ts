@@ -12,7 +12,7 @@ class IdentifierController implements ng.IController {
     }
 
     //#region Variables
-    show: boolean; 
+    show: boolean;
     //#endregion
 
     //#region logger
@@ -43,13 +43,13 @@ class IdentifierController implements ng.IController {
         }
     }
     //#endregion
-    
+
     /**
      * init of AkquinetIdentifierController
      */
     constructor() {
         this.logger.debug("init Constructor", this);
-    }    
+    }
 }
 
 export function IdentifierDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
@@ -68,5 +68,5 @@ export function IdentifierDirectiveFactory(rootNameSpace: string): ng.IDirective
             }
         };
     };
-};
+}
 

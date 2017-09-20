@@ -81,7 +81,7 @@ class ExtensionHeaderController implements ng.IController {
     private _menuList: Array<any>;
     get menuList(): Array<any> {
         return this._menuList;
-    };
+    }
     set menuList(value: Array<any>) {
         logger.debug("menuList change", value);
         try {
@@ -95,12 +95,12 @@ class ExtensionHeaderController implements ng.IController {
         } catch (e) {
             logger.error("Error in setter of menuList");
         }
-    };
+    }
     //#endregion
 
     static $inject = ["$timeout", "$element", "$scope"];
 
-    /** 
+    /**
      * init of List View Controller
      * @param element element of the List View Controller
      * @param scope scope element to get the watcher in class
@@ -115,7 +115,7 @@ class ExtensionHeaderController implements ng.IController {
             return this.element.width();
         }, () => {
             this.calcLists();
-        });        
+        });
     }
 
     /**
@@ -141,10 +141,9 @@ class ExtensionHeaderController implements ng.IController {
             if (this.element) {
                 this.calcLists();
             }
-            
         } catch (e) {
             logger.error("error in listRefactoring", e);
-        }        
+        }
     }
 
     /**
@@ -163,7 +162,7 @@ class ExtensionHeaderController implements ng.IController {
                 } else {
                     this.popOverList.push(x);
                 }
-            }            
+            }
         } catch (e) {
             logger.error("error in calcLists", e);
         }
@@ -192,7 +191,7 @@ export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDire
                 shortcutSearchfield: "<",
                 theme: "<?"
             },
-            compile: function () {                        
+            compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
                         SearchBarDirectiveFactory(rootNameSpace), "SearchBar");
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");

@@ -15,12 +15,6 @@ interface IDefinitionObject {
 }
 
 export interface IRegisterDirective {
-    /**
-    * Register a new directive with the compiler.
-    *
-    * @param name Name of the directive in camel-case (i.e. ngBind which will match as ng-bind)
-    * @param directiveFactory An injectable directive factory function.
-    */
     directive(name: string, directiveFactory: ng.Injectable<ng.IDirectiveFactory>): void;
     directive(object: { [directiveName: string]: ng.Injectable<ng.IDirectiveFactory> }): void;
     filter(name: string, filterFactoryFunction: ng.Injectable<Function>): ng.IModule;
@@ -28,7 +22,7 @@ export interface IRegisterDirective {
 }
 //#endregion
 
-//#region Logger 
+//#region Logger
 let logger = new Logging.Logger("utils");
 //#endregion
 
@@ -46,7 +40,7 @@ export class SimplifierDefinitionObject {
 
     /**
      * recorsive function to generate relevant Object Properties(ref and defaultValue)
-     * @param objectArr Array of stringified Property names 
+     * @param objectArr Array of stringified Property names
      * @param object object of which the property names where stringified
      * @param propName search string for the ref definition of properties
      */
