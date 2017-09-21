@@ -70,7 +70,7 @@ class DragableBar {
             }
             return this.elementDragable[0].style.height;
         } catch (e) {
-            console.error("Error in class DragableBar by call setHeight");
+            this.logger.error("Error in class DragableBar by call setHeight");
         }
     }
 
@@ -189,7 +189,7 @@ class ScrollBarController implements ng.IController {
                     this.timeout();
                 }
             } catch (e) {
-                console.error("error in setter startposition", e);
+                this.logger.error("error in setter startposition", e);
             }
         }
     }
@@ -206,7 +206,7 @@ class ScrollBarController implements ng.IController {
                 this._itemsCount = value;
                 this.calcDragableBarProperties();
             } catch (e) {
-                console.error("error in setter itemsvisible", e);
+                this.logger.error("error in setter itemsvisible", e);
             }
         }
     }
@@ -223,7 +223,7 @@ class ScrollBarController implements ng.IController {
                 this._itemsPageHeight = values;
                 this.calcDragableBarProperties();
             } catch (e) {
-                console.error("error in setter itemsvisible", e);
+                this.logger.error("error in setter itemsvisible", e);
             }
         }
     }

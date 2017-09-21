@@ -4,11 +4,14 @@
         <tr>
             <!-- INPUT FIELD -->
             <td>
-                <q2g-search-bar text-search="vm.textSearch"
+                <q2g-input-bar text-search="vm.textSearch"
                                 placeholder="'search '+vm.title"                                
                                 theme="vm.theme"
-                                ng-show="vm.showSearchField">
-                </q2g-search-bar>
+                                icon="'lui-search__clear-icon'"
+                                ng-show="vm.showSearchField"
+                                input-accept="vm.inputAccept"
+                                input-cancel="vm.inputCancel">
+                </q2g-input-bar>
             </td>
 
             <!-- SEARCH ICON AND TITLE -->

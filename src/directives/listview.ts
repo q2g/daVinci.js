@@ -27,11 +27,11 @@ export interface IDataModel {
 }
 
 class ListViewController implements ng.IController {
-    
+
     public $onInit(): void {
         this.logger.debug("initial Run of ListViewController");
     }
-        
+
     //#region Variables
     element: JQuery;
     hasFocusSearchField: boolean = false;
@@ -56,7 +56,7 @@ class ListViewController implements ng.IController {
             try {
                 this._logger = new Logging.Logger("ListViewController");
             } catch (e) {
-                console.error("Error in initialising Logger", e);
+                this.logger.error("Error in initialising Logger", e);
             }
         }
         return this._logger;
@@ -103,7 +103,7 @@ class ListViewController implements ng.IController {
 
     static $inject = ["$timeout", "$element"];
 
-    /** 
+    /**
      * init of List View Controller
      * @param timeout angular timeout, to maual trigger dom events
      * @param element element of the List View Controller
@@ -113,7 +113,7 @@ class ListViewController implements ng.IController {
         this.timeout = timeout;
         this.ieItemsReadable = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
     }
-    
+
     /**
      * calculates the new selected Positiion. Focus will will be set out of bounds (root div Element)
      * when the the selectet Value is less then 0 and heigher then the max value
@@ -209,7 +209,7 @@ class ListViewController implements ng.IController {
                 } catch (e) {
                     this.logger.error("Error in shortcutHandler pageDown", e);
                 }
-                
+
             case "enter":
                 this.callbackListviewObjects({ pos: this.itemFocused - this.itemsPageTop});
                 return true;
@@ -262,4 +262,4 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
             }
         };
     };
-};
+}

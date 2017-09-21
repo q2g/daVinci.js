@@ -1,26 +1,20 @@
 ﻿
-//#region IMPORT
-import { Logging } from "../utils/logger";
 import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
-import { ShortCutDirectiveFactory } from "./shortcut";
-import { SearchBarDirectiveFactory } from "./searchBar";
 import * as template from "text!./extensionHeader.html";
+import { ShortCutDirectiveFactory } from "./shortcut";
+import { InputBarDirectiveFactory } from "./inputBar";
+import { Logging } from "../utils/logger";
 import "css!./extensionHeader.css";
-//#endregion
 
-//#region Logger
 let logger = new Logging.Logger("q2g menuDirective");
-//#endregion
 
 class ListElement {
-
     type: string = "";
     isVisible: boolean = false;
     isEnabled: boolean = false;
     icon: string = "";
     name: string | Function;
     hasSeparator: boolean = false;
-
 }
 
 class ExtensionHeaderController implements ng.IController {
@@ -29,8 +23,9 @@ class ExtensionHeaderController implements ng.IController {
         logger.debug("initial Run of MainMenuController");
     }
 
-    //#region variables
     callbackMainMenuButton: (item: string) => void;
+
+    inputCancel: boolean = false;
     maxNumberOfElements: number;
     popOverWidth: number = 0;
     reservedButtonWidth: number = 0.5;
@@ -38,16 +33,24 @@ class ExtensionHeaderController implements ng.IController {
     showPopoverMenu: boolean = false;
     showSearchField: boolean = false;
     textSearch: string;
-    title: string;
     timeout: ng.ITimeoutService;
+    title: string;
 
     private element: JQuery;
     private displayList: Array<ListElement> = [];
     private menuListRefactored: Array<ListElement>;
     private popOverList: Array<ListElement> = [];
-    //#endregion
 
-    //#region theme
+    private _inputAccept: boolean;
+    public get inputAccept() : boolean {
+        return this._inputAccept;
+    }
+    public set inputAccept(v : boolean) {
+        if(v!==this._inputAccept) {
+            this._inputAccept = v;
+        }
+    }
+
     private _theme: string;
     get theme(): string {
         if (this._theme) {
@@ -60,9 +63,7 @@ class ExtensionHeaderController implements ng.IController {
             this._theme = value;
         }
     }
-    //#endregion
 
-    //#region showButtons
     private _showButtons: boolean = false;
     get showButtons(): boolean {
         return this._showButtons;
@@ -75,32 +76,24 @@ class ExtensionHeaderController implements ng.IController {
             }
         }
     }
-    //#endregion
 
-    //#region menuList
     private _menuList: Array<any>;
     get menuList(): Array<any> {
         return this._menuList;
-    };
+    }
     set menuList(value: Array<any>) {
         logger.debug("menuList change", value);
         try {
-            // workaround
-            if (typeof value === "string") {
-                value = JSON.parse(value);
-            }
-            // end workaround
             this._menuList = value;
             this.listRefactoring(value);
         } catch (e) {
             logger.error("Error in setter of menuList");
         }
-    };
-    //#endregion
+    }
 
     static $inject = ["$timeout", "$element", "$scope"];
 
-    /** 
+    /**
      * init of List View Controller
      * @param element element of the List View Controller
      * @param scope scope element to get the watcher in class
@@ -115,7 +108,7 @@ class ExtensionHeaderController implements ng.IController {
             return this.element.width();
         }, () => {
             this.calcLists();
-        });        
+        });
     }
 
     /**
@@ -141,10 +134,9 @@ class ExtensionHeaderController implements ng.IController {
             if (this.element) {
                 this.calcLists();
             }
-            
         } catch (e) {
             logger.error("error in listRefactoring", e);
-        }        
+        }
     }
 
     /**
@@ -163,7 +155,7 @@ class ExtensionHeaderController implements ng.IController {
                 } else {
                     this.popOverList.push(x);
                 }
-            }            
+            }
         } catch (e) {
             logger.error("error in calcLists", e);
         }
@@ -181,20 +173,22 @@ export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDire
             controllerAs: "vm",
             scope: {},
             bindToController: {
-                menuList: "<",
-                maxNumberOfElements: "<",
-                reservedButtonWidth: "<",
                 callbackMainMenuButton: "&",
-                textSearch: "=",
+                inputAccept: "=?",
+                inputCancel: "=?",
+                maxNumberOfElements: "<",
+                menuList: "<",
+                reservedButtonWidth: "<",
+                shortcutSearchfield: "<",
                 showButtons: "=",
                 showSearchField: "=",
+                textSearch: "=",
                 title: "<",
-                shortcutSearchfield: "<",
                 theme: "<?"
             },
-            compile: function () {                        
+            compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
-                        SearchBarDirectiveFactory(rootNameSpace), "SearchBar");
+                    InputBarDirectiveFactory(rootNameSpace), "InputBar");
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
             }
         };
