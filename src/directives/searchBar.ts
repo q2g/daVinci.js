@@ -1,13 +1,10 @@
-﻿//#region IMPORT
+﻿
 import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
-import { Logging } from "../utils/logger";
-import { ShortCutDirectiveFactory } from "./shortcut";
+import { ShortCutDirectiveFactory, IShortcutObject, IShortcutHandlerObject } from "./shortcut";
 import * as template from "text!./searchBar.html";
-//#endregion
+import { Logging } from "../utils/logger";
 
-//#region Logger
 let logger = new Logging.Logger("q2g searchBarDirective");
-//#endregion
 
 class SearchBarController implements ng.IController {
 
@@ -15,12 +12,12 @@ class SearchBarController implements ng.IController {
         logger.debug("initial Run of SearchBarController");
     }
 
-    //#region Variables
+    inputAccept: boolean = false;
+    inputCancel: boolean = false;
     placeholder: string;
+    timeout: ng.ITimeoutService;
     textSearch: string = "";
-    //#endregion
 
-    //#region theme
     private _theme: string;
     get theme(): string {
         if (this._theme) {
@@ -33,9 +30,7 @@ class SearchBarController implements ng.IController {
             this._theme = value;
         }
     }
-    //#endregion
 
-    //#region icon
     private _icon: string;
     get icon(): string {
         return this._icon;
@@ -49,14 +44,15 @@ class SearchBarController implements ng.IController {
             this._icon = value;
         }
     }
-    //#endregion
 
-    static $inject = ["$element", "$scope"];
+    static $inject = ["$element", "$scope", "$timeout"];
 
     /**
      * init of List View Controller
      */
-    constructor(element: JQuery, scope: ng.IScope) {
+    constructor(element: JQuery, scope: ng.IScope, timeout: ng.ITimeoutService) {
+
+        this.timeout = timeout;
 
         scope.$watch(function () { return element.is(":visible"); }, function () {
             try {
@@ -67,6 +63,20 @@ class SearchBarController implements ng.IController {
                 logger.error("error in constructor", e);
             }
         });
+    }
+
+    /**
+     * manage all shortcut events, called on the input tag
+     * @param objcet element which is returned from the shortcut directive
+     */
+    shortcutHandlerSearchBar(objcet: IShortcutHandlerObject): void {
+        switch(objcet.objectShortcut.name) {
+            case "accept":
+                this.inputAccept = true;
+            case "cancel":
+                this.inputCancel = true;
+        }
+        this.timeout();
     }
 }
 
@@ -81,16 +91,18 @@ export function SearchBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveF
             controllerAs: "vm",
             scope: {},
             bindToController: {
-                textSearch: "=",
+                inputAccept: "=?",
+                inputCancel: "=?",
+                icon: "<?",
                 placeholder: "<",
-                theme: "<?",
-                icon: "<?"
+                textSearch: "=",
+                theme: "<?"
             },
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
             }
         };
     };
-        }
+}
 
 

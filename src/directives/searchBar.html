@@ -8,7 +8,15 @@
            spellcheck="false"
            tabindex="0"           
            type="text"
-           ng-model="vm.textSearch"/>
+
+           ng-model="vm.textSearch"
+           
+           q2g-shortcut
+           shortcut="[
+                {name:'accept', shortcut: '13'}
+           ]"
+           shortcut-action="vm.shortcutHandlerSearchBar(objectShortcut)"
+           />
 
     <span class="lui-search__clear-icon"
           tabindex="0"

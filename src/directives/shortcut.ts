@@ -26,6 +26,12 @@ export interface IShortcutObject {
     triggerHandler?: string;
 }
 
+export interface IShortcutHandlerObject {
+    element: JQuery,
+    event: Event,
+    objectShortcut: IShortcutObject
+}
+
 class ShortCutController implements ng.IController {
     static $inject = ["$element"];
 
