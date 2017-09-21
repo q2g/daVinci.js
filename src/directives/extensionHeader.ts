@@ -1,9 +1,9 @@
 ﻿
-import { Logging } from "../utils/logger";
 import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
-import { ShortCutDirectiveFactory } from "./shortcut";
-import { SearchBarDirectiveFactory } from "./searchBar";
 import * as template from "text!./extensionHeader.html";
+import { ShortCutDirectiveFactory } from "./shortcut";
+import { InputBarDirectiveFactory } from "./inputBar";
+import { Logging } from "../utils/logger";
 import "css!./extensionHeader.css";
 
 let logger = new Logging.Logger("q2g menuDirective");
@@ -33,8 +33,8 @@ class ExtensionHeaderController implements ng.IController {
     showPopoverMenu: boolean = false;
     showSearchField: boolean = false;
     textSearch: string;
-    title: string;
     timeout: ng.ITimeoutService;
+    title: string;
 
     private element: JQuery;
     private displayList: Array<ListElement> = [];
@@ -188,7 +188,7 @@ export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDire
             },
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
-                        SearchBarDirectiveFactory(rootNameSpace), "SearchBar");
+                    InputBarDirectiveFactory(rootNameSpace), "InputBar");
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
             }
         };

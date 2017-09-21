@@ -1,15 +1,15 @@
 ﻿
 import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
 import { ShortCutDirectiveFactory, IShortcutObject, IShortcutHandlerObject } from "./shortcut";
-import * as template from "text!./searchBar.html";
+import * as template from "text!./inputBar.html";
 import { Logging } from "../utils/logger";
 
-let logger = new Logging.Logger("q2g searchBarDirective");
+let logger = new Logging.Logger("q2g inputBarDirective");
 
-class SearchBarController implements ng.IController {
+class InputBarController implements ng.IController {
 
     public $onInit(): void {
-        logger.debug("initial Run of SearchBarController");
+        logger.debug("initial Run of inputBarController");
     }
 
     inputAccept: boolean = false;
@@ -80,14 +80,14 @@ class SearchBarController implements ng.IController {
     }
 }
 
-export function SearchBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
+export function InputBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
     "use strict";
     return ($document: ng.IAugmentedJQuery, $injector: ng.auto.IInjectorService, $registrationProvider: IRegisterDirective) => {
         return {
             restrict: "E",
             replace: true,
             template: templateReplacer(template, rootNameSpace),
-            controller: SearchBarController,
+            controller: InputBarController,
             controllerAs: "vm",
             scope: {},
             bindToController: {
