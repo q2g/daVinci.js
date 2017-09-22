@@ -43,8 +43,8 @@
                             <div ng-class="{'separatorV': item.hasSeparator}"
                                  ng-click="item.isEnabled || vm.callbackMainMenuButton({item: item.name})"                                        
                                  ng-attr-title="{{item.name}}">
-                                <button ng-class="{'lui-fade-button': item.type.length===0, 'lui-button': item.type.length>0, 'lui-disabled': item.isEnabled, 'button-theme-{{vm.theme}}': (item.type.length===0), 'button-disabled-theme-inverse': (item.isEnabled && vm.theme === 'inverse')}"
-                                        class="lui-button--{{item.type}}">
+                                <button ng-class="{'lui-fade-button': item.buttonType.length===0, 'lui-button': item.buttonType.length>0, 'lui-disabled': item.isEnabled, 'button-theme-{{vm.theme}}': (item.type.length===0), 'button-disabled-theme-inverse': (item.isEnabled && vm.theme === 'inverse')}"
+                                        class="lui-button--{{item.buttonType}}">
                                     <span class="lui-button__icon lui-icon lui-icon--{{item.icon}}"></span>
                                 </button>
                             </div>

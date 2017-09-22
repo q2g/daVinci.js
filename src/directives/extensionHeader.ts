@@ -9,12 +9,14 @@ import "css!./extensionHeader.css";
 let logger = new Logging.Logger("q2g menuDirective");
 
 class ListElement {
-    type: string = "";
+    buttonType: string = "";
     isVisible: boolean = false;
     isEnabled: boolean = false;
     icon: string = "";
     name: string | Function;
     hasSeparator: boolean = false;
+    isChecked?: boolean;
+    type: string;
 }
 
 class ExtensionHeaderController implements ng.IController {
@@ -126,6 +128,8 @@ class ExtensionHeaderController implements ng.IController {
                 assistElement.isEnabled = x.isEnabled ? x.isEnabled : assistElement.isEnabled;
                 assistElement.isVisible = x.isVisible ? x.isBisible : assistElement.isVisible;
                 assistElement.name = x.name ? x.name : assistElement.name;
+                assistElement.buttonType = x.buttonType ? x.buttonType : assistElement.buttonType;
+                assistElement.isChecked = x.isChecked ? x.isChecked : assistElement.isChecked;
                 assistElement.type = x.type ? x.type : assistElement.type;
 
                 this.menuListRefactored.push(assistElement);
