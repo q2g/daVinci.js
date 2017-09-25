@@ -28,6 +28,8 @@ class ExtensionHeaderController implements ng.IController {
     callbackMainMenuButton: (item: string) => void;
 
     inputCancel: boolean = false;
+    isLocked: boolean = false;
+    showUnlockMessage: boolean = false;
     maxNumberOfElements: number;
     popOverWidth: number = 0;
     reservedButtonWidth: number = 0.5;
@@ -37,6 +39,7 @@ class ExtensionHeaderController implements ng.IController {
     textSearch: string;
     timeout: ng.ITimeoutService;
     title: string;
+    buttonGroupWidth: number = 0;
 
     private element: JQuery;
     private displayList: Array<ListElement> = [];
@@ -160,6 +163,8 @@ class ExtensionHeaderController implements ng.IController {
                     this.popOverList.push(x);
                 }
             }
+            this.buttonGroupWidth = (this.displayList.length + 1) * 60;
+            logger.info("width", (this.displayList.length + 1) * 60);
         } catch (e) {
             logger.error("error in calcLists", e);
         }
@@ -188,7 +193,8 @@ export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDire
                 showSearchField: "=",
                 textSearch: "=",
                 title: "<",
-                theme: "<?"
+                theme: "<?",
+                isLocked: "=?"
             },
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
