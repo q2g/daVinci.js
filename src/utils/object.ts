@@ -15,6 +15,13 @@ interface Iq2gIListObject extends Event {
     searchFor: (searchString: string) => Promise<any>;
     acceptListObjectSearch: (toggelMode: boolean) => Promise<boolean>;
 }
+
+interface ICollection {
+    status: string;
+    id: Array<number>;
+    defs: Array<string>;
+    title: string;
+}
 //#endregion
 
 export class Q2gListAdapter {
@@ -26,8 +33,8 @@ export class Q2gListAdapter {
     //#endregion
 
     //#region collection
-    private _collection: Array<any> = [];
-    get collection(): Array<any> {
+    private _collection: Array<ICollection> = [];
+    get collection(): Array<ICollection> {
         return this._collection;
     }
     //#endregion
@@ -240,7 +247,7 @@ export class Q2gListObject extends Event implements Iq2gIListObject {
                         let matrix = item[0];
                         collection.push({
                             status: matrix.qState,
-                            id: matrix.qElemNumber,
+                            id: [matrix.qElemNumber],
                             title: matrix.qText,
                         });
                     }

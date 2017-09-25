@@ -2,6 +2,7 @@
 
     .header {
         width: 100%;
+        position: relative;
 
         tr, td {
             height: 42px;
@@ -35,7 +36,6 @@
                     padding-left: 8px;
                 }
             }
-
             .normalButton {
                 width: 46px !important
             }
@@ -43,6 +43,32 @@
 
         .header-theme-inverse {
             color: #ffffff
+        }
+
+        .menuLocked {
+            opacity: 0.1;
+        }
+
+        .lockContainer {
+            background-color: rgba(51, 51, 51, 0.2);            
+            height: 42px;
+            position: absolute;
+            right: 0;
+            text-align: center;
+
+            .lockElement {
+                left: 50%;
+                top: 25%;
+                position: absolute;
+                font-family: "LUI icons";
+            }
+
+            .lockText {
+                top: 25%;
+                position: relative;
+                font-weight: bold;
+                font-size: inherit;                
+            }
         }
     }
 

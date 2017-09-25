@@ -9,12 +9,14 @@ import "css!./extensionHeader.css";
 let logger = new Logging.Logger("q2g menuDirective");
 
 class ListElement {
-    type: string = "";
+    buttonType: string = "";
     isVisible: boolean = false;
     isEnabled: boolean = false;
     icon: string = "";
     name: string | Function;
     hasSeparator: boolean = false;
+    isChecked?: boolean;
+    type: string;
 }
 
 class ExtensionHeaderController implements ng.IController {
@@ -26,6 +28,8 @@ class ExtensionHeaderController implements ng.IController {
     callbackMainMenuButton: (item: string) => void;
 
     inputCancel: boolean = false;
+    isLocked: boolean = false;
+    showUnlockMessage: boolean = false;
     maxNumberOfElements: number;
     popOverWidth: number = 0;
     reservedButtonWidth: number = 0.5;
@@ -35,6 +39,7 @@ class ExtensionHeaderController implements ng.IController {
     textSearch: string;
     timeout: ng.ITimeoutService;
     title: string;
+    buttonGroupWidth: number = 0;
 
     private element: JQuery;
     private displayList: Array<ListElement> = [];
@@ -126,6 +131,8 @@ class ExtensionHeaderController implements ng.IController {
                 assistElement.isEnabled = x.isEnabled ? x.isEnabled : assistElement.isEnabled;
                 assistElement.isVisible = x.isVisible ? x.isBisible : assistElement.isVisible;
                 assistElement.name = x.name ? x.name : assistElement.name;
+                assistElement.buttonType = x.buttonType ? x.buttonType : assistElement.buttonType;
+                assistElement.isChecked = x.isChecked ? x.isChecked : assistElement.isChecked;
                 assistElement.type = x.type ? x.type : assistElement.type;
 
                 this.menuListRefactored.push(assistElement);
@@ -156,6 +163,7 @@ class ExtensionHeaderController implements ng.IController {
                     this.popOverList.push(x);
                 }
             }
+            this.buttonGroupWidth = (this.displayList.length + 1) * 60;
         } catch (e) {
             logger.error("error in calcLists", e);
         }
@@ -184,7 +192,8 @@ export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDire
                 showSearchField: "=",
                 textSearch: "=",
                 title: "<",
-                theme: "<?"
+                theme: "<?",
+                isLocked: "=?"
             },
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,

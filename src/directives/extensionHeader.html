@@ -7,7 +7,7 @@
                 <q2g-input-bar text-search="vm.textSearch"
                                 placeholder="'search '+vm.title"                                
                                 theme="vm.theme"
-                                icon="'lui-search__clear-icon'"
+                                icon="'lui-search__search-icon'"
                                 ng-show="vm.showSearchField"
                                 input-accept="vm.inputAccept"
                                 input-cancel="vm.inputCancel">
@@ -26,8 +26,9 @@
             </td>
 
             <!-- BUTTON GROUP -->
-            <td ng-show="vm.showButtons">
-                <table  class="menutable">
+            <td ng-show="vm.showButtons" >
+                <table class="menutable"
+                       ng-class="{'menuLocked': vm.isLocked}">
                     <tr>
                         <td class="buttonGroup normalButton"
                             ng-if="vm.popOverList.length>0">
@@ -43,14 +44,29 @@
                             <div ng-class="{'separatorV': item.hasSeparator}"
                                  ng-click="item.isEnabled || vm.callbackMainMenuButton({item: item.name})"                                        
                                  ng-attr-title="{{item.name}}">
-                                <button ng-class="{'lui-fade-button': item.type.length===0, 'lui-button': item.type.length>0, 'lui-disabled': item.isEnabled, 'button-theme-{{vm.theme}}': (item.type.length===0), 'button-disabled-theme-inverse': (item.isEnabled && vm.theme === 'inverse')}"
-                                        class="lui-button--{{item.type}}">
+                                <button ng-class="{'lui-fade-button': item.buttonType.length===0, 'lui-button': item.buttonType.length>0, 'lui-disabled': item.isEnabled, 'button-theme-{{vm.theme}}': (item.type.length===0), 'button-disabled-theme-inverse': (item.isEnabled && vm.theme === 'inverse')}"
+                                        class="lui-button--{{item.buttonType}}">
                                     <span class="lui-button__icon lui-icon lui-icon--{{item.icon}}"></span>
                                 </button>
                             </div>
                         </td>
                     </tr>
                 </table>
+                <div class="lockContainer" 
+                     style="width: {{vm.buttonGroupWidth}}px;"
+                     ng-if="vm.isLocked"
+                     ng-mouseenter="vm.showUnlockMessage = true"
+                     ng-mouseleave="vm.showUnlockMessage = false"
+                     ng-click="vm.isLocked = false">
+                    <span class="lui-icon--lock lockElement luiFont"
+                          ng-if="!vm.showUnlockMessage">
+                    </span>
+                    <span class="lockText"
+                          ng-if="vm.showUnlockMessage">
+                        Click to unlock
+                    </span>
+                    
+                </div>
             </td>
         </tr>
 
