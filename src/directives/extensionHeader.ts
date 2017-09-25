@@ -164,7 +164,6 @@ class ExtensionHeaderController implements ng.IController {
                 }
             }
             this.buttonGroupWidth = (this.displayList.length + 1) * 60;
-            logger.info("width", (this.displayList.length + 1) * 60);
         } catch (e) {
             logger.error("error in calcLists", e);
         }
