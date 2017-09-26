@@ -12,7 +12,7 @@ class ShortCutScopeController implements ng.IController {
     static $inject = ["$element"];
 
     //#region logger
-    private _logger: Logging.Logger; 
+    private _logger: Logging.Logger;
     private get logger(): Logging.Logger {
         if (!this._logger) {
             try {
