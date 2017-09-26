@@ -347,6 +347,9 @@ class ShortCutController implements ng.IController {
                             return true;
                         }
                     }
+                    if (elem[j].value===rootscope && (element.parent() as any).find(":focus").length > 0) {
+                        return true;
+                    }
                 }
                 element = element.parent();
             }
