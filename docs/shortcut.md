@@ -31,9 +31,7 @@ string? | triggerHandler | optional; event which is triggered when shortcut is c
 
 ### possible Actions
 
-focus
-click
-...text
+focus; click; ...text
 
 ## Usage
 
