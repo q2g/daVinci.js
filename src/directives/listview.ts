@@ -7,6 +7,8 @@ import * as template from "text!./listview.html";
 import "css!./listview.css";
 //#endregion
 
+let logger = new Logging.Logger("q2g Listview Directive");
+
 export interface ICallbackListview {
     pos: number;
     event?: JQueryKeyEventObject;
@@ -29,10 +31,12 @@ export interface IDataModel {
 class ListViewController implements ng.IController {
 
     public $onInit(): void {
-        this.logger.debug("initial Run of ListViewController");
+        logger.debug("initial Run of ListViewController");
     }
 
     //#region Variables
+    callbackListviewObjects: (elem: ICallbackListview) => void;
+
     element: JQuery;
     hasFocusSearchField: boolean = false;
     ieItemsReadable: boolean = false;
@@ -40,27 +44,12 @@ class ListViewController implements ng.IController {
     itemsCount: number = 0;
     itemsPageHeight: number;
     itemsPageTop: number;
+    overrideShortcuts: Array<IShortcutObject>;
     readingText: string = "";
-    callbackListviewObjects: (elem: ICallbackListview) => void;
     shortcutRootscope: string;
     showFocused: boolean = false;
     showScrollBar: boolean = false;
     timeout: ng.ITimeoutService;
-    overrideShortcuts: Array<IShortcutObject>;
-    //#endregion
-
-    //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
-        if (!this._logger) {
-            try {
-                this._logger = new Logging.Logger("ListViewController");
-            } catch (e) {
-                this.logger.error("Error in initialising Logger", e);
-            }
-        }
-        return this._logger;
-    }
     //#endregion
 
     //#region itemFocused
@@ -120,7 +109,7 @@ class ListViewController implements ng.IController {
      * @param newPos new Position of the selected Element
      */
     private calcSelected(newPos: number): void {
-        this.logger.debug("function calcSelected", "");
+        logger.debug("function calcSelected", "");
 
         if (newPos !== this._itemFocused) {
             if (newPos < 0 || newPos >= this.itemsCount) {
@@ -129,7 +118,7 @@ class ListViewController implements ng.IController {
                 try {
                     this.element.focus();
                 } catch (e) {
-                    this.logger.error("ERROR in calcSelected (else if block)", e);
+                    logger.error("ERROR in calcSelected (else if block)", e);
                 }
             } else {
                 try {
@@ -146,7 +135,7 @@ class ListViewController implements ng.IController {
                         this.readingText = focusChild.innerHTML;
                     }
                 } catch (e) {
-                    this.logger.error("ERROR in calcSelected (else block)", e);
+                    logger.error("ERROR in calcSelected (else block)", e);
                 }
             }
             this._itemFocused = newPos;
@@ -168,7 +157,7 @@ class ListViewController implements ng.IController {
      * @param objectShortcut element which is returned from the shortcut directive
      */
     public shortcutHandler(objectShortcut: any): boolean {
-        this.logger.debug("function shortcutHandler", objectShortcut);
+        logger.debug("function shortcutHandler", objectShortcut);
         let assist: number = 0;
 
         switch (objectShortcut.objectShortcut.name) {
@@ -191,7 +180,7 @@ class ListViewController implements ng.IController {
                     this.timeout();
                     return true;
                 } catch (e) {
-                    this.logger.error("Error in shortcutHandler pageUp", e);
+                    logger.error("Error in shortcutHandler pageUp", e);
                 }
             case "pageDown":
                 try {
@@ -207,7 +196,7 @@ class ListViewController implements ng.IController {
                     this.timeout();
                     return true;
                 } catch (e) {
-                    this.logger.error("Error in shortcutHandler pageDown", e);
+                    logger.error("Error in shortcutHandler pageDown", e);
                 }
 
             case "enter":
@@ -257,7 +246,7 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 theme: "<?"
             },
             compile: function () {
-                checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
+                // checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
                 $registrationProvider.filter("qstatusfilter", qStatusFilter);
             }
         };

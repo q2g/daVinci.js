@@ -13,7 +13,7 @@
          shortcut-action="vm.shortcutHandler(objectShortcut)">
         <ul class="lui-list list-theme-{{vm.theme}}">
             <li class="{{item.status | qstatusfilter}}"
-                style="height: {{vm.itemHeight + 'px'}};"
+                ng-style="{'height': vm.itemHeight+'px'}"
                 tabindex="0"
                 role="application"
                 aria-hidden="{{vm.ieItemsReadable}}"

@@ -1,29 +1,23 @@
 ﻿<div class="lui-search"
      ng-class="{'lui-search--{{vm.theme}}': vm.theme === 'inverse'}">
-
-    <span class="{{vm.icon}}"></span>
-    {{vm.shortcuts.esc.name}}
+    <span class="lui-icon {{vm.icon}}" style="margin: auto; width: 24px"></span>
     <input class="lui-search__input"
+           ng-blur="vm.hasFocus=false"
            placeholder="{{vm.placeholder}}"
            spellcheck="false"
            tabindex="0"           
            type="text"
-
-           ng-model="vm.textSearch"
-           
+           ng-model="vm.textInput"
            q2g-shortcut
            shortcut="[
                 {name:'accept', shortcut: '13'}
            ]"
            shortcut-action="vm.shortcutHandlerSearchBar(objectShortcut)"
            />
-
     <span class="lui-search__clear-icon"
           tabindex="0"
-
-          ng-show="vm.textSearch.length > 0"
-          ng-click="vm.textSearch = ''"          
-           
+          ng-show="vm.textInput.length > 0"
+          ng-click="vm.textInput = ''"
           q2g-shortcut
           shortcut="[
                 {name:'esc', shortcut: '27', triggerHandler: 'click'}

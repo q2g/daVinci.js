@@ -5,28 +5,16 @@ import * as utils from "../utils/utils";
 import "css!./identifier.css";
 //#endregion
 
+let logger = new Logging.Logger("q2g Identifier Directive");
+
 class IdentifierController implements ng.IController {
 
     public $onInit(): void {
-        this.logger.debug("initial Run of AkquinetIdentifierController");
+        logger.debug("initial Run of AkquinetIdentifierController");
     }
 
     //#region Variables
     show: boolean;
-    //#endregion
-
-    //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
-        if (!this._logger) {
-            try {
-                this._logger = new Logging.Logger("IdentifierController");
-            } catch (e) {
-                this.logger.error("ERROR in create logger instance", e);
-            }
-        }
-        return this._logger;
-    }
     //#endregion
 
     //#region theme
@@ -48,7 +36,7 @@ class IdentifierController implements ng.IController {
      * init of AkquinetIdentifierController
      */
     constructor() {
-        this.logger.debug("init Constructor", this);
+        logger.debug("init Constructor", this);
     }
 }
 

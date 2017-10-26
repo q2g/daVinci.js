@@ -1,8 +1,9 @@
-﻿
+﻿//#region IMPORT
 import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
 import { ShortCutDirectiveFactory, IShortcutObject, IShortcutHandlerObject } from "./shortcut";
 import * as template from "text!./inputBar.html";
 import { Logging } from "../utils/logger";
+//#endregion
 
 let logger = new Logging.Logger("q2g inputBarDirective");
 
@@ -12,12 +13,15 @@ class InputBarController implements ng.IController {
         logger.debug("initial Run of inputBarController");
     }
 
-    inputAccept: boolean = false;
-    inputCancel: boolean = false;
-    placeholder: string;
+    //#region VARIABLES
+    accept: () => void;
+    cancel: () => void;
     timeout: ng.ITimeoutService;
-    textSearch: string = "";
+    textInput: string = "";
+    element: JQuery;
+    //#endregion
 
+    //#region theme
     private _theme: string;
     get theme(): string {
         if (this._theme) {
@@ -30,20 +34,52 @@ class InputBarController implements ng.IController {
             this._theme = value;
         }
     }
+    //#endregion
 
+    //#region icon
     private _icon: string;
     get icon(): string {
-        return this._icon;
+        if (this._icon) {
+            return this._icon;
+        }
+        return "lui-icon--search";
     }
     set icon(value: string) {
-        if (!value) {
-            value = "lui-search__search-icon";
-        }
         if (value !== this._icon) {
-
             this._icon = value;
         }
     }
+    //#endregion
+
+    //#region placeholder
+    private _placeholder;
+    public get placeholder() : string {
+        if (this._placeholder) {
+            return this._placeholder;
+        }
+        return "search";
+    }
+    public set placeholder(v : string) {
+        if (this._placeholder !== v) {
+            this._placeholder = v;
+        }
+    }
+    //#endregion
+
+    //#region hasFocus
+    private _hasFocus = false;
+    public get hasFocus() : boolean {
+        return this._hasFocus;
+    }
+    public set hasFocus(v : boolean) {
+        if (v !== this._hasFocus) {
+            this._hasFocus = v;
+            if(this.element && v) {
+                this.element.children().eq(1).focus();
+            }
+        }
+    }
+    //#endregion
 
     static $inject = ["$element", "$scope", "$timeout"];
 
@@ -51,8 +87,9 @@ class InputBarController implements ng.IController {
      * init of List View Controller
      */
     constructor(element: JQuery, scope: ng.IScope, timeout: ng.ITimeoutService) {
-
         this.timeout = timeout;
+        this.element = element;
+        let that = this;
 
         scope.$watch(function () { return element.is(":visible"); }, function () {
             try {
@@ -72,11 +109,12 @@ class InputBarController implements ng.IController {
     shortcutHandlerSearchBar(objcet: IShortcutHandlerObject): void {
         switch(objcet.objectShortcut.name) {
             case "accept":
-                this.inputAccept = true;
+                this.accept();
+                break;
             case "cancel":
-                this.inputCancel = true;
+                this.cancel();
+                break;
         }
-        this.timeout();
     }
 }
 
@@ -91,15 +129,16 @@ export function InputBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
             controllerAs: "vm",
             scope: {},
             bindToController: {
-                inputAccept: "=?",
-                inputCancel: "=?",
+                accept: "&?",
+                cancel: "&?",
                 icon: "<?",
-                placeholder: "<",
-                textSearch: "=",
-                theme: "<?"
+                placeholder: "<?",
+                textInput: "=",
+                theme: "<?",
+                hasFocus: "="
             },
             compile: function () {
-                checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
+                // checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
             }
         };
     };
