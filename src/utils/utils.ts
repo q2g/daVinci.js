@@ -152,23 +152,6 @@ export function checkEqualityOfArrays(array1: Array <any>, array2: Array<any>, c
         return true;
     }
 }
-
-/**
- * sorting of enelements
- * @param a
- * @param b
- */
-function sort(a: any, b: any) {
-    if (a.id > b.id) {
-        return 1;
-    }
-    if (a.id < b.id) {
-        return -1;
-    }
-    // a muss gleich b sein
-    return 0;
-}
-
 //#endregion
 
 export abstract class AssistHypercube<T extends EngineAPI.IGenericBaseLayout> {
@@ -345,24 +328,24 @@ export class AssistHyperCubeFields extends AssistHypercube<EngineAPI.IGenericHyp
 
 }
 
-export interface IStateMachineState {
+export interface IStateMachineState<T> {
     placeholder: string;
     icon: string;
-    name: string;
+    name: T;
     acceptFunction: () => void;
 }
 
-export class StateMachineInput {
+export class StateMachineInput<T> {
 
-    states: Array<IStateMachineState> = [];
-    relState: IStateMachineState;
+    states: Array<IStateMachineState<T>> = [];
+    relState: IStateMachineState<T>;
 
     //#region relStateName
-    private _relStateName: string = "";
-    public get relStateName() : string {
+    private _relStateName: T = null;
+    public get relStateName() : T {
         return this._relStateName;
     }
-    public set relStateName(v : string) {
+    public set relStateName(v : T) {
         if (v !== this._relStateName) {
             this._relStateName = v;
             try {
@@ -374,13 +357,13 @@ export class StateMachineInput {
     }
     //#endregion
 
-    addState(state: IStateMachineState): Promise<boolean> {
+    addState(state: IStateMachineState<T>): Promise<boolean> {
         return new Promise(() => {
             this.states.push(state);
         });
     }
 
-    returnStateByName (stateName: string): IStateMachineState {
+    returnStateByName (stateName: T): IStateMachineState<T> {
         return this.states.filter((x) => {
             return (x.name === stateName) ? x : null;
         })[0];

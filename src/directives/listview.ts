@@ -165,13 +165,13 @@ class ListViewController implements ng.IController {
 
     /**
      * manage all shortcut events on this directive
-     * @param objectShortcut element which is returned from the shortcut directive
+     * @param shortcutObject element which is returned from the shortcut directive
      */
-    public shortcutHandler(objectShortcut: any): boolean {
-        this.logger.debug("function shortcutHandler", objectShortcut);
+    public shortcutHandler(shortcutObject: IShortcutObject, event : JQueryKeyEventObject): boolean {
+        this.logger.debug("function shortcutHandler", shortcutObject, event);
         let assist: number = 0;
 
-        switch (objectShortcut.objectShortcut.name) {
+        switch (shortcutObject.name) {
             case "up":
                 this.itemFocused++;
                 return true;
@@ -214,7 +214,7 @@ class ListViewController implements ng.IController {
                 this.callbackListviewObjects({ pos: this.itemFocused - this.itemsPageTop});
                 return true;
             case "enterAll":
-                this.callbackListviewObjects({ pos: this.itemFocused - this.itemsPageTop, event: objectShortcut.event });
+                this.callbackListviewObjects({ pos: this.itemFocused - this.itemsPageTop, event: event });
                 return true;
         }
         return false;

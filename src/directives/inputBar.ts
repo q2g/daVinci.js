@@ -1,6 +1,6 @@
 ﻿//#region IMPORT
 import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
-import { ShortCutDirectiveFactory, IShortcutObject, IShortcutHandlerObject } from "./shortcut";
+import { ShortCutDirectiveFactory, IShortcutObject } from "./shortcut";
 import * as template from "text!./inputBar.html";
 import { Logging } from "../utils/logger";
 //#endregion
@@ -118,8 +118,8 @@ class InputBarController implements ng.IController {
      * manage all shortcut events, called on the input tag
      * @param objcet element which is returned from the shortcut directive
      */
-    shortcutHandlerSearchBar(objcet: IShortcutHandlerObject): void {
-        switch(objcet.objectShortcut.name) {
+    shortcutHandlerSearchBar(shortcutObject: IShortcutObject): void {
+        switch(shortcutObject.name) {
             case "accept":
                 this.accept();
                 break;

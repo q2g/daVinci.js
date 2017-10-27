@@ -10,7 +10,7 @@
                 {name:'pageDown', shortcut:'33'}                
              ]"
          shortcut-override="vm.overrideShortcuts"
-         shortcut-action="vm.shortcutHandler(objectShortcut)">
+         shortcut-action="vm.shortcutHandler(shortcutObject, event, domcontainer)">
         <ul class="lui-list list-theme-{{vm.theme}}">
             <li class="{{item.status | qstatusfilter}}"
                 ng-style="{'height': vm.itemHeight+'px'}"
@@ -19,9 +19,11 @@
                 aria-hidden="{{vm.ieItemsReadable}}"
                 ng-repeat="item in vm.items track by $index"                
                 ng-class="{'list-element-focussed': vm.hasFocus($index) && vm.showFocused}"
+              
                 ng-click="vm.callbackListviewObjects({pos: $index, event:$event})"
                 ng-keydown="vm.itemKeypressed($event, $index)"
                 >
+                 <!-- todo no direct call of binded function call vm... that check if callbackListviewObjects!==null & undefinded -->
                 <span class="lui-list__text">{{item.title}}</span>
 </li>
         </ul>

@@ -26,18 +26,32 @@ export interface IShortcutObject {
     triggerHandler?: string;
 }
 
-export interface IShortcutHandlerObject {
-    element: JQuery;
-    event: Event;
-    objectShortcut: IShortcutObject;
+interface IShortcutHandlerObject {
+    /**
+     * TODO
+     */
+    domcontainer: {
+        element: JQuery;
+    };
+
+    event: JQueryKeyEventObject;
+    /**
+     * TODO
+     */
+    shortcutObject: IShortcutObject;
 }
+
+export interface IDomContainer {
+    element: JQuery;
+}
+
 
 class ShortCutController implements ng.IController {
     static $inject = ["$element"];
 
     //#region Variables
     private element: JQuery;
-    private shortcutAction: (object: any) => void;
+    private shortcutAction: (params: IShortcutHandlerObject) => void;
     private shortcutTriggerHandler: string;
     private rootNameSpace: string = "";
     private shortcutObject: Array<IShortcutObject> = [];
@@ -294,21 +308,23 @@ class ShortCutController implements ng.IController {
      * checks if Action is predefined, otherwise run q2gShortcutAction
      * @param object selected Shortcut Object
      */
-    private runAction(objectShortcut: IShortcutObject, event?: JQueryKeyEventObject): void {
+    private runAction(shortcutObject: IShortcutObject, event?: JQueryKeyEventObject): void {
 
         try {
-            if (objectShortcut.triggerHandler !== "") {
-                this.element.triggerHandler(objectShortcut.triggerHandler);
+            if (shortcutObject.triggerHandler !== "") {
+                this.element.triggerHandler(shortcutObject.triggerHandler);
             }
 
             if (typeof this.shortcutAction !== "undefined") {
-                this.shortcutAction({
-                    objectShortcut: {
-                        objectShortcut: objectShortcut,
-                        element: this.element,
-                        event: event,
-                    },
-                });
+
+                let params = {
+                    shortcutObject: shortcutObject,
+                    event: event,
+                    domcontainer: {
+                        element: this.element
+                    }
+                };
+                this.shortcutAction(params);
             }
         } catch (e) {
             this.logger.error("ERROR in function runAction", e);
