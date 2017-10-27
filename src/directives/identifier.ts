@@ -5,12 +5,10 @@ import * as utils from "../utils/utils";
 import "css!./identifier.css";
 //#endregion
 
-let logger = new Logging.Logger("q2g Identifier Directive");
-
 class IdentifierController implements ng.IController {
 
     public $onInit(): void {
-        logger.debug("initial Run of AkquinetIdentifierController");
+        this.logger.debug("initial Run of AkquinetIdentifierController");
     }
 
     //#region Variables
@@ -32,12 +30,19 @@ class IdentifierController implements ng.IController {
     }
     //#endregion
 
-    /**
-     * init of AkquinetIdentifierController
-     */
-    constructor() {
-        logger.debug("init Constructor", this);
+    //#region logger
+    private _logger: Logging.Logger;
+    private get logger(): Logging.Logger {
+        if (!this._logger) {
+            try {
+                this._logger = new Logging.Logger("IdentifierController");
+            } catch (e) {
+                this.logger.error("ERROR in create logger instance", e);
+            }
+        }
+        return this._logger;
     }
+    //#endregion
 }
 
 export function IdentifierDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {

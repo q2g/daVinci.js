@@ -8,8 +8,6 @@ import { Logging } from "../utils/logger";
 import "css!./extensionHeader.css";
 //#endregion
 
-let logger = new Logging.Logger("q2g header Directive");
-
 class ListElement {
     buttonType: string = "";
     isVisible: boolean = false;
@@ -24,7 +22,7 @@ class ListElement {
 class ExtensionHeaderController implements ng.IController {
 
     public $onInit(): void {
-        logger.debug("initial Run of MainMenuController");
+        this.logger.debug("initial Run of MainMenuController");
     }
 
     //#region VARIABLES
@@ -122,8 +120,22 @@ class ExtensionHeaderController implements ng.IController {
             this._menuList = value;
             this.listRefactoring(value);
         } catch (e) {
-            logger.error("Error in setter of menuList");
+            this.logger.error("Error in setter of menuList");
         }
+    }
+    //#endregion
+
+    //#region logger
+    private _logger: Logging.Logger;
+    private get logger(): Logging.Logger {
+        if (!this._logger) {
+            try {
+                this._logger = new Logging.Logger("ExtensionHeaderController");
+            } catch (e) {
+                this.logger.error("ERROR in create logger instance", e);
+            }
+        }
+        return this._logger;
     }
     //#endregion
 
@@ -173,7 +185,7 @@ class ExtensionHeaderController implements ng.IController {
                 this.calcLists();
             }
         } catch (e) {
-            logger.error("error in listRefactoring", e);
+            this.logger.error("error in listRefactoring", e);
         }
     }
 
@@ -202,7 +214,7 @@ class ExtensionHeaderController implements ng.IController {
 
             this.buttonGroupWidth = (this.displayList.length + 1) * 60;
         } catch (e) {
-            logger.error("error in calcLists", e);
+            this.logger.error("error in calcLists", e);
         }
     }
 }

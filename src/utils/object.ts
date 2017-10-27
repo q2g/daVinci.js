@@ -5,10 +5,6 @@ import { Event } from "../node_modules/typescript.events/lib/typescript.events";
 import { checkEqualityOfArrays, AssistHypercube } from "./utils";
 //#endregion
 
-//#region Logger
-let logger = new Logging.Logger("q2gListAdapter");
-//#endregion
-
 //#region interfaces
 interface Iq2gIListObject extends Event {
     getDataPage: (top: number, height: number) => Promise<any>;
@@ -32,6 +28,20 @@ export class Q2gListAdapter {
     type: string;
     //#endregion
 
+    //#region logger
+    private _logger: Logging.Logger;
+    private get logger(): Logging.Logger {
+        if (!this._logger) {
+            try {
+                this._logger = new Logging.Logger("Q2gListAdapter");
+            } catch (e) {
+                this.logger.error("ERROR in create logger instance", e);
+            }
+        }
+        return this._logger;
+    }
+    //#endregion
+
     //#region collection
     private _collection: Array<ICollection> = [];
     get collection(): Array<ICollection> {
@@ -50,7 +60,7 @@ export class Q2gListAdapter {
                 this._itemsPagingHeight = value;
                 this.callData();
             } catch (err) {
-                logger.error("error in setter of listDimensionscrollPosition", err);
+                this.logger.error("error in setter of listDimensionscrollPosition", err);
             }
         }
     }
@@ -71,7 +81,7 @@ export class Q2gListAdapter {
                 this._itemsPagingTop = value;
                 this.callData();
             } catch (err) {
-                logger.error("error in setter of listDimensionscrollPosition", err);
+                this.logger.error("error in setter of listDimensionscrollPosition", err);
             }
         }
         return new Promise((resolve, reject) => {
@@ -99,7 +109,7 @@ export class Q2gListAdapter {
      * writes the new data page in the collection
      */
     private callData(): void {
-        logger.debug("callData", "");
+        this.logger.debug("callData", "");
 
         this.obj.getDataPage(this.itemsPagingTop, this.itemsPagingHeight)
             .then((collection: Array<any>) => {
@@ -116,7 +126,7 @@ export class Q2gListAdapter {
                 }
             })
             .catch((e) => {
-                logger.error("ERROR in getDataPages", e);
+                this.logger.error("ERROR in getDataPages", e);
             });
     }
 
@@ -148,6 +158,20 @@ export class Q2gListAdapter {
 export class Q2gIndObject extends Event implements Iq2gIListObject {
 
     model: AssistHypercube<EngineAPI.IGenericBaseLayout>;
+
+    //#region logger
+    private _logger: Logging.Logger;
+    private get logger(): Logging.Logger {
+        if (!this._logger) {
+            try {
+                this._logger = new Logging.Logger("Q2gIndObject");
+            } catch (e) {
+                this.logger.error("ERROR in create logger instance", e);
+            }
+        }
+        return this._logger;
+    }
+    //#endregion
 
     /**
      * init of class Q2gIndObject
@@ -186,7 +210,7 @@ export class Q2gIndObject extends Event implements Iq2gIListObject {
                     resolve(collection);
                 })
                 .catch((e: Error) => {
-                    logger.error("ERROR", e);
+                    this.logger.error("ERROR", e);
                     reject(e);
                 });
         });
@@ -202,7 +226,7 @@ export class Q2gIndObject extends Event implements Iq2gIListObject {
             .then(() => {
                 resolve(true);
             }).catch((e) => {
-                logger.error("error", e);
+                this.logger.error("error", e);
                 reject();
             });
         });
@@ -212,6 +236,20 @@ export class Q2gIndObject extends Event implements Iq2gIListObject {
 export class Q2gListObject extends Event implements Iq2gIListObject {
 
     model: EngineAPI.IGenericObject;
+
+    //#region logger
+    private _logger: Logging.Logger;
+    private get logger(): Logging.Logger {
+        if (!this._logger) {
+            try {
+                this._logger = new Logging.Logger("Q2gListObject");
+            } catch (e) {
+                this.logger.error("ERROR in create logger instance", e);
+            }
+        }
+        return this._logger;
+    }
+    //#endregion
 
     /**
      * init of class q2gDimensionObject
@@ -249,7 +287,7 @@ export class Q2gListObject extends Event implements Iq2gIListObject {
                     resolve(collection);
                 })
                 .catch((e: Error) => {
-                    logger.error("ERROR", e);
+                    this.logger.error("ERROR", e);
                     reject(e);
                 });
         });
@@ -265,7 +303,7 @@ export class Q2gListObject extends Event implements Iq2gIListObject {
                 .then(() => {
                     resolve(true);
                 }).catch((e) => {
-                    logger.error("error", e);
+                    this.logger.error("error", e);
                     reject();
                 });
         });
@@ -281,7 +319,7 @@ export class Q2gListObject extends Event implements Iq2gIListObject {
                 .then(() => {
                     resolve(true);
                 }).catch((error) => {
-                    logger.error("Error in acceptListObjectSearch", error);
+                    this.logger.error("Error in acceptListObjectSearch", error);
                     reject(error);
                 });
         });

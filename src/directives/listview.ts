@@ -7,8 +7,6 @@ import * as template from "text!./listview.html";
 import "css!./listview.css";
 //#endregion
 
-let logger = new Logging.Logger("q2g Listview Directive");
-
 export interface ICallbackListview {
     pos: number;
     event?: JQueryKeyEventObject;
@@ -31,7 +29,7 @@ export interface IDataModel {
 class ListViewController implements ng.IController {
 
     public $onInit(): void {
-        logger.debug("initial Run of ListViewController");
+        this.logger.debug("initial Run of ListViewController");
     }
 
     //#region Variables
@@ -89,6 +87,19 @@ class ListViewController implements ng.IController {
     }
     //#endregion
 
+    //#region logger
+    private _logger: Logging.Logger;
+    private get logger(): Logging.Logger {
+        if (!this._logger) {
+            try {
+                this._logger = new Logging.Logger("ListViewController");
+            } catch (e) {
+                this.logger.error("ERROR in create logger instance", e);
+            }
+        }
+        return this._logger;
+    }
+    //#endregion
 
     static $inject = ["$timeout", "$element"];
 
@@ -109,7 +120,7 @@ class ListViewController implements ng.IController {
      * @param newPos new Position of the selected Element
      */
     private calcSelected(newPos: number): void {
-        logger.debug("function calcSelected", "");
+        this.logger.debug("function calcSelected", "");
 
         if (newPos !== this._itemFocused) {
             if (newPos < 0 || newPos >= this.itemsCount) {
@@ -118,7 +129,7 @@ class ListViewController implements ng.IController {
                 try {
                     this.element.focus();
                 } catch (e) {
-                    logger.error("ERROR in calcSelected (else if block)", e);
+                    this.logger.error("ERROR in calcSelected (else if block)", e);
                 }
             } else {
                 try {
@@ -135,7 +146,7 @@ class ListViewController implements ng.IController {
                         this.readingText = focusChild.innerHTML;
                     }
                 } catch (e) {
-                    logger.error("ERROR in calcSelected (else block)", e);
+                    this.logger.error("ERROR in calcSelected (else block)", e);
                 }
             }
             this._itemFocused = newPos;
@@ -157,7 +168,7 @@ class ListViewController implements ng.IController {
      * @param objectShortcut element which is returned from the shortcut directive
      */
     public shortcutHandler(objectShortcut: any): boolean {
-        logger.debug("function shortcutHandler", objectShortcut);
+        this.logger.debug("function shortcutHandler", objectShortcut);
         let assist: number = 0;
 
         switch (objectShortcut.objectShortcut.name) {
@@ -180,7 +191,7 @@ class ListViewController implements ng.IController {
                     this.timeout();
                     return true;
                 } catch (e) {
-                    logger.error("Error in shortcutHandler pageUp", e);
+                    this.logger.error("Error in shortcutHandler pageUp", e);
                 }
             case "pageDown":
                 try {
@@ -196,7 +207,7 @@ class ListViewController implements ng.IController {
                     this.timeout();
                     return true;
                 } catch (e) {
-                    logger.error("Error in shortcutHandler pageDown", e);
+                    this.logger.error("Error in shortcutHandler pageDown", e);
                 }
 
             case "enter":

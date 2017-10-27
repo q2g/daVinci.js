@@ -5,12 +5,10 @@ import * as template from "text!./inputBar.html";
 import { Logging } from "../utils/logger";
 //#endregion
 
-let logger = new Logging.Logger("q2g inputBarDirective");
-
 class InputBarController implements ng.IController {
 
     public $onInit(): void {
-        logger.debug("initial Run of inputBarController");
+        this.logger.debug("initial Run of inputBarController");
     }
 
     //#region VARIABLES
@@ -81,6 +79,20 @@ class InputBarController implements ng.IController {
     }
     //#endregion
 
+    //#region logger
+    private _logger: Logging.Logger;
+    private get logger(): Logging.Logger {
+        if (!this._logger) {
+            try {
+                this._logger = new Logging.Logger("InputBarController");
+            } catch (e) {
+                this.logger.error("ERROR in create logger instance", e);
+            }
+        }
+        return this._logger;
+    }
+    //#endregion
+
     static $inject = ["$element", "$scope", "$timeout"];
 
     /**
@@ -97,7 +109,7 @@ class InputBarController implements ng.IController {
                     element.children().eq(1).focus();
                 }
             } catch (e) {
-                logger.error("error in constructor", e);
+                this.logger.error("error in constructor", e);
             }
         });
     }

@@ -2,14 +2,10 @@
 import { Logging } from "../utils/logger";
 //#endregion
 
-//#region Logger
-let logger = new Logging.Logger("Main");
-//#endregion
-
 interface IRegistrationObject {
     directive(name: string, directiveFactory: ng.Injectable<ng.IDirectiveFactory>): void;
     filter(name: string, filterFactoryFunction: ng.Injectable<Function>): void;
-    service<T>(name: string, serviceConstructor: ng.Injectable<Function>): T;    
+    service<T>(name: string, serviceConstructor: ng.Injectable<Function>): T;
 }
 
 export interface IRegistrationProvider {
@@ -17,10 +13,24 @@ export interface IRegistrationProvider {
 }
 
 export class RegistrationProvider implements IRegistrationObject {
+
     directive: (name: string, directiveFactory: ng.Injectable<ng.IDirectiveFactory>) => void;
     filter: (name: string, filterFactoryFunction: ng.Injectable<Function>) => void;
     service: <T>(name: string, serviceConstructor: ng.Injectable<Function>) => T;
-    
+
+    //#region logger
+    private _logger: Logging.Logger;
+    private get logger(): Logging.Logger {
+        if (!this._logger) {
+            try {
+                this._logger = new Logging.Logger("RegistrationProvider");
+            } catch (e) {
+                this.logger.error("ERROR in create logger instance", e);
+            }
+        }
+        return this._logger;
+    }
+    //#endregion
 
     implementObject(object: IRegistrationObject) {
 
@@ -29,7 +39,7 @@ export class RegistrationProvider implements IRegistrationObject {
         this.service = object.service ? object.service : null;
 
         if (!this.directive && this.filter && this.service) {
-            logger.error("object with missing properties inserted", object);
+            this.logger.error("object with missing properties inserted", object);
         }
     }
 }
