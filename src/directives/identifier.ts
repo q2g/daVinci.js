@@ -8,7 +8,7 @@ import "css!./identifier.css";
 class IdentifierController implements ng.IController {
 
     public $onInit(): void {
-        this.logger.debug("initial Run of AkquinetIdentifierController");
+        this.logger.debug("initial Run of IdentifierController");
     }
 
     //#region Variables

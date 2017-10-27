@@ -33,7 +33,6 @@ class ExtensionHeaderController implements ng.IController {
     buttonGroupWidth: number = 0;
     inputBarFocus: boolean = false;
     inputBarVisible: boolean = false;
-    inputField: string;
     isLocked: boolean = false;
     maxNumberOfElements: number;
     popOverWidth: number = 0;
@@ -136,6 +135,21 @@ class ExtensionHeaderController implements ng.IController {
             }
         }
         return this._logger;
+    }
+    //#endregion
+
+    //#region inputField
+    private _inputField: string;
+    public get inputField() : string {
+        return this._inputField;
+    }
+    public set inputField(v : string) {
+        if(v !== this._inputField) {
+            if (v === null) {
+                this.inputBarVisible = false;
+            }
+            this._inputField = v;
+        }
     }
     //#endregion
 

@@ -11,7 +11,7 @@ D*  | Name             |  Description
 ----|------------------|--------------------------------------------
  <  | shortcut         | mandatory; the shortcut(s)
  <  | shortcutOverride | mandatory; same like shortcuts but easy possibility to merge / override only some shortcuts / parts
- \<\? | shortcutRootscope| optional; Rootscope for the shortcut
+ \<\? | shortcutRootscope| optional; Rootscope for the shortcut; use "\|global\|" to registrate on document 
  \&\? | shortcutAction   | optional; action that is called for shortcut
  \<\? | shortcutPreventdefault | optional; cancels the default action that belongs to the element
  \<\? | shortcutTriggerHandler | optional; event which is triggered when shortcut is called
@@ -26,7 +26,7 @@ string | shortcut | mandatory; the shortcut
 string | name | mandatory; name of the shortcut, to be identified in the in the handler function outside of the directive
 boolean? | preventdefault | optional; cancels the default action that belongs to the element
 string? | action | optional; action that is called for shortcut
-string? | rootscope | optional; Rootscope for the shortcut
+string? | rootscope | optional; Rootscope for the shortcut; use "\|global\|" to registrate on document
 string? | triggerHandler | optional; event which is triggered when shortcut is called
 
 ### possible Actions
