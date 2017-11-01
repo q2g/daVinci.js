@@ -8,25 +8,11 @@ import "css!./identifier.css";
 class IdentifierController implements ng.IController {
 
     public $onInit(): void {
-        this.logger.debug("initial Run of AkquinetIdentifierController");
+        this.logger.debug("initial Run of IdentifierController");
     }
 
     //#region Variables
     show: boolean;
-    //#endregion
-
-    //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
-        if (!this._logger) {
-            try {
-                this._logger = new Logging.Logger("IdentifierController");
-            } catch (e) {
-                this.logger.error("ERROR in create logger instance", e);
-            }
-        }
-        return this._logger;
-    }
     //#endregion
 
     //#region theme
@@ -44,12 +30,19 @@ class IdentifierController implements ng.IController {
     }
     //#endregion
 
-    /**
-     * init of AkquinetIdentifierController
-     */
-    constructor() {
-        this.logger.debug("init Constructor", this);
+    //#region logger
+    private _logger: Logging.Logger;
+    private get logger(): Logging.Logger {
+        if (!this._logger) {
+            try {
+                this._logger = new Logging.Logger("IdentifierController");
+            } catch (e) {
+                this.logger.error("ERROR in create logger instance", e);
+            }
+        }
+        return this._logger;
     }
+    //#endregion
 }
 
 export function IdentifierDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {

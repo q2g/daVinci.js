@@ -33,6 +33,8 @@ class ListViewController implements ng.IController {
     }
 
     //#region Variables
+    callbackListviewObjects: (elem: ICallbackListview) => void;
+
     element: JQuery;
     hasFocusSearchField: boolean = false;
     ieItemsReadable: boolean = false;
@@ -40,27 +42,12 @@ class ListViewController implements ng.IController {
     itemsCount: number = 0;
     itemsPageHeight: number;
     itemsPageTop: number;
+    overrideShortcuts: Array<IShortcutObject>;
     readingText: string = "";
-    callbackListviewObjects: (elem: ICallbackListview) => void;
     shortcutRootscope: string;
     showFocused: boolean = false;
     showScrollBar: boolean = false;
     timeout: ng.ITimeoutService;
-    overrideShortcuts: Array<IShortcutObject>;
-    //#endregion
-
-    //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
-        if (!this._logger) {
-            try {
-                this._logger = new Logging.Logger("ListViewController");
-            } catch (e) {
-                this.logger.error("Error in initialising Logger", e);
-            }
-        }
-        return this._logger;
-    }
     //#endregion
 
     //#region itemFocused
@@ -100,6 +87,19 @@ class ListViewController implements ng.IController {
     }
     //#endregion
 
+    //#region logger
+    private _logger: Logging.Logger;
+    private get logger(): Logging.Logger {
+        if (!this._logger) {
+            try {
+                this._logger = new Logging.Logger("ListViewController");
+            } catch (e) {
+                this.logger.error("ERROR in create logger instance", e);
+            }
+        }
+        return this._logger;
+    }
+    //#endregion
 
     static $inject = ["$timeout", "$element"];
 
@@ -165,13 +165,13 @@ class ListViewController implements ng.IController {
 
     /**
      * manage all shortcut events on this directive
-     * @param objectShortcut element which is returned from the shortcut directive
+     * @param shortcutObject element which is returned from the shortcut directive
      */
-    public shortcutHandler(objectShortcut: any): boolean {
-        this.logger.debug("function shortcutHandler", objectShortcut);
+    public shortcutHandler(shortcutObject: IShortcutObject, event : JQueryKeyEventObject): boolean {
+        this.logger.debug("function shortcutHandler", shortcutObject, event);
         let assist: number = 0;
 
-        switch (objectShortcut.objectShortcut.name) {
+        switch (shortcutObject.name) {
             case "up":
                 this.itemFocused++;
                 return true;
@@ -214,7 +214,7 @@ class ListViewController implements ng.IController {
                 this.callbackListviewObjects({ pos: this.itemFocused - this.itemsPageTop});
                 return true;
             case "enterAll":
-                this.callbackListviewObjects({ pos: this.itemFocused - this.itemsPageTop, event: objectShortcut.event });
+                this.callbackListviewObjects({ pos: this.itemFocused - this.itemsPageTop, event: event });
                 return true;
         }
         return false;
@@ -231,6 +231,19 @@ class ListViewController implements ng.IController {
         } catch (err) {
             return false;
         }
+    }
+
+    /**
+     * selectItem, selects an item from list and calls callback
+     * @param index position of selected Item
+     * @param event event which got fired when selecting the item
+     */
+    public selectItem(index: number, event: JQueryEventObject) {
+
+        if (this.callbackListviewObjects) {
+            this.callbackListviewObjects({pos: index, event:event});
+        }
+
     }
 }
 
@@ -257,7 +270,7 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 theme: "<?"
             },
             compile: function () {
-                checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
+                // checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
                 $registrationProvider.filter("qstatusfilter", qStatusFilter);
             }
         };

@@ -1,6 +1,7 @@
 ﻿
 //#region Imports
 import { Logging } from "../utils/logger";
+import { IDomContainer } from "../utils/utils";
 //#endregion
 
 class ShortcutInputObject implements IShortcutObject {
@@ -26,10 +27,21 @@ export interface IShortcutObject {
     triggerHandler?: string;
 }
 
-export interface IShortcutHandlerObject {
-    element: JQuery;
-    event: Event;
-    objectShortcut: IShortcutObject;
+interface IShortcutHandlerObject {
+    /**
+     * A wraper of an dom element, needed to get the element return to the caller
+     */
+    domcontainer: IDomContainer;
+
+    /**
+     * the event calld when the shortcut handler gets triggered
+     */
+    event: JQueryKeyEventObject;
+
+    /**
+     * the object, which hold the information about the shortcut which got fired
+     */
+    shortcutObject: IShortcutObject;
 }
 
 class ShortCutController implements ng.IController {
@@ -37,7 +49,7 @@ class ShortCutController implements ng.IController {
 
     //#region Variables
     private element: JQuery;
-    private shortcutAction: (object: any) => void;
+    private shortcutAction: (params: IShortcutHandlerObject) => void;
     private shortcutTriggerHandler: string;
     private rootNameSpace: string = "";
     private shortcutObject: Array<IShortcutObject> = [];
@@ -186,7 +198,6 @@ class ShortCutController implements ng.IController {
             this.shortcutObject[0].preventdefault = this.shortcutPreventdefault;
             this.shortcutObject[0].rootscope = this.shortcutRootscope;
         }
-        //#endregion
 
         this.keyDownFunction = (e: JQueryKeyEventObject) => {
             this.keydownHandler(e);
@@ -272,8 +283,6 @@ class ShortCutController implements ng.IController {
      * @param global definition, if handler is fired on local or global
      */
     private keydownHandler(event: JQueryKeyEventObject) {
-        this.logger.debug("Function keyDownHandler", this.shortcutObject);
-
         for (let shortcut of this.shortcutObject) {
             if (this.checkShortcutsEqual(this.getArrayInsertetShortcut(shortcut.shortcut), this.getArrayKeydownShortcut(event))) {
                 if (shortcut.preventdefault) {
@@ -283,7 +292,6 @@ class ShortCutController implements ng.IController {
                         this.logger.error("error in keydownHandler", e);
                     }
                 }
-
                 if (shortcut.rootscope === "|global|") {
                     this.runAction(shortcut);
 
@@ -298,22 +306,23 @@ class ShortCutController implements ng.IController {
      * checks if Action is predefined, otherwise run q2gShortcutAction
      * @param object selected Shortcut Object
      */
-    private runAction(objectShortcut: IShortcutObject, event?: JQueryKeyEventObject): void {
-        this.logger.debug("Function runAction", objectShortcut);
+    private runAction(shortcutObject: IShortcutObject, event?: JQueryKeyEventObject): void {
 
         try {
-            if (objectShortcut.triggerHandler !== "") {
-                this.element.triggerHandler(objectShortcut.triggerHandler);
+            if (shortcutObject.triggerHandler !== "") {
+                this.element.triggerHandler(shortcutObject.triggerHandler);
             }
 
             if (typeof this.shortcutAction !== "undefined") {
-                this.shortcutAction({
-                    objectShortcut: {
-                        objectShortcut: objectShortcut,
-                        element: this.element,
-                        event: event,
-                    },
-                });
+
+                let params = {
+                    shortcutObject: shortcutObject,
+                    event: event,
+                    domcontainer: {
+                        element: this.element
+                    }
+                };
+                this.shortcutAction(params);
             }
         } catch (e) {
             this.logger.error("ERROR in function runAction", e);
