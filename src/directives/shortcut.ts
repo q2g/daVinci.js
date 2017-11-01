@@ -30,9 +30,7 @@ interface IShortcutHandlerObject {
     /**
      * TODO
      */
-    domcontainer: {
-        element: JQuery;
-    };
+    domcontainer: IDomContainer;
 
     event: JQueryKeyEventObject;
     /**
@@ -41,6 +39,7 @@ interface IShortcutHandlerObject {
     shortcutObject: IShortcutObject;
 }
 
+/** TODO MOVE somethere */
 export interface IDomContainer {
     element: JQuery;
 }
