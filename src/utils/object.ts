@@ -1,7 +1,7 @@
 ﻿
 //#region import
 import { Logging } from "./logger";
-import { Event } from "../node_modules/typescript.events/lib/typescript.events";
+import { Event } from "../../node_modules/typescript.events/lib/typescript.events";
 import { checkEqualityOfArrays, AssistHypercube } from "./utils";
 //#endregion
 
