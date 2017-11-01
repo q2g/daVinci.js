@@ -20,7 +20,7 @@
                 ng-repeat="item in vm.items track by $index"                
                 ng-class="{'list-element-focussed': vm.hasFocus($index) && vm.showFocused}"
               
-                ng-click="vm.callbackListviewObjects({pos: $index, event:$event})"
+                ng-click="vm.selectItem($index, $event)"
                 ng-keydown="vm.itemKeypressed($event, $index)"
                 >
                  <!-- todo no direct call of binded function call vm... that check if callbackListviewObjects!==null & undefinded -->

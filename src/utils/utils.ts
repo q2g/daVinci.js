@@ -39,6 +39,10 @@ export interface IMenuElement {
     name: string;
     hasSeparator: boolean;
 }
+
+export interface IDomContainer {
+    element: JQuery;
+}
 //#endregion
 
 //#region Logger

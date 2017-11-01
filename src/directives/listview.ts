@@ -232,6 +232,19 @@ class ListViewController implements ng.IController {
             return false;
         }
     }
+
+    /**
+     * selectItem, selects an item from list and calls callback
+     * @param index position of selected Item
+     * @param event event which got fired when selecting the item
+     */
+    public selectItem(index: number, event: JQueryEventObject) {
+
+        if (this.callbackListviewObjects) {
+            this.callbackListviewObjects({pos: index, event:event});
+        }
+
+    }
 }
 
 export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
