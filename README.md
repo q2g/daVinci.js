@@ -1,6 +1,8 @@
 # daVinci.js
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/q2g/daVinci.js.svg)](https://greenkeeper.io/)
+[![TravisCI](https://travis-ci.org/q2g/daVinci.js.svg?branch=master)](https://travis-ci.org/q2g/daVinci.js)
+
 
 davinci.js is a framework to build visual elments for the qlik sense plattform.
 
