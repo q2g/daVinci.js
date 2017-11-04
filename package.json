@@ -9,7 +9,7 @@
   },
   "author": "Thomas Häning, Konrad Mattheis (qlik2go) ",
   "devDependencies": {
-    "@types/angular": "1.6.36",
+    "@types/angular": "1.6.37",
     "@types/jquery": "3.2.16",
     "@types/qlik-engineapi": "12.34.0"
   },
