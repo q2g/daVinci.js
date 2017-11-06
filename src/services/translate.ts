@@ -6,7 +6,7 @@ interface ILanguageTranslationTable {
     [key: string]: ITranslationTable;
 }
 
-interface ITranslationTable {
+export interface ITranslationTable {
     [key: string]: string | ITranslationTable;
 }
 

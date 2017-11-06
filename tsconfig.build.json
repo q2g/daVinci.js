@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+        "module": "amd",
+        "target": "es5",
+        "declaration": true,
+        "outFile": "dist/app-build.js"
+    },
+    "include": [
+        "src/*.ts"
+    ],
+    "lib": [
+        "es2015.promise",
+        "es2015.iterable"
+      ],
+}

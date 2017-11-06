@@ -1,18 +1,18 @@
 ﻿
 //#region import
 import { Logging } from "./logger";
-import { Event } from "../../node_modules/typescript.events/lib/typescript.events";
+import { Event } from "../../node_modules/typescript.events/lib/server/events";
 import { checkEqualityOfArrays, AssistHypercube } from "./utils";
 //#endregion
 
 //#region interfaces
-interface Iq2gIListObject extends Event {
+export interface Iq2gIListObject extends Event {
     getDataPage: (top: number, height: number) => Promise<any>;
     searchFor: (searchString: string) => Promise<any>;
     acceptListObjectSearch?: (toggelMode: boolean) => Promise<boolean>;
 }
 
-interface ICollection {
+export interface ICollection {
     status: string;
     id: Array<number> | Array<string>;
     defs: Array<string>;

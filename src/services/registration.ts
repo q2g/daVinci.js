@@ -2,7 +2,7 @@
 import { Logging } from "../utils/logger";
 //#endregion
 
-interface IRegistrationObject {
+export interface IRegistrationObject {
     directive(name: string, directiveFactory: ng.Injectable<ng.IDirectiveFactory>): void;
     filter(name: string, filterFactoryFunction: ng.Injectable<Function>): void;
     service<T>(name: string, serviceConstructor: ng.Injectable<Function>): T;

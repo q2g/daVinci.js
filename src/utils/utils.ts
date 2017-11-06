@@ -1,6 +1,7 @@
 ﻿
 //#region Import
 import { Logging } from "./logger";
+import { IVMScope } from "./interfaces";
 //#endregion
 
 //#region interfaces
@@ -22,7 +23,7 @@ export interface IRegisterDirective {
 }
 
 
-interface ICalcCubeElement {
+export interface ICalcCubeElement {
     qState: string;
     cId: string;
     qGroupFieldDefs: Array<string>;
