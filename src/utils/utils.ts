@@ -47,7 +47,7 @@ export interface IDomContainer {
 //#endregion
 
 //#region Logger
-let logger = new Logging.Logger("utils");
+let logger: Logging.Logger = new Logging.Logger("utils");
 //#endregion
 
 //#region AssistFunctions
@@ -250,7 +250,7 @@ export abstract class AssistHypercube<T extends EngineAPI.IGenericBaseLayout> {
 
 }
 
-export class AssistHyperCubeDimensions extends AssistHypercube<EngineAPI.IGenericHyperCubeLayout> {
+export class AssistHyperCubeDimensionsInd extends AssistHypercube<EngineAPI.IGenericHyperCubeLayout> {
 
     /**
      * no docu
@@ -269,6 +269,26 @@ export class AssistHyperCubeDimensions extends AssistHypercube<EngineAPI.IGeneri
         return resElement;
     }
 
+}
+
+export class AssistHyperCubeDimensions extends AssistHypercube<EngineAPI.IGenericDimensionListLayout> {
+
+    /**
+     * no docu
+     * @param cube
+     */
+    protected internalReduceCube(cube: EngineAPI.IGenericDimensionListLayout): Array<ICalcCubeElement> {
+        let resElement: Array<ICalcCubeElement> = [];
+        for (let element of (cube as any).qDimensionList.qItems) {
+            resElement.push({
+                qState: "O",
+                cId: element.qInfo.qId,
+                qGroupFieldDefs: [element.qMeta.title],
+                qFallbackTitle: element.qMeta.title
+            });
+        }
+        return resElement;
+    }
 }
 
 export class AssistHyperCubeBookmarks extends AssistHypercube<EngineAPI.IGenericBookmarkListLayout> {
@@ -320,12 +340,12 @@ export class AssistHyperCubeFields extends AssistHypercube<EngineAPI.IGenericHyp
      */
     protected internalReduceCube(cube: EngineAPI.IGenericHyperCubeLayout): Array<ICalcCubeElement> {
         let resElement: Array<ICalcCubeElement> = [];
-        for (let element of cube.qHyperCube.qDimensionInfo) {
+        for (let element of (cube as any).qFieldList.qItems) {
             resElement.push({
                 qState: "O",
-                cId: "1",
-                qGroupFieldDefs: element.qGroupFieldDefs,
-                qFallbackTitle: element.qFallbackTitle
+                cId: element.qName,
+                qGroupFieldDefs: element.qName,
+                qFallbackTitle: element.qName
             });
         }
         return resElement;

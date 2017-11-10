@@ -3,6 +3,7 @@ import { Logging } from "../utils/logger";
 import { qStatusFilter } from "../filter/statusFilter";
 import { ShortCutDirectiveFactory, IShortcutObject } from "./shortcut";
 import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
+import { ScrollBarDirectiveFactory } from "./scrollBar";
 import * as template from "text!./listview.html";
 import "css!./listview.css";
 //#endregion
@@ -271,6 +272,8 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
             },
             compile: function () {
                 // checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
+                checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
+                    ScrollBarDirectiveFactory(rootNameSpace), "ScrollBar");
                 $registrationProvider.filter("qstatusfilter", qStatusFilter);
             }
         };

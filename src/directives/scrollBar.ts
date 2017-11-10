@@ -275,6 +275,7 @@ class ScrollBarController implements ng.IController {
 
         this.element.parent().on("wheel", (event: JQueryEventObject) => {
             this.scrollWheelHandle(event);
+            this.timeout();
         });
         this.dragElement.on("mousedown", (event: JQueryEventObject) => {
             event.preventDefault();
