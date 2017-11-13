@@ -1,8 +1,8 @@
 ﻿//#region Import
-import { Logging } from "../utils/logger";
+import { logging } from "../utils/logger";
 //#endregion
 
-interface IRegistrationObject {
+export interface IRegistrationObject {
     directive(name: string, directiveFactory: ng.Injectable<ng.IDirectiveFactory>): void;
     filter(name: string, filterFactoryFunction: ng.Injectable<Function>): void;
     service<T>(name: string, serviceConstructor: ng.Injectable<Function>): T;
@@ -19,11 +19,11 @@ export class RegistrationProvider implements IRegistrationObject {
     service: <T>(name: string, serviceConstructor: ng.Injectable<Function>) => T;
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("RegistrationProvider");
+                this._logger = new logging.Logger("RegistrationProvider");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }

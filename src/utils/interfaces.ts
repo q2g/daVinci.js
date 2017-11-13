@@ -1,3 +1,3 @@
-﻿interface IVMScope<T> extends ExtensionAPI.IExtensionScope {
+﻿export interface IVMScope<T> extends ExtensionAPI.IExtensionScope {
     vm: T;
 }

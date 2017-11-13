@@ -1,8 +1,9 @@
 ﻿//#region Imports
-import { Logging } from "../utils/logger";
+import { logging } from "../utils/logger";
 import { qStatusFilter } from "../filter/statusFilter";
 import { ShortCutDirectiveFactory, IShortcutObject } from "./shortcut";
 import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
+import { ScrollBarDirectiveFactory } from "./scrollBar";
 import * as template from "text!./listview.html";
 import "css!./listview.css";
 //#endregion
@@ -88,11 +89,11 @@ class ListViewController implements ng.IController {
     //#endregion
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("ListViewController");
+                this._logger = new logging.Logger("ListViewController");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }
@@ -271,6 +272,8 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
             },
             compile: function () {
                 // checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
+                checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
+                    ScrollBarDirectiveFactory(rootNameSpace), "ScrollBar");
                 $registrationProvider.filter("qstatusfilter", qStatusFilter);
             }
         };

@@ -1,0 +1,10 @@
+node_modules/
+src/
+test/
+
+*.yml
+gulpfile.js
+tsconfig.build.json
+tsconfig.test.json
+package-lock.json
+.gitignore

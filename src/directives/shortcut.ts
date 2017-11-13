@@ -1,6 +1,6 @@
 ﻿
 //#region Imports
-import { Logging } from "../utils/logger";
+import { logging } from "../utils/logger";
 import { IDomContainer } from "../utils/utils";
 //#endregion
 
@@ -104,11 +104,11 @@ class ShortCutController implements ng.IController {
     //#endregion
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("ShortCutController");
+                this._logger = new logging.Logger("ShortCutController");
             } catch (e) {
                 console.error("Error in initialising Logger", e);
             }

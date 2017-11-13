@@ -1,4 +1,5 @@
-﻿import { Logging } from "../utils/logger";
+﻿import { logging } from "../utils/logger";
+import { IQService } from "angular";
 
 type TranslationResults = string | { [key: string]: string };
 
@@ -6,7 +7,7 @@ interface ILanguageTranslationTable {
     [key: string]: ITranslationTable;
 }
 
-interface ITranslationTable {
+export interface ITranslationTable {
     [key: string]: string | ITranslationTable;
 }
 
@@ -63,8 +64,9 @@ export class TranslateProvider implements ITranslateProvider {
 
     determinePreferredLanguage(fn?: () => void): ITranslateProvider {
         let userLang = navigator.language || (navigator as any).userLanguage;
-        if (userLang === undefined)
+        if (userLang === undefined) {
             userLang = "";
+        }
         this.preferredLanguage(userLang);
         return this;
     }
@@ -113,10 +115,11 @@ export interface ITranslateService {
     //#endregion
 }
 
-export const TranslateService = ((function ($q: ng.IQService, $translateProvider: ITranslateProvider) {
+export const TranslateService = ((function ($q: IQService, $translateProvider: ITranslateProvider) {
     // init für Translation
 
-    let NameLess = function (translationId: string | string[], interpolateParams?: any, interpolationId?: string): ng.IPromise<TranslationResults> {
+    let NameLess = function (
+        translationId: string | string[], interpolateParams?: any, interpolationId?: string): ng.IPromise<TranslationResults> {
         return new $q<TranslationResults>((resolve, reject) => {
             let result = NameLess.instant(translationId as any, interpolateParams, interpolationId);
             resolve(result);
@@ -125,11 +128,10 @@ export const TranslateService = ((function ($q: ng.IQService, $translateProvider
 
     NameLess.instant = (translationId: string | string[], interpolateParams?: any, interpolationId?: string): any => {
         try {
-            return $translateProvider.translations($translateProvider.preferredLanguage())[translationId as string];;
-        }
-        catch (err) {
+            return $translateProvider.translations($translateProvider.preferredLanguage())[translationId as string];
+        } catch (err) {
             return translationId;
         }
-    }
+    };
     return NameLess;
 }));

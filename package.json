@@ -1,6 +1,6 @@
 {
   "name": "davinci.js",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "license": "MIT",
   "description": "Framework for visualisation extensions",
   "repository": {
@@ -8,13 +8,35 @@
     "url": "https://github.com/q2g/daVinci.js"
   },
   "author": "Thomas Häning, Konrad Mattheis (qlik2go) ",
+  "scripts": {
+    "test": "tsc -p tsconfig.test.json && mocha --recursive",
+    "build": "tsc -p tsconfig.build.json && gulp less && gulp html && gulp gitversionPackage && gulp addVersionNumber"
+  },
   "devDependencies": {
     "@types/angular": "1.6.39",
     "@types/jquery": "3.2.16",
+    "@types/chai": "^4.0.4",
+    "@types/mocha": "^2.2.44",
+    "@types/qlik-visualizationextensions": "^4.0.1",
+    "chai": "^4.1.2",
+    "mocha": "^4.0.1",
+    "rollup": "^0.50.0",
+    "typescript": "^2.6.1",
+    "gulp": "^3.9.1",
+    "gulp-less": "^3.3.2",
+    "gulp-rename": "^1.2.2",
+    "git-rev": "^0.2.1",
+    "gulp-string-replace": "^0.4.0",
+    "gulp-json-modify": "^1.0.2",
     "@types/qlik-engineapi": "12.34.1"
   },
   "dependencies": {
-    
     "typescript.events": "^7.9.0"
-  }
+  },
+  "files": [
+    "dist/*.js",
+    "dist/*.d.ts"
+  ],
+  "main": "dist/daVinci.js",
+  "types": "dist/daVinci.d.ts"
 }

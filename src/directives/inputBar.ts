@@ -2,7 +2,7 @@
 import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
 import { ShortCutDirectiveFactory, IShortcutObject } from "./shortcut";
 import * as template from "text!./inputBar.html";
-import { Logging } from "../utils/logger";
+import { logging } from "../utils/logger";
 //#endregion
 
 class InputBarController implements ng.IController {
@@ -80,11 +80,11 @@ class InputBarController implements ng.IController {
     //#endregion
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("InputBarController");
+                this._logger = new logging.Logger("InputBarController");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }

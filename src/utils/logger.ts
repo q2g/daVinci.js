@@ -1,4 +1,4 @@
-﻿export namespace Logging {
+﻿export namespace logging {
     class KV {
         key: string;
         value: LogLevel;

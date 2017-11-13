@@ -1,20 +1,60 @@
 ﻿
 //#region import
-import { Logging } from "./logger";
-import { Event } from "../../node_modules/typescript.events/lib/typescript.events";
+import { logging } from "./logger";
+// import { Event } from "typescript.events";
 import { checkEqualityOfArrays, AssistHypercube } from "./utils";
 //#endregion
 
+
+export interface ILiteEvent {
+    on(eventName: string, listener: IListener);
+    emit(eventName: string, args: any);
+}
+
+export interface IListener {
+    (...arg: Array<any>): void;
+}
+
+interface IEvent {
+    eventName: string;
+    listener: IListener;
+}
+
+export class LiteEvent implements ILiteEvent {
+
+    private events: Array<IEvent> = [];
+
+    public on(eventName: string, listener: IListener): LiteEvent {
+        this.registerEvent(eventName, listener);
+        return this;
+    }
+
+    public emit(eventName: string, args: any): void {
+        for(var event of this.events) {
+            if(event.eventName === eventName) {
+                event.listener(args);
+            }
+        }
+    }
+
+    private registerEvent(eventName: string, listener: IListener): void {
+        this.events.push({eventName, listener});
+        return;
+    }
+
+}
+
+
 //#region interfaces
-interface Iq2gIListObject extends Event {
+export interface Iq2gIListObject extends LiteEvent {
     getDataPage: (top: number, height: number) => Promise<any>;
     searchFor: (searchString: string) => Promise<any>;
     acceptListObjectSearch?: (toggelMode: boolean) => Promise<boolean>;
 }
 
-interface ICollection {
+export interface ICollection {
     status: string;
-    id: Array<number> | Array<string>;
+    id: Array<string>;
     defs: Array<string>;
     title: string;
 }
@@ -29,11 +69,11 @@ export class Q2gListAdapter {
     //#endregion
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("Q2gListAdapter");
+                this._logger = new logging.Logger("Q2gListAdapter");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }
@@ -124,6 +164,7 @@ export class Q2gListAdapter {
                     }
                     this._collection.splice(counter, this._collection.length);
                 }
+                this.obj.emit("changeData", true);
             })
             .catch((e) => {
                 this.logger.error("ERROR in getDataPages", e);
@@ -155,16 +196,16 @@ export class Q2gListAdapter {
     }
 }
 
-export class Q2gIndObject extends Event implements Iq2gIListObject {
+export class Q2gIndObject extends LiteEvent implements Iq2gIListObject {
 
     model: AssistHypercube<EngineAPI.IGenericBaseLayout>;
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("Q2gIndObject");
+                this._logger = new logging.Logger("Q2gIndObject");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }
@@ -233,16 +274,16 @@ export class Q2gIndObject extends Event implements Iq2gIListObject {
     }
 }
 
-export class Q2gListObject extends Event implements Iq2gIListObject {
+export class Q2gListObject extends LiteEvent implements Iq2gIListObject {
 
     model: EngineAPI.IGenericObject;
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("Q2gListObject");
+                this._logger = new logging.Logger("Q2gListObject");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }

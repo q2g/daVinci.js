@@ -4,7 +4,7 @@ import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } fro
 import * as template from "text!./extensionHeader.html";
 import { ShortCutDirectiveFactory } from "./shortcut";
 import { InputBarDirectiveFactory } from "./inputBar";
-import { Logging } from "../utils/logger";
+import { logging } from "../utils/logger";
 import "css!./extensionHeader.css";
 //#endregion
 
@@ -125,11 +125,11 @@ class ExtensionHeaderController implements ng.IController {
     //#endregion
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("ExtensionHeaderController");
+                this._logger = new logging.Logger("ExtensionHeaderController");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }
