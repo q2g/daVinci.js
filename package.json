@@ -15,7 +15,6 @@
   "devDependencies": {
     "@types/angular": "1.6.39",
     "@types/jquery": "3.2.16",
-    "@types/qlik-engineapi": "12.34.1",
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.44",
     "@types/qlik-visualizationextensions": "^4.0.1",
@@ -28,7 +27,8 @@
     "gulp-rename": "^1.2.2",
     "git-rev": "^0.2.1",
     "gulp-string-replace": "^0.4.0",
-    "gulp-json-modify": "^1.0.2"
+    "gulp-json-modify": "^1.0.2",
+    "@types/qlik-engineapi": "12.34.1"
   },
   "dependencies": {
     "typescript.events": "^7.9.0"
