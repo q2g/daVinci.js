@@ -1,6 +1,6 @@
 ﻿
 //#region Import
-import { Logging } from "./logger";
+import { logging } from "./logger";
 import { IVMScope } from "./interfaces";
 //#endregion
 
@@ -47,7 +47,7 @@ export interface IDomContainer {
 //#endregion
 
 //#region Logger
-let logger: Logging.Logger = new Logging.Logger("utils");
+let logger: logging.Logger = new logging.Logger("utils");
 //#endregion
 
 //#region AssistFunctions

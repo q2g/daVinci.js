@@ -1,6 +1,6 @@
 ﻿
 //#region Imports
-import { Logging } from "../utils/logger";
+import { logging } from "../utils/logger";
 import { templateReplacer } from "../utils/utils";
 import * as template from "text!./statusText.html";
 //#endregion
@@ -13,11 +13,11 @@ class StatusTextController implements ng.IController {
     statustime: number;
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("StatusTextController");
+                this._logger = new logging.Logger("StatusTextController");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }

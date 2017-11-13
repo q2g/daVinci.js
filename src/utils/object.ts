@@ -1,6 +1,6 @@
 ﻿
 //#region import
-import { Logging } from "./logger";
+import { logging } from "./logger";
 // import { Event } from "typescript.events";
 import { checkEqualityOfArrays, AssistHypercube } from "./utils";
 //#endregion
@@ -69,11 +69,11 @@ export class Q2gListAdapter {
     //#endregion
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("Q2gListAdapter");
+                this._logger = new logging.Logger("Q2gListAdapter");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }
@@ -201,11 +201,11 @@ export class Q2gIndObject extends LiteEvent implements Iq2gIListObject {
     model: AssistHypercube<EngineAPI.IGenericBaseLayout>;
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("Q2gIndObject");
+                this._logger = new logging.Logger("Q2gIndObject");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }
@@ -279,11 +279,11 @@ export class Q2gListObject extends LiteEvent implements Iq2gIListObject {
     model: EngineAPI.IGenericObject;
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("Q2gListObject");
+                this._logger = new logging.Logger("Q2gListObject");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }

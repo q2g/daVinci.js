@@ -1,5 +1,5 @@
 ﻿//#region Imports
-import { Logging } from "../utils/logger";
+import { logging } from "../utils/logger";
 import * as template from "text!./identifier.html";
 import * as utils from "../utils/utils";
 import "css!./identifier.css";
@@ -31,11 +31,11 @@ class IdentifierController implements ng.IController {
     //#endregion
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("IdentifierController");
+                this._logger = new logging.Logger("IdentifierController");
             } catch (e) {
                 this.logger.error("ERROR in create logger instance", e);
             }

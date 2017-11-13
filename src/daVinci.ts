@@ -1,4 +1,4 @@
-import { Logging } from "./utils/logger";
+import { logging } from "./utils/logger";
 
 import { IVMScope as _IVMScope } from "./utils/interfaces";
 
@@ -128,7 +128,7 @@ namespace directives {
 }
 
 export {
-    Logging,
+    logging,
     utils,
     services,
     version,

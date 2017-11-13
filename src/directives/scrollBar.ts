@@ -1,6 +1,6 @@
 ﻿
 //#region Imports
-import { Logging } from "../utils/logger";
+import { logging } from "../utils/logger";
 import { templateReplacer } from "../utils/utils";
 import * as template from "text!./scrollBar.html";
 import "css!./scrollBar.css";
@@ -9,11 +9,11 @@ import "css!./scrollBar.css";
 class DragableBar {
 
     //#region VARIABLES
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("DragableBar");
+                this._logger = new logging.Logger("DragableBar");
             } catch (e) {
                 console.error("Error in initialising Logger", e);
             }
@@ -230,11 +230,11 @@ class ScrollBarController implements ng.IController {
     //#endregion
 
     //#region logger
-    private _logger: Logging.Logger;
-    private get logger(): Logging.Logger {
+    private _logger: logging.Logger;
+    private get logger(): logging.Logger {
         if (!this._logger) {
             try {
-                this._logger = new Logging.Logger("ScrollBarController");
+                this._logger = new logging.Logger("ScrollBarController");
             } catch (e) {
                 console.error("Error in initialising Logger", e);
             }

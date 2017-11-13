@@ -1,4 +1,4 @@
-﻿import { Logging } from "../utils/logger";
+﻿import { logging } from "../utils/logger";
 import { IQService } from "angular";
 
 type TranslationResults = string | { [key: string]: string };
