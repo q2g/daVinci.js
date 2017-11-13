@@ -1,7 +1,11 @@
 {
     "compilerOptions": {
         "module": "umd",
-        "target": "es5"
+        "target": "es5",
+        "lib": [
+            "dom",
+            "es2015"
+        ]
     },
     "include": [
         "test/*.ts"
