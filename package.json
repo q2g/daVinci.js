@@ -28,7 +28,8 @@
     "gulp-less": "^3.3.2",
     "gulp-rename": "^1.2.2",
     "git-rev": "^0.2.1",
-    "gulp-string-replace": "^0.4.0"
+    "gulp-string-replace": "^0.4.0",
+    "gulp-json-modify": "^1.0.2"
   },
   "dependencies": {
     "typescript.events": "^7.9.0"
