@@ -10,7 +10,7 @@
   "author": "Thomas Häning, Konrad Mattheis (qlik2go) ",
   "scripts": {
     "test": "tsc -p tsconfig.test.json && mocha --recursive",
-    "build": "tsc -p tsconfig.build.json && gulp less && gulp html && gulp gitversion"
+    "build": "tsc -p tsconfig.build.json && gulp less && gulp html && gulp gitversionPackage && gulp addVersionNumber"
   },
   "devDependencies": {
     "@types/angular": "1.6.36",

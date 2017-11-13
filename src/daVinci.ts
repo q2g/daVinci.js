@@ -62,6 +62,7 @@ import { ShortCutDirectiveFactory as _ShortCutDirectiveFactory,
 
 import { StatusTextDirectiveFactory as _StatusTextDirectiveFactory } from "./directives/statusText";
 
+import { IQService } from "angular";
 
 
 const version: string = "|GitVersionNumber|";

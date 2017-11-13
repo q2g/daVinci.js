@@ -6,3 +6,5 @@ test/
 gulpfile.js
 tsconfig.build.json
 tsconfig.test.json
+package-lock.json
+.gitignore
