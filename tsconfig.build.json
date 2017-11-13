@@ -3,13 +3,19 @@
         "module": "umd",
         "target": "es5",
         "declaration": true,
-        "outDir": "dist/"
+        "outDir": "dist/",
+        "lib": [
+            "dom",
+            "es2015"
+        ],
+        "noResolve": false
     },
     "include": [
         "src/*.ts"
     ],
-    "lib": [
-        "es2015.promise",
-        "es2015.iterable"
-      ]
+    "exclude": [
+        "node_modules",
+        "dist",
+        "test"
+    ]
 }

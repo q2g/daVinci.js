@@ -5,9 +5,5 @@
     },
     "include": [
         "test/*.ts"
-    ],
-    "lib": [
-        "es2015.promise",
-        "es2015.iterable"
-      ]
+    ]
 }
