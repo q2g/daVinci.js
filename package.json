@@ -1,6 +1,6 @@
 {
   "name": "davinci.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "license": "MIT",
   "description": "Framework for visualisation extensions",
   "repository": {
@@ -34,8 +34,7 @@
     "typescript.events": "^7.9.0"
   },
   "files": [
-    "dist/*.js",
-    "dist/*.d.ts"
+    "dist"
   ],
   "main": "dist/daVinci.js",
   "types": "dist/daVinci.d.ts"
