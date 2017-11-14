@@ -2,7 +2,7 @@
 *.map
 *.js
 *.css
-*.d.ts
+dist/*.d.ts
 
 node_modules/
 dist/
