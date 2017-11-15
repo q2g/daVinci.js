@@ -1,6 +1,6 @@
 {
   "name": "davinci.js",
-  "version": "1.0.2",
+  "version": "1.0.1",
   "license": "MIT",
   "description": "Framework for visualisation extensions",
   "repository": {
@@ -18,6 +18,7 @@
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.44",
     "@types/qlik-visualizationextensions": "^4.0.1",
+    "@types/qlik-engineapi": "12.34.1",
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
     "typescript": "^2.6.1",
@@ -26,8 +27,7 @@
     "gulp-rename": "^1.2.2",
     "git-rev": "^0.2.1",
     "gulp-string-replace": "^0.4.0",
-    "gulp-json-modify": "^1.0.2",
-    "@types/qlik-engineapi": "12.34.1"
+    "gulp-json-modify": "^1.0.2"
   },
   "files": [
     "dist"
