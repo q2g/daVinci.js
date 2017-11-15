@@ -52,7 +52,7 @@ import { IdentifierDirectiveFactory as _IdentifierDirectiveFactory } from "./dir
 
 import { InputBarDirectiveFactory as _InputBarDirectiveFactory } from "./directives/inputBar";
 
-import { ListViewDirectiveFactory as _ListViewDirectiveFactory } from "./directives/listview";
+import { ListViewDirectiveFactory as _ListViewDirectiveFactory, IDataModelItem as _IDataModelItem } from "./directives/listview";
 
 import { ScrollBarDirectiveFactory as _ScrollBarDirectiveFactory } from "./directives/scrollBar";
 
@@ -125,6 +125,7 @@ namespace directives {
     export const StatusTextDirectiveFactory = _StatusTextDirectiveFactory;
 
     export type IShortcutObject = _IShortcutObject;
+    export type IDataModelItem = _IDataModelItem;
 }
 
 export {
