@@ -20,7 +20,6 @@
     "@types/qlik-visualizationextensions": "^4.0.1",
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
-    "rollup": "^0.50.0",
     "typescript": "^2.6.1",
     "gulp": "^3.9.1",
     "gulp-less": "^3.3.2",
