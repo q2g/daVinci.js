@@ -30,12 +30,8 @@
     "gulp-json-modify": "^1.0.2",
     "@types/qlik-engineapi": "12.34.1"
   },
-  "dependencies": {
-    "typescript.events": "^7.9.0"
-  },
   "files": [
-    "dist/*.js",
-    "dist/*.d.ts"
+    "dist"
   ],
   "main": "dist/daVinci.js",
   "types": "dist/daVinci.d.ts"
