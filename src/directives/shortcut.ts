@@ -1,7 +1,7 @@
 ﻿
 //#region Imports
 import { logging } from "../utils/logger";
-import { IDomContainer } from "../utils/utils";
+import { IDomContainer } from "../utils/interfaces";
 //#endregion
 
 class ShortcutInputObject implements IShortcutObject {
