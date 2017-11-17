@@ -2,10 +2,11 @@
 import { logging } from "../utils/logger";
 import { qStatusFilter } from "../filter/statusFilter";
 import { ShortCutDirectiveFactory, IShortcutObject } from "./shortcut";
-import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
+import { templateReplacer, checkDirectiveIsRegistrated } from "../utils/utils";
 import { ScrollBarDirectiveFactory } from "./scrollBar";
 import * as template from "text!./listview.html";
 import "css!./listview.css";
+import { IRegisterDirective } from "../utils/interfaces";
 //#endregion
 
 export interface ICallbackListview {

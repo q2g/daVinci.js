@@ -10,10 +10,6 @@ import { AssistHypercube as _AssistHypercube,
          checkEqualityOfArrays as _checkEqualityOfArrays,
          checkDirectiveIsRegistrated as _checkDirectiveIsRegistrated,
          getEnigma as _getEnigma,
-         ICalcCubeElement as _ICalcCubeElement,
-         IDomContainer as _IDomContainer,
-         IMenuElement as _IMenuElement,
-         IRegisterDirective as _IRegisterDirective,
          IStateMachineState as _IStateMachineState,
          regEscaper as _regEscaper,
          StateMachineInput as _StateMachineInput,
@@ -65,6 +61,13 @@ import { StatusTextDirectiveFactory as _StatusTextDirectiveFactory } from "./dir
 
 import { IQService } from "angular";
 
+import { IVMScope as _IVMScope,
+         ICalcCubeElement as _ICalcCubeElement,
+         IDomContainer as _IDomContainer,
+         IMenuElement as _IMenuElement,
+         IRegisterDirective as _IRegisterDirective,
+} from "./utils/interfaces";
+
 
 const version: string = "|GitVersionNumber|";
 
@@ -88,7 +91,7 @@ namespace utils {
     export const regEscaper = _regEscaper;
     export const templateReplacer = _templateReplacer;
 
-    // export type IVMScope<T> = _IVMScope<T>;
+    export type IVMScope<T> = _IVMScope<T>;
     export type ICalcCubeElement = _ICalcCubeElement;
     export type IDomContainer = _IDomContainer;
     export type IMenuElement = _IMenuElement;

@@ -1,8 +1,9 @@
 ﻿//#region IMPORT
-import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
+import { templateReplacer, checkDirectiveIsRegistrated } from "../utils/utils";
 import { ShortCutDirectiveFactory, IShortcutObject } from "./shortcut";
 import * as template from "text!./inputBar.html";
 import { logging } from "../utils/logger";
+import { IRegisterDirective } from "../utils/interfaces";
 //#endregion
 
 class InputBarController implements ng.IController {

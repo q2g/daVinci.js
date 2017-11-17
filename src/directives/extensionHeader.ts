@@ -1,11 +1,12 @@
 ﻿
 //#region IMPORT
-import { templateReplacer, checkDirectiveIsRegistrated, IRegisterDirective } from "../utils/utils";
+import { templateReplacer, checkDirectiveIsRegistrated } from "../utils/utils";
 import * as template from "text!./extensionHeader.html";
 import { ShortCutDirectiveFactory } from "./shortcut";
 import { InputBarDirectiveFactory } from "./inputBar";
 import { logging } from "../utils/logger";
 import "css!./extensionHeader.css";
+import { IRegisterDirective } from "../utils/interfaces";
 //#endregion
 
 class ListElement {
