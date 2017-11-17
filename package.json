@@ -18,7 +18,7 @@
     "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.44",
     "@types/qlik-visualizationextensions": "^4.0.1",
-    "@types/qlik-engineapi": "12.34.1",
+    "@types/qlik-engineapi": "12.34.2",
     "chai": "^4.1.2",
     "mocha": "^4.0.1",
     "typescript": "^2.6.1",
