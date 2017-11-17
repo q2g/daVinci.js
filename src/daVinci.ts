@@ -1,7 +1,5 @@
 import { logging } from "./utils/logger";
 
-import { IVMScope as _IVMScope } from "./utils/interfaces";
-
 import { AssistHypercube as _AssistHypercube,
          AssistHyperCubeDimensionsInd as _AssistHyperCubeDimensionsInd,
          AssistHyperCubeMeasures as _AssistHyperCubeMeasures,
@@ -52,7 +50,10 @@ import { IdentifierDirectiveFactory as _IdentifierDirectiveFactory } from "./dir
 
 import { InputBarDirectiveFactory as _InputBarDirectiveFactory } from "./directives/inputBar";
 
-import { ListViewDirectiveFactory as _ListViewDirectiveFactory, IDataModelItem as _IDataModelItem } from "./directives/listview";
+import { ListViewDirectiveFactory as _ListViewDirectiveFactory,
+         IDataModelItem as _IDataModelItem,
+         ICallbackListview as _ICallbackListview,
+         IDataModel as _IDataModel} from "./directives/listview";
 
 import { ScrollBarDirectiveFactory as _ScrollBarDirectiveFactory } from "./directives/scrollBar";
 
@@ -87,7 +88,7 @@ namespace utils {
     export const regEscaper = _regEscaper;
     export const templateReplacer = _templateReplacer;
 
-    export type IVMScope<T> = _IVMScope<T>;
+    // export type IVMScope<T> = _IVMScope<T>;
     export type ICalcCubeElement = _ICalcCubeElement;
     export type IDomContainer = _IDomContainer;
     export type IMenuElement = _IMenuElement;
@@ -126,6 +127,8 @@ namespace directives {
 
     export type IShortcutObject = _IShortcutObject;
     export type IDataModelItem = _IDataModelItem;
+    export type ICallbackListview = _ICallbackListview;
+    export type IDataModel = _IDataModel;
 }
 
 export {
