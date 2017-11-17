@@ -1,7 +1,6 @@
 ﻿
 //#region Import
 import { logging } from "./logger";
-import { IVMScope } from "./interfaces";
 //#endregion
 
 //#region interfaces
@@ -85,7 +84,7 @@ export function regEscaper(string: string) {
  */
 export function checkDirectiveIsRegistrated(
     injector: ng.auto.IInjectorService,
-    regDirective: IRegisterDirective | IQVAngular,
+    regDirective: IRegisterDirective,
     rootNameSpace: string,
     factory: ng.IDirectiveFactory,
     directiveName: string) {
@@ -115,13 +114,22 @@ export function calcNumbreOfVisRows(elementHeight: number): number {
  * @param scope root angular scoop for the Directive
  * @returns returns the enigma root Object
  */
-export function getEnigma(scope: IVMScope<any>): EngineAPI.IGenericObject {
+export function getEnigma(scope: ng.IScope): EngineAPI.IGenericObject {
 
-    let enigmaRoot = (scope.component.model as any) as EngineAPI.IGenericObject;
+    let enigmaRoot = undefined;
 
-    if ((scope.component.model as any).enigmaModel) {
-        // pre 3.2 SR3 enigma is in a subvariable of model
-        enigmaRoot = (scope.component.model as any).enigmaModel as EngineAPI.IGenericObject;
+    try {
+        let anyscope = scope as any;
+        if (anyscope && anyscope.component && anyscope.component.model) {
+            if  (anyscope.component.model.enigmaModel) {
+            // pre 3.2 SR3 enigma is in a subvariable of model
+                enigmaRoot = anyscope.component.model.enigmaModel as EngineAPI.IGenericObject;
+            } else {
+                enigmaRoot = anyscope.component.model as EngineAPI.IGenericObject;
+            }
+        }
+    } catch (error) {
+        logger.error("Error in getEnigma", error);
     }
 
     return enigmaRoot;

@@ -14,20 +14,19 @@
   },
   "devDependencies": {
     "@types/angular": "1.6.39",
+    "@types/chai": "^4.0.5",
     "@types/jquery": "3.2.16",
-    "@types/chai": "^4.0.4",
     "@types/mocha": "^2.2.44",
-    "@types/qlik-visualizationextensions": "^4.0.1",
     "@types/qlik-engineapi": "12.34.2",
     "chai": "^4.1.2",
-    "mocha": "^4.0.1",
-    "typescript": "^2.6.1",
+    "git-rev": "^0.2.1",
     "gulp": "^3.9.1",
+    "gulp-json-modify": "^1.0.2",
     "gulp-less": "^3.3.2",
     "gulp-rename": "^1.2.2",
-    "git-rev": "^0.2.1",
     "gulp-string-replace": "^0.4.0",
-    "gulp-json-modify": "^1.0.2"
+    "mocha": "^4.0.1",
+    "typescript": "^2.6.1"
   },
   "files": [
     "dist"
