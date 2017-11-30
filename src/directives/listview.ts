@@ -40,8 +40,10 @@ class ListViewController implements ng.IController {
     element: JQuery;
     hasFocusSearchField: boolean = false;
     ieItemsReadable: boolean = false;
-    itemHeight: number;
     itemsCount: number = 0;
+    /**
+     * number of items visible
+     */
     itemsPageHeight: number;
     itemsPageTop: number;
     overrideShortcuts: Array<IShortcutObject>;
@@ -50,6 +52,46 @@ class ListViewController implements ng.IController {
     showFocused: boolean = false;
     showScrollBar: boolean = false;
     timeout: ng.ITimeoutService;
+    //#endregion
+
+    //#region itemHeight
+    private _itemHeight: number;
+    public get itemHeight() : number {
+        if (this._itemHeight) {
+            return this._itemHeight;
+        }
+        return 31;
+    }
+    public set itemHeight(v : number) {
+        if(v !== this._itemHeight) {
+            this._itemHeight = v;
+        }
+    }
+    //#endregion
+
+    //#region itemWidth
+    private _itemWidth: number;
+    public get itemWidth() : number {
+        if (this._itemWidth) {
+            return this._itemWidth;
+        }
+    }
+    public set itemWidth(v : number) {
+        if(v !== this._itemWidth) {
+            this._itemWidth = v;
+        }
+    }
+    //#endregion
+
+    //#region elementHeight
+    private _elementHeight: number;
+    public get elementHeight() : number {
+        return this._elementHeight;
+    }
+    public set elementHeight(v : number) {
+        this._elementHeight = v;
+        this. itemsPageHeight = Math.floor(v/this.itemHeight);
+    }
     //#endregion
 
     //#region itemFocused
@@ -103,17 +145,23 @@ class ListViewController implements ng.IController {
     }
     //#endregion
 
-    static $inject = ["$timeout", "$element"];
+    static $inject = ["$timeout", "$element", "$scope"];
 
     /**
      * init of List View Controller
      * @param timeout angular timeout, to maual trigger dom events
      * @param element element of the List View Controller
      */
-    constructor(timeout: ng.ITimeoutService, element: JQuery) {
+    constructor(timeout: ng.ITimeoutService, element: JQuery, scope: ng.IScope) {
         this.element = element;
         this.timeout = timeout;
         this.ieItemsReadable = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+
+        scope.$watch(() => {
+            return this.element.height() * this.element.width();
+        }, () => {
+            this.elementHeight = this.element.height();
+        });
     }
 
     /**
@@ -263,16 +311,17 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 items: "<",
                 itemsCount: "=",
                 itemsPageTop: "=",
-                itemsPageHeight: "<",
-                itemHeight: "=",
+                itemsPageHeight: "=",
+                itemHeight: "=?",
+                itemWidth: "=?",
                 itemFocused: "=",
-                showFocused: "<",
+                showFocused: "<?",
                 callbackListviewObjects: "&",
                 overrideShortcuts: "<?",
                 theme: "<?"
             },
             compile: function () {
-                // checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
+                checkDirectiveIsRegistrated($injector, $registrationProvider, "", ShortCutDirectiveFactory, "Shortcut");
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
                     ScrollBarDirectiveFactory(rootNameSpace), "ScrollBar");
                 $registrationProvider.filter("qstatusfilter", qStatusFilter);

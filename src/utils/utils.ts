@@ -58,9 +58,10 @@ export function checkDirectiveIsRegistrated(
 }
 
 /**
- * calculates the number of Visible Rows
+ * calculates the number of Visible Rows ***DEPRECATED***
  */
 export function calcNumbreOfVisRows(elementHeight: number): number {
+    logger.warn("the function calcNUmberOfVisRows is deprecated");
     try {
         return Math.floor((elementHeight - 42) / 32.5);
     } catch (err) {
