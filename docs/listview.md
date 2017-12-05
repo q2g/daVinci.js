@@ -27,10 +27,10 @@ D* | Name                       |  Description
 <  | items                      | Array of Items that are current visible; this parameter is mendatory
 =  | itemsCount                 | Total count of possible items to show; this parameter is mendatory
 =  | itemsPageTop               | Index of the first visible item on the current page; this parameter is mendatory
-=  | itemsPageHeight            | Height of the current page; this parameter is mendatory
-=? | itemHeight                 | Height of an item in px; this parameter is optional
-=? | itemWidth                  | Width of an item in px; this parameter is optional
-=  | itemFocused                | The index of the; this parameter is mendatory
+=  | itemsPageSize              | Height of the current page; this parameter is mendatory
+=? | itemPxHeight               | Height of an item in px; this parameter is optional
+=? | itemPxWidth                | Width of an item in px; this parameter is optional
+=? | itemFocused                | The index of the; this parameter is optional
 <? | showFocused                | Defines if the focused Element is marked with a small boarder.; this parameter is optional
 &  | callbackListviewObjects    | Callback if an Element is clicked; this parameter is mendatory
 =? | overrrideShortCuts         | possibility to override default shortcuts; this parameter is optional

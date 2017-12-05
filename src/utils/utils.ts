@@ -172,7 +172,7 @@ export abstract class AssistHypercube<T extends EngineAPI.IGenericBaseLayout> {
      * replaces some character
      * @param qMatch string to be checked
      */
-    protected replacer(qMatch: string): string {
+    protected replace(qMatch: string): string {
         return qMatch
         .replace(/[\-\[\]\/\{\}\(\)\+\?\.\\\^\$\|]/g, "\\$&")
         .replace(/\*/g, ".*");
@@ -187,7 +187,7 @@ export abstract class AssistHypercube<T extends EngineAPI.IGenericBaseLayout> {
         return new Promise((resolve, reject) => {
             try {
                 this.calcCube = this.preCalcCube.filter((element) => {
-                    if (element.qFallbackTitle.match(new RegExp(this.replacer(qMatch), "i"))) {
+                    if (element.qFallbackTitle.match(new RegExp(this.replace(qMatch), "i"))) {
                         return element;
                     }
                 });
@@ -320,6 +320,17 @@ export class AssistHyperCubeFields extends AssistHypercube<EngineAPI.IGenericHyp
     }
 
 }
+
+// export class AssistHyperCubeObjects extends AssistHypercube<EngineAPI.IGenericHyperCubeLayout> {
+//     protected internalReduceCube(cube: EngineAPI.IGenericHyperCubeLayout): Array<ICalcCubeElement> {
+//         let resElement: Array<ICalcCubeElement> = [];
+//         logger.info("cube",cube);
+//         for (const iterator of (cube as any)) {
+//             //
+//         }
+//         return resElement;
+//     }
+// }
 
 export interface IStateMachineState<T> {
     placeholder: string;

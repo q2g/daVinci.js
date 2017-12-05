@@ -24,7 +24,7 @@
                 ng-keydown="vm.itemKeypressed($event, $index)"
                 >
                 <span class="lui-list__text">{{item.title}}</span>
-</li>
+            </li>
         </ul>
     </div>
 
@@ -37,9 +37,9 @@
         {{vm.readingText}}
     </div>
 
-    <q2g-scroll-bar items-count="vm.itemsCount" 
-                    items-page-top="vm.itemsPageTop" 
-                    items-page-height="vm.itemsPageHeight" 
+    <q2g-scroll-bar items-count="vm.itemsCount"
+                    items-page-top="vm.itemsPageTop"
+                    items-page-size="vm.itemsPageSize"
                     vertical="0"
                     show="vm.showScrollBar"
                     theme="vm.theme">

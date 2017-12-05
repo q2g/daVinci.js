@@ -169,20 +169,19 @@ class ScrollBarController implements ng.IController {
         return this._itemsPageTop;
     }
     set itemsPageTop(value: number) {
-        if (this.itemsPageTop !== value) {
-
+        if (value && this.itemsPageTop !== value) {
             let oldVal = this.itemsPageTop;
             try {
                 if (value < 0) {
                     this.itemsPageTop = 0;
-                } else if (value > this.itemsCount - this.itemsPageHeight) {
-                    this.itemsPageTop = this.itemsCount - this.itemsPageHeight;
+                } else if (value > this.itemsCount - this.itemsPageSize) {
+                    this.itemsPageTop = this.itemsCount - this.itemsPageSize;
                 } else {
                     this._itemsPageTop = value;
                 }
                 if (this.element) {
                     let newPostion = (this.element.height() - this.dragableBarElement.getHeight()) /
-                        (this.itemsCount - this.itemsPageHeight) * (value - oldVal);
+                        (this.itemsCount - this.itemsPageSize) * (value - oldVal);
                     this.dragableBarElement.setPosition(newPostion);
                 }
                 if (this.timeout) {
@@ -212,15 +211,15 @@ class ScrollBarController implements ng.IController {
     }
     //#endregion
 
-    //#region itemsPageHeight
-    private _itemsPageHeight: number;
-    get itemsPageHeight(): number {
-        return this._itemsPageHeight;
+    //#region itemsPageSize
+    private _itemsPageSize: number;
+    get itemsPageSize(): number {
+        return this._itemsPageSize;
     }
-    set itemsPageHeight(values: number) {
-        if (this.itemsPageHeight !== values) {
+    set itemsPageSize(values: number) {
+        if (this.itemsPageSize !== values) {
             try {
-                this._itemsPageHeight = values;
+                this._itemsPageSize = values;
                 this.calcDragableBarProperties();
             } catch (e) {
                 this.logger.error("error in setter itemsvisible", e);
@@ -308,8 +307,8 @@ class ScrollBarController implements ng.IController {
     public calcDragableBarProperties(): void {
         setTimeout(() => {
             try {
-                this.dragableBarElement.setVisible(this.itemsCount > this.itemsPageHeight);
-                this.dragableBarElement.setHeight(this.element.height() * this.itemsPageHeight / this.itemsCount);
+                this.dragableBarElement.setVisible(this.itemsCount > this.itemsPageSize);
+                this.dragableBarElement.setHeight(this.element.height() * this.itemsPageSize / this.itemsCount);
             } catch (err) {
                 this.logger.error("ERROR in calcDragableBarProperties", err);
             }
@@ -327,7 +326,7 @@ class ScrollBarController implements ng.IController {
         try {
             this.dragableBarElement.setPosition((event.screenY - startY) - top);
             let newPosition: number = (this.dragableBarElement.getTop() /
-                ((this.element.height() - this.dragableBarElement.getHeight()) / (this.itemsCount - this.itemsPageHeight)));
+                ((this.element.height() - this.dragableBarElement.getHeight()) / (this.itemsCount - this.itemsPageSize)));
             this.itemsPageTop = Math.round(newPosition);
             if (upOrMove === "mouseup") {
                 $(document).unbind("mousemove");
@@ -365,7 +364,7 @@ export function ScrollBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveF
             bindToController: {
                 itemsCount: "<",
                 itemsPageTop: "=",
-                itemsPageHeight: "<",
+                itemsPageSize: "<",
                 vertical: "<",
                 show: "<",
                 theme: "<?"
