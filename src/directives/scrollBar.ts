@@ -169,7 +169,7 @@ class ScrollBarController implements ng.IController {
         return this._itemsPageTop;
     }
     set itemsPageTop(value: number) {
-        if (value && this.itemsPageTop !== value) {
+        if (typeof(value) !== "undefined" && this.itemsPageTop !== value) {
             let oldVal = this.itemsPageTop;
             try {
                 if (value < 0) {
