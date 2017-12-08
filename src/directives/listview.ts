@@ -178,7 +178,7 @@ class ListViewController implements ng.IController {
         return 0;
     }
     public set itemsPageSize(v : number) {
-        if (v && this._itemsPageSize !== v) {
+        if (typeof(v) !== "undefined" && this._itemsPageSize !== v) {
             this._itemsPageSize = v;
         }
     }
