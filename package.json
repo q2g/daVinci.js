@@ -26,7 +26,7 @@
     "gulp-rename": "^1.2.2",
     "gulp-string-replace": "^0.4.0",
     "mocha": "^4.0.1",
-    "typescript": "^2.6.1"
+    "typescript": "^2.6.2"
   },
   "files": [
     "dist"

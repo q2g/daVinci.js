@@ -40,16 +40,82 @@ class ListViewController implements ng.IController {
     element: JQuery;
     hasFocusSearchField: boolean = false;
     ieItemsReadable: boolean = false;
-    itemHeight: number;
-    itemsCount: number = 0;
-    itemsPageHeight: number;
-    itemsPageTop: number;
     overrideShortcuts: Array<IShortcutObject>;
     readingText: string = "";
     shortcutRootscope: string;
     showFocused: boolean = false;
     showScrollBar: boolean = false;
     timeout: ng.ITimeoutService;
+    //#endregion
+
+    //#region itemPxHeight
+    private _itemPxHeight: number;
+    public get itemPxHeight() : number {
+        if (this._itemPxHeight) {
+            return this._itemPxHeight;
+        }
+        return 31;
+    }
+    public set itemPxHeight(v : number) {
+        if(v !== this._itemPxHeight) {
+            this._itemPxHeight = v;
+        }
+    }
+    //#endregion
+
+
+    //#region itemsCount
+    private _itemsCount: number;
+    public get itemsCount() : number {
+        if (this._itemsCount) {
+            return this._itemsCount;
+        }
+    }
+    public set itemsCount(v : number) {
+        if(v !== this._itemsCount) {
+            this._itemsCount = v;
+        }
+    }
+    //#endregion
+
+
+    //#region itemsPageTop
+    private _itemsPageTop: number = 0;
+    public get itemsPageTop() : number {
+        if (this._itemsPageTop) {
+            return this._itemsPageTop;
+        }
+        return 0;
+    }
+    public set itemsPageTop(v : number) {
+        if(v !== this._itemsPageTop) {
+            this._itemsPageTop = v;
+        }
+    }
+    //#endregion
+    //#region itemPxWidth
+    private _itemPxWidth: number;
+    public get itemPxWidth() : number {
+        if (this._itemPxWidth) {
+            return this._itemPxWidth;
+        }
+    }
+    public set itemPxWidth(v : number) {
+        if(v !== this._itemPxWidth) {
+            this._itemPxWidth = v;
+        }
+    }
+    //#endregion
+
+    //#region elementHeight
+    private _elementHeight: number;
+    public get elementHeight() : number {
+        return this._elementHeight;
+    }
+    public set elementHeight(v : number) {
+        this._elementHeight = v;
+        this.itemsPageSize = Math.floor(v/this.itemPxHeight);
+    }
     //#endregion
 
     //#region itemFocused
@@ -103,17 +169,38 @@ class ListViewController implements ng.IController {
     }
     //#endregion
 
-    static $inject = ["$timeout", "$element"];
+    //#region itmesPageSize
+    private _itemsPageSize: number;
+    public get itemsPageSize(): number {
+        if (this._itemsPageSize) {
+            return this._itemsPageSize;
+        }
+        return 0;
+    }
+    public set itemsPageSize(v : number) {
+        if (typeof(v) !== "undefined" && this._itemsPageSize !== v) {
+            this._itemsPageSize = v;
+        }
+    }
+    //#endregion
+
+    static $inject = ["$timeout", "$element", "$scope"];
 
     /**
      * init of List View Controller
      * @param timeout angular timeout, to maual trigger dom events
      * @param element element of the List View Controller
      */
-    constructor(timeout: ng.ITimeoutService, element: JQuery) {
+    constructor(timeout: ng.ITimeoutService, element: JQuery, scope: ng.IScope) {
         this.element = element;
         this.timeout = timeout;
         this.ieItemsReadable = navigator.userAgent.toLowerCase().indexOf("firefox") > -1;
+
+        scope.$watch(() => {
+            return this.element.height() * this.element.width();
+        }, () => {
+            this.elementHeight = this.element.height();
+        });
     }
 
     /**
@@ -127,7 +214,7 @@ class ListViewController implements ng.IController {
         if (newPos !== this._itemFocused) {
             if (newPos < 0 || newPos >= this.itemsCount) {
                 return;
-            } else if (newPos < this.itemsPageTop || newPos > this.itemsPageTop + this.itemsPageHeight) {
+            } else if (newPos < this.itemsPageTop || newPos > this.itemsPageTop + this.itemsPageSize) {
                 try {
                     this.element.focus();
                 } catch (e) {
@@ -182,12 +269,12 @@ class ListViewController implements ng.IController {
                 return true;
             case "pageUp":
                 try {
-                    this.itemsPageTop += this.itemsPageHeight;
-                    if (this.itemFocused >= this.itemsPageTop - this.itemsPageHeight && this.itemFocused <= this.itemsPageTop) {
-                        if (this.itemFocused + this.itemsPageHeight >= this.itemsCount) {
+                    this.itemsPageTop += this.itemsPageSize;
+                    if (this.itemFocused >= this.itemsPageTop - this.itemsPageSize && this.itemFocused <= this.itemsPageTop) {
+                        if (this.itemFocused + this.itemsPageSize >= this.itemsCount) {
                             this.itemFocused = this.itemsCount;
                         } else {
-                            this.itemFocused += this.itemsPageHeight;
+                            this.itemFocused += this.itemsPageSize;
                         }
                     }
                     this.timeout();
@@ -197,13 +284,13 @@ class ListViewController implements ng.IController {
                 }
             case "pageDown":
                 try {
-                    this.itemsPageTop -= this.itemsPageHeight;
-                    if (this.itemFocused >= this.itemsPageTop + this.itemsPageHeight && this.itemFocused
-                            <= this.itemsPageTop + this.itemsPageHeight * 2) {
-                        if (this.itemFocused - this.itemsPageHeight < 0) {
+                    this.itemsPageTop -= this.itemsPageSize;
+                    if (this.itemFocused >= this.itemsPageTop + this.itemsPageSize && this.itemFocused
+                            <= this.itemsPageTop + this.itemsPageSize * 2) {
+                        if (this.itemFocused - this.itemsPageSize < 0) {
                             this.itemFocused = 0;
                         } else {
-                            this.itemFocused -= this.itemsPageHeight;
+                            this.itemFocused -= this.itemsPageSize;
                         }
                     }
                     this.timeout();
@@ -263,16 +350,18 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 items: "<",
                 itemsCount: "=",
                 itemsPageTop: "=",
-                itemsPageHeight: "<",
-                itemHeight: "=",
-                itemFocused: "=",
-                showFocused: "<",
+                itemsPageSize: "=",
+                itemPxHeight: "=?",
+                itemPxWidth: "=?",
+                itemFocused: "=?",
+                showFocused: "<?",
                 callbackListviewObjects: "&",
                 overrideShortcuts: "<?",
                 theme: "<?"
             },
             compile: function () {
-                // checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
+                checkDirectiveIsRegistrated($injector, $registrationProvider, "",
+                    ShortCutDirectiveFactory, "Shortcut");
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
                     ScrollBarDirectiveFactory(rootNameSpace), "ScrollBar");
                 $registrationProvider.filter("qstatusfilter", qStatusFilter);

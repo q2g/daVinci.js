@@ -22,16 +22,34 @@ space + ctrl    | equivalent to left mouseclick + ctrl on element
 
 ## Attributes
 
-D* | Name            |  Description
----|-----------------|--------------------------------------------
-<  | items           | Array of Items that are current visible 
-=  | itemsCount      | Total count of possible items to show
-=  | itemsPageTop    | Index of the first visible item on the current page
-<  | itemsPageHeight | Height of the current page
-=  | itemHeight      | Height an item in px
-=  | itemFocused     | The index of the 
-<  | showFocused     | Defines if the focused Element is marked with a small boarder.
-&  | callbackListviewObjects | Callback if an Element is clicked
-=  | overrrideShortCuts | possibility to override default shortcuts
+D* | Name                       |  Description
+---|----------------------------|--------------------------------------------
+<  | items                      | Array of Items that are current visible; this parameter is mendatory
+=  | itemsCount                 | Total count of possible items to show; this parameter is mendatory
+=  | itemsPageTop               | Index of the first visible item on the current page; this parameter is mendatory
+=  | itemsPageSize              | Height of the current page; this parameter is mendatory
+=? | itemPxHeight               | Height of an item in px; this parameter is optional
+=? | itemPxWidth                | Width of an item in px; this parameter is optional
+=? | itemFocused                | The index of the; this parameter is optional
+<? | showFocused                | Defines if the focused Element is marked with a small boarder.; this parameter is optional
+&  | callbackListviewObjects    | Callback if an Element is clicked; this parameter is mendatory
+=? | overrrideShortCuts         | possibility to override default shortcuts; this parameter is optional
+<? | theme                      | choose the theme; this parameter is optional
 
 D* for further description see angular directives
+
+
+## Usage
+
+```html
+<q2g-listview items="vm.fieldList.collection"
+              items-count="vm.fieldList.itemsCounter"
+              items-page-top="vm.fieldList.itemsPagingTop"
+              items-page-height="vm.fieldList.itemsPagingHeight"
+              item-height="31"
+              item-focused="vm.focusedPosition"
+              show-focused="vm.showFocused"
+              callback-listview-objects="vm.selectObjectCallback(pos)"
+              theme="vm.theme">
+</q2g-listview>
+```
