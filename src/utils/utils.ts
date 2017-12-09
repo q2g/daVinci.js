@@ -58,18 +58,6 @@ export function checkDirectiveIsRegistrated(
 }
 
 /**
- * calculates the number of Visible Rows ***DEPRECATED***
- */
-export function calcNumbreOfVisRows(elementHeight: number): number {
-    logger.warn("the function calcNUmberOfVisRows is deprecated");
-    try {
-        return Math.floor((elementHeight - 42) / 32.5);
-    } catch (err) {
-        logger.error("ERROR in calc Number of vis roes", err);
-    }
-}
-
-/**
  * gets the enigmaRoot for the different Qlik Versions
  * @param scope root angular scoop for the Directive
  * @returns returns the enigma root Object
