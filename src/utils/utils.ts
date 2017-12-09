@@ -48,24 +48,12 @@ export function checkDirectiveIsRegistrated(
     factory: ng.IDirectiveFactory,
     directiveName: string) {
     try {
-        if (!injector.has("q2g" + rootNameSpace + directiveName)) {
+        if (!injector.has("q2g" + rootNameSpace + directiveName + "Directive")) {
             logger.debug("load missing q2g" + rootNameSpace + directiveName);
             regDirective.directive("q2g" + rootNameSpace + directiveName, factory);
         }
     } catch (e) {
         logger.error("Error in checkForExistingDirective", e);
-    }
-}
-
-/**
- * calculates the number of Visible Rows ***DEPRECATED***
- */
-export function calcNumbreOfVisRows(elementHeight: number): number {
-    logger.warn("the function calcNUmberOfVisRows is deprecated");
-    try {
-        return Math.floor((elementHeight - 42) / 32.5);
-    } catch (err) {
-        logger.error("ERROR in calc Number of vis roes", err);
     }
 }
 

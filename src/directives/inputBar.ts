@@ -151,7 +151,8 @@ export function InputBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 hasFocus: "="
             },
             compile: function () {
-                // checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
+                checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
+                    ShortCutDirectiveFactory(rootNameSpace), "Shortcut");
             }
         };
     };
