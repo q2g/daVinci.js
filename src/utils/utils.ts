@@ -48,7 +48,7 @@ export function checkDirectiveIsRegistrated(
     factory: ng.IDirectiveFactory,
     directiveName: string) {
     try {
-        if (!injector.has("q2g" + rootNameSpace + directiveName)) {
+        if (!injector.has("q2g" + rootNameSpace + directiveName + "Directive")) {
             logger.debug("load missing q2g" + rootNameSpace + directiveName);
             regDirective.directive("q2g" + rootNameSpace + directiveName, factory);
         }
