@@ -6,7 +6,6 @@ import { AssistHypercube as _AssistHypercube,
          AssistHyperCubeDimensions as _AssistHyperCubeDimensions,
          AssistHyperCubeBookmarks as _AssistHyperCubeBookmarks,
          AssistHyperCubeFields as _AssistHyperCubeFields,
-         calcNumbreOfVisRows as _calcNumbreOfVisRows,
          checkEqualityOfArrays as _checkEqualityOfArrays,
          checkDirectiveIsRegistrated as _checkDirectiveIsRegistrated,
          getEnigma as _getEnigma,
@@ -84,7 +83,6 @@ namespace utils {
     export const Q2gIndObject = _Q2gIndObject;
     export const Q2gListObject = _Q2gListObject;
 
-    export const calcNumbreOfVisRows = _calcNumbreOfVisRows;
     export const checkEqualityOfArrays = _checkEqualityOfArrays;
     export const checkDirectiveIsRegistrated = _checkDirectiveIsRegistrated;
     export const getEnigma = _getEnigma;

@@ -360,8 +360,8 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 theme: "<?"
             },
             compile: function () {
-                checkDirectiveIsRegistrated($injector, $registrationProvider, "",
-                    ShortCutDirectiveFactory, "Shortcut");
+                checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
+                    ShortCutDirectiveFactory(rootNameSpace), "Shortcut");
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
                     ScrollBarDirectiveFactory(rootNameSpace), "ScrollBar");
                 $registrationProvider.filter("qstatusfilter", qStatusFilter);
