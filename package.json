@@ -17,7 +17,7 @@
     "@types/chai": "^4.0.5",
     "@types/jquery": "3.2.16",
     "@types/mocha": "^2.2.44",
-    "@types/qlik-engineapi": "12.34.2",
+    "@types/qlik-engineapi": "12.67.0",
     "chai": "^4.1.2",
     "git-rev": "^0.2.1",
     "gulp": "^3.9.1",
