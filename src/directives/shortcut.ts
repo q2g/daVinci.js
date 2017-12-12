@@ -123,7 +123,7 @@ class ShortCutController implements ng.IController {
         if(this._shortcutPreventdefault) {
             return this._shortcutPreventdefault;
         }
-        return true;
+        return false;
     }
     set shortcutPreventdefault(value: boolean) {
         if (value !== this.shortcutPreventdefault && this.shortcut) {
@@ -222,7 +222,7 @@ class ShortCutController implements ng.IController {
             assistShortcutInputObject.rootscope = value.rootscope;
         }
 
-        assistShortcutInputObject.preventdefault = true;
+        assistShortcutInputObject.preventdefault = false;
         if (typeof value.preventdefault !== "undefined") {
             assistShortcutInputObject.preventdefault = value.preventdefault;
         }

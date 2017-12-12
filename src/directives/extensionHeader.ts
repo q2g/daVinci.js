@@ -268,7 +268,7 @@ export function ExtensionHeaderDirectiveFactory(rootNameSpace: string): ng.IDire
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
                     InputBarDirectiveFactory(rootNameSpace), "InputBar");
-                checkDirectiveIsRegistrated($injector, $registrationProvider, "", ShortCutDirectiveFactory, "Shortcut");
+                checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace, ShortCutDirectiveFactory, "Shortcut");
             }
         };
     };
