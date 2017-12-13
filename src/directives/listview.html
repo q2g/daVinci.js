@@ -7,7 +7,7 @@
                 {name:'enter', shortcut:'32'},
                 {name:'enterAll', shortcut:'strg + 32'},
                 {name:'pageUp', shortcut:'34'},
-                {name:'pageDown', shortcut:'33'}                
+                {name:'pageDown', shortcut:'33'}
              ]"
          shortcut-override="vm.overrideShortcuts"
          shortcut-action="vm.shortcutHandler(shortcutObject, event, domcontainer)">
@@ -17,7 +17,7 @@
                 tabindex="0"
                 role="application"
                 aria-hidden="{{vm.ieItemsReadable}}"
-                ng-repeat="item in vm.items track by $index"                
+                ng-repeat="item in vm.items track by $index"
                 ng-class="{'list-element-focussed': vm.hasFocus($index) && vm.showFocused}"
               
                 ng-click="vm.selectItem($index, $event)"
