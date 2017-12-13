@@ -1,5 +1,4 @@
-﻿
-//#region IMPORT
+﻿//#region IMPORT
 import { templateReplacer, checkDirectiveIsRegistrated } from "../utils/utils";
 import * as template from "text!./extensionHeader.html";
 import { ShortCutDirectiveFactory } from "./shortcut";
@@ -8,7 +7,6 @@ import { logging } from "../utils/logger";
 import "css!./extensionHeader.css";
 import { IRegisterDirective } from "../utils/interfaces";
 //#endregion
-
 class ListElement {
     buttonType: string = "";
     isVisible: boolean = false;
@@ -49,7 +47,6 @@ class ExtensionHeaderController implements ng.IController {
     private menuListRefactored: Array<ListElement>;
     private popOverList: Array<ListElement> = [];
     //#endregion
-
     //#region theme
     private _theme: string;
     get theme(): string {
@@ -64,7 +61,6 @@ class ExtensionHeaderController implements ng.IController {
         }
     }
     //#endregion
-
     //#region inputBarLogo
     private _inputBarLogo: string;
     get inputBarLogo(): string {
@@ -79,7 +75,6 @@ class ExtensionHeaderController implements ng.IController {
         }
     }
     //#endregion
-
     //#region inputBarPlaceholder
     private _inputBarPlaceholder: string;
     public get inputBarPlaceholder() : string {
@@ -94,7 +89,6 @@ class ExtensionHeaderController implements ng.IController {
         }
     }
     //#endregion
-
     //#region menuVisible
     private _menuVisible: boolean = false;
     get menuVisible(): boolean {
@@ -109,7 +103,6 @@ class ExtensionHeaderController implements ng.IController {
         }
     }
     //#endregion
-
     //#region menuList
     private _menuList: Array<any>;
     get menuList(): Array<any> {
@@ -124,7 +117,6 @@ class ExtensionHeaderController implements ng.IController {
         }
     }
     //#endregion
-
     //#region logger
     private _logger: logging.Logger;
     private get logger(): logging.Logger {
@@ -138,7 +130,6 @@ class ExtensionHeaderController implements ng.IController {
         return this._logger;
     }
     //#endregion
-
     //#region inputField
     private _inputField: string;
     public get inputField() : string {
@@ -153,7 +144,6 @@ class ExtensionHeaderController implements ng.IController {
         }
     }
     //#endregion
-
     static $inject = ["$timeout", "$element", "$scope"];
 
     /**
