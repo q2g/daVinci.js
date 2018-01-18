@@ -10,7 +10,8 @@
   "author": "Thomas Häning, Konrad Mattheis (qlik2go)",
   "scripts": {
     "test": "tsc -p tsconfig.test.json && mocha --recursive",
-    "build": "tsc -p tsconfig.build.json && gulp less && gulp html && gulp gitversionPackage && gulp addVersionNumber"
+    "build-umd": "tsc -p tsconfig.build.umd.json && gulp less-umd && gulp html-umd && gulp gitversionPackage && gulp addVersionNumber-umd",
+    "build-amd": "tsc -p tsconfig.build.amd.json && gulp less-amd && gulp html-amd && gulp gitversionPackage && gulp addVersionNumber-amd"
   },
   "devDependencies": {
     "@types/angular": "1.6.40",
@@ -19,7 +20,6 @@
     "@types/mocha": "^2.2.44",
     "@types/qlik-engineapi": "^12.67.0",
     "chai": "^4.1.2",
-    "git-rev": "^0.2.1",
     "gulp": "^3.9.1",
     "gulp-json-modify": "^1.0.2",
     "gulp-less": "^3.3.2",

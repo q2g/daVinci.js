@@ -3,7 +3,7 @@
         "module": "umd",
         "target": "es5",
         "declaration": true,
-        "outDir": "dist/",
+        "outDir": "dist/umd/",
         "lib": [
             "dom",
             "es2015"

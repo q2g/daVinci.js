@@ -1,0 +1,21 @@
+{
+    "compilerOptions": {
+        "module": "amd",
+        "target": "es5",
+        "declaration": true,
+        "outDir": "dist/amd/",
+        "lib": [
+            "dom",
+            "es2015"
+        ],
+        "noResolve": false
+    },
+    "include": [
+        "src/*.ts"
+    ],
+    "exclude": [
+        "node_modules",
+        "dist",
+        "test"
+    ]
+}
