@@ -4,11 +4,13 @@ import { logging } from "./logger";
 import { IRegisterDirective, ICalcCubeElement } from "./interfaces";
 //#endregion
 
+
 //#region Logger
 let logger: logging.Logger = new logging.Logger("utils");
 //#endregion
 
-//#region AssistFunctions
+
+//#region Functions
 
 /**
  * replace and creates namespace for the directives in the templates, to ensure multiple use of directives
@@ -113,8 +115,49 @@ export function checkEqualityOfArrays(array1: Array <any>, array2: Array<any>, c
         return true;
     }
 }
+
+/**
+ * get the ID of an object from the scope
+ * @param scope root angular scoop for the Directive
+ * @returns return the ID of the object
+ */
+export function getObjectId(scope: ng.IScope) {
+    return new Promise((resolve, reject) => {
+        try {
+            let objectId: string = "";
+            let anyscope = scope as any;
+            if (anyscope.layout.sourceObjectId) {
+                objectId = anyscope.layout.sourceObjectId;
+                anyscope.component.model.app.getObject(objectId)
+                .then((obj: EngineAPI.IGenericObject) => {
+
+                    return obj.getProperties();
+                })
+
+                .then((props: EngineAPI.IGenericProperties) => {
+                    if (props.qExtendsId)  {
+                        objectId = props.qExtendsId;
+                    }
+                    resolve(objectId);
+                })
+                .catch( ( error ) => {
+                    console.error("Error in getObjectId", error);
+                    reject(error);
+                });
+            } else {
+                objectId = anyscope.layout.qExtendsId ? anyscope.layout.qExtendsId : anyscope.layout.qInfo.qId;
+                resolve(objectId);
+            }
+        } catch (error) {
+            console.error("Error in getObjectId", error);
+            reject(error);
+        }
+    });
+}
 //#endregion
 
+
+//#region Classes
 export abstract class AssistHypercube<T extends EngineAPI.IGenericBaseLayout> {
 
     rootCube: T;
@@ -309,24 +352,6 @@ export class AssistHyperCubeFields extends AssistHypercube<EngineAPI.IGenericHyp
 
 }
 
-// export class AssistHyperCubeObjects extends AssistHypercube<EngineAPI.IGenericHyperCubeLayout> {
-//     protected internalReduceCube(cube: EngineAPI.IGenericHyperCubeLayout): Array<ICalcCubeElement> {
-//         let resElement: Array<ICalcCubeElement> = [];
-//         logger.info("cube",cube);
-//         for (const iterator of (cube as any)) {
-//             //
-//         }
-//         return resElement;
-//     }
-// }
-
-export interface IStateMachineState<T> {
-    placeholder: string;
-    icon: string;
-    name: T;
-    acceptFunction: () => void;
-}
-
 export class StateMachineInput<T> {
 
     states: Array<IStateMachineState<T>> = [];
@@ -362,3 +387,14 @@ export class StateMachineInput<T> {
     }
 
 }
+//#endregion
+
+
+//#region Interfaces
+export interface IStateMachineState<T> {
+    placeholder: string;
+    icon: string;
+    name: T;
+    acceptFunction: () => void;
+}
+//#endregion

@@ -12,7 +12,8 @@ import { AssistHypercube as _AssistHypercube,
          IStateMachineState as _IStateMachineState,
          regEscaper as _regEscaper,
          StateMachineInput as _StateMachineInput,
-         templateReplacer as _templateReplacer
+         templateReplacer as _templateReplacer,
+         getObjectId as _getObjectId
 } from "./utils/utils";
 
 import { ICollection as _ICollection,
@@ -48,7 +49,8 @@ import { InputBarDirectiveFactory as _InputBarDirectiveFactory } from "./directi
 import { ListViewDirectiveFactory as _ListViewDirectiveFactory,
          IDataModelItem as _IDataModelItem,
          ICallbackListview as _ICallbackListview,
-         IDataModel as _IDataModel} from "./directives/listview";
+         IDataModel as _IDataModel
+} from "./directives/listview";
 
 import { ScrollBarDirectiveFactory as _ScrollBarDirectiveFactory } from "./directives/scrollBar";
 
@@ -88,6 +90,7 @@ namespace utils {
     export const getEnigma = _getEnigma;
     export const regEscaper = _regEscaper;
     export const templateReplacer = _templateReplacer;
+    export const getObjectId = _getObjectId;
 
     export type IVMScope<T> = _IVMScope<T>;
     export type ICalcCubeElement = _ICalcCubeElement;
