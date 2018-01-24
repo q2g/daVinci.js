@@ -12,7 +12,7 @@
     "test": "tsc -p tsconfig.test.json && mocha --recursive",
     "build-umd": "tsc -p tsconfig.build.umd.json && gulp less-umd && gulp html-umd && gulp gitversionPackage && gulp addVersionNumber-umd",
     "build-esm": "tsc -p tsconfig.build.esm.json && gulp less-esm && gulp html-esm && gulp gitversionPackage && gulp addVersionNumber-esm",
-    "build": "npm run build-umd && npm run build-esm && gulp copy-typings"
+    "build": "npm run build-umd && npm run build-esm"
   },
   "devDependencies": {
     "@types/angular": "1.6.41",
@@ -35,5 +35,5 @@
   ],
   "main": "dist/umd/daVinci.js",
   "module": "dist/esm/daVinci.js",
-  "types": "dist/daVinci.d.ts"
+  "types": "dist/umd/daVinci.d.ts"
 }
