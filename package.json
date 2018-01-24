@@ -14,7 +14,7 @@
     "build-amd": "tsc -p tsconfig.build.amd.json && gulp less-amd && gulp html-amd && gulp gitversionPackage && gulp addVersionNumber-amd"
   },
   "devDependencies": {
-    "@types/angular": "1.6.40",
+    "@types/angular": "1.6.41",
     "@types/chai": "^4.1.1",
     "@types/jquery": "3.3.0",
     "@types/mocha": "^2.2.44",
