@@ -2,8 +2,9 @@ var gulp = require('gulp');
 var less = require('gulp-less');
 var path = require('path');
 var rename = require('gulp-rename');
-let mod = require("gulp-json-modify");
+var mod = require("gulp-json-modify");
 var replace = require('gulp-string-replace');
+var del = require('del');
 
 var package = require("./package.json");
 
@@ -18,13 +19,13 @@ gulp.task('less-umd', function () {
     .pipe(gulp.dest('./dist/umd'));
 });
 
-gulp.task('less-amd', function () {
+gulp.task('less-esm', function () {
     return gulp.src('./src/**/*.less')
     .pipe(less({
     paths: [ path.join(__dirname, 'less', 'includes') ]
     }))
     // .pipe(rename({dirname: ''}))
-    .pipe(gulp.dest('./dist/amd'));
+    .pipe(gulp.dest('./dist/esm'));
 });
 
 gulp.task('html-umd', function () {
@@ -33,10 +34,10 @@ gulp.task('html-umd', function () {
     .pipe(gulp.dest('./dist/umd'));
 })
 
-gulp.task('html-amd', function () {
+gulp.task('html-esm', function () {
     return gulp.src('./src/**/*.html')
     // .pipe(rename({dirname: ''}))
-    .pipe(gulp.dest('./dist/amd'));
+    .pipe(gulp.dest('./dist/esm'));
 })
 
 gulp.task("gitversionPackage", () => {  
@@ -66,14 +67,23 @@ gulp.task("addVersionNumber-umd", () => {
     });
 });
 
-gulp.task("addVersionNumber-amd", () => {
+gulp.task("addVersionNumber-esm", () => {
     gitVersion.getFullVersionString()
     .then((res) => {
-            return gulp.src('./dist/amd/daVinci.js')
+            return gulp.src('./dist/esm/daVinci.js')
             .pipe(replace(/\|GitVersionNumber\|/, res))
-            .pipe(gulp.dest('./dist/amd'));
+            .pipe(gulp.dest('./dist/esm'));
     })
     .catch((error) => {
         console.log("Error in addVersionNumber gulp task", error);
     });
+});
+
+gulp.task('copy-typings', function () {
+    gulp.src('./dist/umd/daVinci.d.ts')
+        .pipe(gulp.dest('./dist/'));
+});
+
+gulp.task('clean', function () {
+    return del('./dist/umd/daVinci.d.ts');
 });
