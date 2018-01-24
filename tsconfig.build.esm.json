@@ -1,9 +1,9 @@
 {
     "compilerOptions": {
-        "module": "amd",
+        "module": "es2015",
         "target": "es5",
         "declaration": true,
-        "outDir": "dist/amd/",
+        "outDir": "dist/esm/",
         "lib": [
             "dom",
             "es2015"
