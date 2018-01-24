@@ -343,7 +343,7 @@ export class AssistHyperCubeFields extends AssistHypercube<EngineAPI.IGenericHyp
             resElement.push({
                 qState: "O",
                 cId: element.qName,
-                qGroupFieldDefs: element.qName,
+                qGroupFieldDefs: [element.qName],
                 qFallbackTitle: element.qName
             });
         }
