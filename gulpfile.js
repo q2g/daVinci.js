@@ -83,7 +83,3 @@ gulp.task('copy-typings', function () {
     gulp.src('./dist/umd/daVinci.d.ts')
         .pipe(gulp.dest('./dist/'));
 });
-
-gulp.task('clean', function () {
-    return del('./dist/umd/daVinci.d.ts');
-});
