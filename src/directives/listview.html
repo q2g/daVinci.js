@@ -1,18 +1,23 @@
-<div class="q2glistview"
-      ng-mouseover="vm.showScrollBar = true" ng-mouseleave="vm.showScrollBar = false">
-    <div q2g-shortcut
-         shortcut="[
+<div    class="q2glistview"
+        ng-mouseover="vm.showScrollBar = true" 
+        ng-mouseleave="vm.showScrollBar = false">
+
+    <div    q2g-shortcut
+            shortcut="[
                 {name:'up', shortcut:'40'},
                 {name:'down', shortcut:'38'},
                 {name:'enterAll', shortcut:'strg + 32'},
                 {name:'pageUp', shortcut:'34'},
                 {name:'pageDown', shortcut:'33'}
-             ]"
-         shortcut-override="vm.overrideShortcuts"
-         shortcut-action="vm.shortcutHandler(shortcutObject, event, domcontainer)">
+            ]"
+            shortcut-override="vm.overrideShortcuts"
+            shortcut-action="vm.shortcutHandler(shortcutObject, event, domcontainer)">
+
         <ul class="lui-list list-theme-{{vm.theme}}">
+
             <li class="{{item.status | qstatusfilter}}"
-                ng-style="{'height': vm.itemHeight+'px'}"
+                ng-class="vm.horizontalMode ? 'horizontal' : 'vertical'"
+                ng-style="vm.horizontalMode && {'width': vm.itemPxHeight+'px'} || {'height': vm.itemPxHeight+'px'}"
                 tabindex="0"
                 role="application"
                 aria-hidden="{{vm.ieItemsReadable}}"
@@ -20,9 +25,8 @@
                 ng-class="{'list-element-focussed': vm.hasFocus($index) && vm.showFocused}"
               
                 ng-click="vm.selectItem($index, $event)"
-                ng-keydown="vm.itemKeypressed($event, $index)"
-                >
-                <span class="lui-list__text">{{item.title}}</span>
+                ng-keydown="vm.itemKeypressed($event, $index)">
+                    <span class="lui-list__text">{{item.title}}</span>
             </li>
         </ul>
     </div>
@@ -43,5 +47,6 @@
                     show="vm.showScrollBar"
                     theme="vm.theme">
     </q2g-scroll-bar>
+
 </div>
 
