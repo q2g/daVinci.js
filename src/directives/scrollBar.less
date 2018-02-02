@@ -19,10 +19,40 @@
 
 .q2gScrollBar {
     position: absolute;
-    height: 100%;
-    right: 0;
-    top: 0px;
 
+    &.horizontal {
+        width: 100%;
+
+        .scrollBarContainer{
+
+            width: 100%;
+            height: 11px;
+
+            .scrollBarTracker {
+                top: 0;
+                height: 11px;
+                width: 12px;
+            }
+        }
+    }
+
+    &.vertical {
+        right: 0;
+        height: 100%;
+        top: 0px;
+
+        .scrollBarContainer{
+            
+            width: 11px;
+            height: 100%;
+
+            .scrollBarTracker {
+                top: 0;
+                height: 12px;
+                width: 11px;
+            }
+        }
+    }
 
     .fadeIn {
         animation-name: fadeIn;
@@ -40,17 +70,10 @@
         top: 0px;
         right: 0;
         position: absolute;
-        width: 11px;
-        height: 100%;
         z-index: 2;
         overflow: visible;
 
-
-
         .scrollBarTracker {
-            top: 0;
-            height: 12px;
-            width: 11px;
             border-radius: 10px;
             position: absolute;
             z-index: 3;

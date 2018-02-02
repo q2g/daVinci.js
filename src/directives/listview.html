@@ -1,6 +1,6 @@
 <div    class="q2glistview"
         ng-mouseover="vm.showScrollBar = true" 
-        ng-mouseleave="vm.showScrollBar = false">
+        ng-mouseleave="vm.showScrollBar = true">
 
     <div    q2g-shortcut
             shortcut="[
@@ -43,7 +43,7 @@
     <q2g-scroll-bar items-count="vm.itemsCount"
                     items-page-top="vm.itemsPageTop"
                     items-page-size="vm.itemsPageSize"
-                    vertical="0"
+                    horizontal-mode="vm.horizontalMode"
                     show="vm.showScrollBar"
                     theme="vm.theme">
     </q2g-scroll-bar>

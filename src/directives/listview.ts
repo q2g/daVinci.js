@@ -67,7 +67,7 @@ class ListViewController implements ng.IController {
     }
     //#endregion
 
-    //#region theme
+    //#region horizontalMode
     private _horizontalMode: boolean;
     get horizontalMode(): boolean {
         if (this._horizontalMode) {
