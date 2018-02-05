@@ -16,14 +16,21 @@ TBD             |
 
 D* | Name            |  Description
 ---|-----------------|--------------------------------------------
- < | menuList        | the elements for the menu
- < | maxNumberOfElements    | max Number of Menu items that are shown in the header even if is enough space for more
- < | reservedButtonWidth    | tbd 
- & | callbackMainMenuButton | callback for the Menu
- = | textSearch      | search text from the inner searchbar
- = | showButtons     | if the Menubuttons are visible
- = | showSearchField | if the searchfield is visible
- < | title           | the inner title
- < | shortcutSearchfield | the shortcut for the searchfield
+ < | maxNumberOfElements    | mandatory; max Number of Menu items that are shown in the header even if is enough space for more
+ < | reservedButtonWidth    | mandatory; how many space should be reserved for the buttons (between 0 and 1)
+ < | title           | mandatory; the inner title
+ < | theme           | optional; theme of the header
+ & | inputAccept    | optional; function to be called when accept header input
+ & | inputCancel    | optional; function to be called when cancel header input
+ = | inputField     | optional; search text from the inner searchbar
+ = | inputBarLogo   | optional; lui logo of the search logo
+ = | inputBarPlaceholder    | optional; placeholer for the input bar
+ = | inputBarVisible    | optional; shows the input bar
+ = | inputBarFocus  | optional; set input bar focus
+ = | menuVisible | optional; sets visibility of header menue
+ & | menuCallback | optional; callback for the Menu
+ < | menuList | optional; list of the menu elements
+ < | shortcutSearchfield | optional; the shortcut for the searchfield
+ < | isLocked | optional; locks the header for more input
 
 D* for further description see angular directives

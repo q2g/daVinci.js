@@ -148,7 +148,6 @@ class ListViewController implements ng.IController {
         if (this.horizontalMode) {
             this.itemsPageSize = Math.floor(v/this.itemPxHeight);
         }
-        console.log("test", this.itemsPageSize = Math.floor(v/this.itemPxHeight));
     }
     //#endregion
 
@@ -213,6 +212,9 @@ class ListViewController implements ng.IController {
     }
     public set itemsPageSize(v : number) {
         if (typeof(v) !== "undefined" && this._itemsPageSize !== v) {
+            if (v > Math.floor(this.elementHeight/this.itemPxHeight)) {
+                return;
+            }
             this._itemsPageSize = v;
         }
     }

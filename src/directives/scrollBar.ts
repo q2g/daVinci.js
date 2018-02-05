@@ -270,7 +270,7 @@ class ScrollBarController implements ng.IController {
                     this._itemsPageTop = value;
                 }
                 if (this.element) {
-                    let newPostion = (this.horizontalMode?this.element.width():this.element.height()
+                    let newPostion = ((this.horizontalMode?this.element.width():this.element.height())
                         - this.dragableBarElement.getHeight())
                         / (this.itemsCount - this.itemsPageSize) * (value - oldVal);
                     this.dragableBarElement.setPosition(newPostion);
