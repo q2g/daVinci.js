@@ -27,6 +27,8 @@
                 ng-click="vm.selectItem($index, $event)"
                 ng-keydown="vm.itemKeypressed($event, $index)">
                     <span class="lui-list__text">{{item.title}}</span>
+                    <i class="lui-icon lui-icon--tick"
+                       ng-if="item.status | qselectedfilter"></i>
             </li>
         </ul>
     </div>
