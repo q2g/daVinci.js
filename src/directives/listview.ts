@@ -78,6 +78,11 @@ class ListViewController implements ng.IController {
     set horizontalMode(value: boolean) {
         if (value !== this._horizontalMode) {
             this._horizontalMode = value;
+            if (this.horizontalMode) {
+                this.itemsPageSize = Math.floor(this.elementWidth/this.itemPxHeight);
+            } else {
+                this.itemsPageSize = Math.floor(this.elementHeight/this.itemPxHeight);
+            }
         }
     }
     //#endregion
@@ -212,7 +217,7 @@ class ListViewController implements ng.IController {
     }
     public set itemsPageSize(v : number) {
         if (typeof(v) !== "undefined" && this._itemsPageSize !== v) {
-            if (v > Math.floor(this.elementHeight/this.itemPxHeight)) {
+            if (v > Math.floor((this.horizontalMode?this.elementWidth:this.elementHeight)/this.itemPxHeight)) {
                 return;
             }
             this._itemsPageSize = v;
