@@ -1,5 +1,4 @@
-﻿
-//#region Imports
+﻿//#region Imports
 import { logging } from "../utils/logger";
 import { templateReplacer } from "../utils/utils";
 import * as template from "text!./scrollBar.html";
@@ -27,17 +26,39 @@ class DragableBar {
     private height: number = 0;
     //#endregion
 
+    //#region horizontalMode
+    private _horizontalMode: boolean;
+    public get horizontalMode() : boolean {
+        return this._horizontalMode;
+    }
+    public set horizontalMode(v : boolean) {
+        if (v !== this._horizontalMode) {
+            this._horizontalMode = v;
+            if (v) {
+                this.setHorizontalProperties();
+            } else {
+                this.setVerticalProperties();
+            }
+        }
+    }
+    //#endregion
+
     /**
      * initial DragableBar
      * @param element requires element in which the Dragable Bar is placed
      */
-    constructor(element: JQuery) {
+    constructor(element: JQuery, horizontalMode?: boolean) {
+
         this.element = element;
         this.elementDragable = this.element.children().children();
-        this.elementDragable[0].style.height = "12px";
         this.elementDragable[0].style.display = "normal";
-        this.elementDragable[0].style.top = "0px";
-        this.height = element.children().height();
+
+        this.horizontalMode = false;
+        if (typeof(horizontalMode) !== "undefined") {
+            this.horizontalMode = horizontalMode;
+        }
+
+        this.height = this.horizontalMode?element.children().width():element.children().height();
         this.watchResize(40);
     }
 
@@ -47,9 +68,9 @@ class DragableBar {
      */
     private watchResize(intervall: number): void {
         setInterval(() => {
-            if (this.element.children().height() !== this.height) {
+            if (this.horizontalMode?this.element.children().width():this.element.children().height() !== this.height) {
                 try {
-                    this.height = this.element.children().height();
+                    this.height = this.horizontalMode?this.element.children().width():this.element.children().height();
                 } catch (err) {
                     this.logger.error("ERROR in watch resize", err);
                 }
@@ -64,11 +85,27 @@ class DragableBar {
     public setHeight(height: number): string {
         try {
             if (height < 12) {
-                this.elementDragable[0].style.height = 12 + "px";
+                if (this.horizontalMode) {
+                    this.elementDragable[0].style.width = 12 + "px";
+                    this.elementDragable[0].style.height = 11 + "px";
+                } else {
+                    this.elementDragable[0].style.height = 12 + "px";
+                    this.elementDragable[0].style.width = 11 + "px";
+                }
             } else {
-                this.elementDragable[0].style.height = height + "px";
+                if (this.horizontalMode) {
+                    this.elementDragable[0].style.width = height + "px";
+                    this.elementDragable[0].style.height = 11 + "px";
+                } else {
+                    this.elementDragable[0].style.height = height + "px";
+                    this.elementDragable[0].style.width = 11 + "px";
+                }
             }
-            return this.elementDragable[0].style.height;
+            if (this.horizontalMode) {
+                return this.elementDragable[0].style.width;
+            } else {
+                return this.elementDragable[0].style.height;
+            }
         } catch (e) {
             this.logger.error("Error in class DragableBar by call setHeight");
         }
@@ -79,7 +116,11 @@ class DragableBar {
      */
     public getHeight(): number {
         try {
-            return +this.elementDragable[0].style.height.replace("px", "");
+            if (this.horizontalMode) {
+                return +this.elementDragable[0].style.width.replace("px", "");
+            } else {
+                return +this.elementDragable[0].style.height.replace("px", "");
+            }
         } catch (err) {
             this.logger.error("ERROR", [err]);
             return 0;
@@ -112,14 +153,26 @@ class DragableBar {
             if (isNaN(this.position)) {
                 this.position = 0;
             } else if (this.position + posMove < 0) {
-                this.elementDragable[0].style.top = "0px";
+                if (this.horizontalMode) {
+                    this.elementDragable[0].style.left = "0px";
+                } else {
+                    this.elementDragable[0].style.top = "0px";
+                }
                 this.position = 0;
             } else if (this.position + posMove > this.height - this.getHeight()) {
-                this.elementDragable[0].style.top = this.height - this.getHeight() + "px";
+                if (this.horizontalMode) {
+                    this.elementDragable[0].style.left = this.height - this.getHeight() + "px";
+                } else {
+                    this.elementDragable[0].style.top = this.height - this.getHeight() + "px";
+                }
                 this.position = this.height - this.getHeight();
             } else {
                 this.position += posMove;
-                this.elementDragable[0].style.top = this.position + "px";
+                if (this.horizontalMode) {
+                    this.elementDragable[0].style.left = this.position + "px";
+                } else {
+                    this.elementDragable[0].style.top = this.position + "px";
+                }
             }
         } catch (err) {
             this.logger.error("ERROR", [err]);
@@ -127,11 +180,15 @@ class DragableBar {
     }
 
     /**
-     * returns the top space as number
+     * returns the top/left space as number
      */
     public getTop(): number {
         try {
-            return parseInt(this.elementDragable[0].style.top.substring(0, this.elementDragable[0].style.top.length - 2), 10);
+            if (this.horizontalMode) {
+                return parseInt(this.elementDragable[0].style.left.substring(0, this.elementDragable[0].style.left.length - 2), 10);
+            } else {
+                return parseInt(this.elementDragable[0].style.top.substring(0, this.elementDragable[0].style.top.length - 2), 10);
+            }
         } catch (err) {
             this.logger.error("Error in function get Top of class DragableElement", err);
             return 0;
@@ -139,13 +196,29 @@ class DragableBar {
     }
 
     /**
-     * reset height to childreen heigt
+     * name
      */
-    public resetHeight(): void {
-        this.height = this.element.children().height();
+    public setHorizontalProperties() {
+        try {
+            this.elementDragable[0].style.width = "11px";
+        } catch (error) {
+            this.logger.error("Error in setHorizontalProperties", error);
+        }
     }
 
-    //#endregion
+    /**
+     * name
+     */
+    public setVerticalProperties() {
+        try {
+            this.elementDragable[0].style.height = "12px";
+            this.elementDragable[0].style.top = "0px";
+        } catch (error) {
+            this.logger.error("Error in setVerticalProperties", error);
+        }
+    }
+
+
 }
 
 class ScrollBarController implements ng.IController {
@@ -158,9 +231,26 @@ class ScrollBarController implements ng.IController {
     element: JQuery;
     dragElement: JQuery;
     dragableBarElement: DragableBar;
-    vertical: any;
     timeout: angular.ITimeoutService;
     show: boolean;
+    //#endregion
+
+    //#region horizontalMode
+    private _horizontalMode: boolean;
+    get horizontalMode(): boolean {
+        if (this._horizontalMode) {
+            return this._horizontalMode;
+        }
+        return false;
+    }
+    set horizontalMode(value: boolean) {
+        if (value !== this._horizontalMode) {
+            this._horizontalMode = value;
+            if (typeof(this.dragableBarElement) !== "undefined") {
+                this.dragableBarElement.horizontalMode = value;
+            }
+        }
+    }
     //#endregion
 
     //#region itemsPageTop
@@ -180,8 +270,9 @@ class ScrollBarController implements ng.IController {
                     this._itemsPageTop = value;
                 }
                 if (this.element) {
-                    let newPostion = (this.element.height() - this.dragableBarElement.getHeight()) /
-                        (this.itemsCount - this.itemsPageSize) * (value - oldVal);
+                    let newPostion = ((this.horizontalMode?this.element.width():this.element.height())
+                        - this.dragableBarElement.getHeight())
+                        / (this.itemsCount - this.itemsPageSize) * (value - oldVal);
                     this.dragableBarElement.setPosition(newPostion);
                 }
                 if (this.timeout) {
@@ -276,15 +367,21 @@ class ScrollBarController implements ng.IController {
             this.scrollWheelHandle(event);
             this.timeout();
         });
+
         this.dragElement.on("mousedown", (event: JQueryEventObject) => {
             event.preventDefault();
             let startY = 0;
             let topPositionOfDragElement = 0;
 
             try {
-                startY = event.screenY;
-                topPositionOfDragElement = parseInt(
-                    this.dragElement[0].style.top.substring(0, this.dragElement[0].style.top.length - 2), 10);
+                startY = this.horizontalMode?event.screenX:event.screenY;
+                if (this.horizontalMode) {
+                    topPositionOfDragElement = parseInt(
+                        this.dragElement[0].style.left.substring(0, this.dragElement[0].style.left.length - 2), 10);
+                } else {
+                    topPositionOfDragElement = parseInt(
+                        this.dragElement[0].style.top.substring(0, this.dragElement[0].style.top.length - 2), 10);
+                }
             } catch (err) {
                 this.logger.error("ERROR", [err]);
             }
@@ -308,7 +405,9 @@ class ScrollBarController implements ng.IController {
         setTimeout(() => {
             try {
                 this.dragableBarElement.setVisible(this.itemsCount > this.itemsPageSize);
-                this.dragableBarElement.setHeight(this.element.height() * this.itemsPageSize / this.itemsCount);
+                this.dragableBarElement.setHeight((this.horizontalMode?this.element.width():this.element.height())
+                    * this.itemsPageSize
+                    / this.itemsCount);
             } catch (err) {
                 this.logger.error("ERROR in calcDragableBarProperties", err);
             }
@@ -324,9 +423,11 @@ class ScrollBarController implements ng.IController {
      */
     private mousehandle(event: JQueryEventObject, upOrMove: string, startY: number, top: number): void {
         try {
-            this.dragableBarElement.setPosition((event.screenY - startY) - top);
+            this.dragableBarElement.setPosition((this.horizontalMode?event.screenX:event.screenY - startY) - top);
             let newPosition: number = (this.dragableBarElement.getTop() /
-                ((this.element.height() - this.dragableBarElement.getHeight()) / (this.itemsCount - this.itemsPageSize)));
+                ((this.horizontalMode?this.element.width():this.element.height()
+                    - this.dragableBarElement.getHeight())
+                    / (this.itemsCount - this.itemsPageSize)));
             this.itemsPageTop = Math.round(newPosition);
             if (upOrMove === "mouseup") {
                 $(document).unbind("mousemove");
@@ -365,7 +466,7 @@ export function ScrollBarDirectiveFactory(rootNameSpace: string): ng.IDirectiveF
                 itemsCount: "<",
                 itemsPageTop: "=",
                 itemsPageSize: "<",
-                vertical: "<",
+                horizontalMode: "<?",
                 show: "<",
                 theme: "<?"
             }

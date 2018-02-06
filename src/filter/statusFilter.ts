@@ -23,3 +23,19 @@ export function qStatusFilter() {
     };
 }
 
+/**
+ * Filter to check which item is selected
+ */
+export function qSelectedFilter() {
+    "use strict";
+    return function (elementStatus: string) {
+        switch (elementStatus) {
+            case "S":
+                return true;
+            case "XS":
+                return true;
+            default:
+                return false;
+        }
+    };
+}

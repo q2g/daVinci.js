@@ -1,6 +1,6 @@
 ﻿//#region Imports
 import { logging } from "../utils/logger";
-import { qStatusFilter } from "../filter/statusFilter";
+import { qStatusFilter, qSelectedFilter } from "../filter/statusFilter";
 import { ShortCutDirectiveFactory, IShortcutObject } from "./shortcut";
 import { templateReplacer, checkDirectiveIsRegistrated } from "../utils/utils";
 import { ScrollBarDirectiveFactory } from "./scrollBar";
@@ -59,10 +59,33 @@ class ListViewController implements ng.IController {
     public set itemPxHeight(v : number) {
         if(v !== this._itemPxHeight) {
             this._itemPxHeight = v;
+            if (this.horizontalMode) {
+                this.itemsPageSize = Math.floor(this.elementWidth/this.itemPxHeight);
+            }
+            this.itemsPageSize = Math.floor(this.elementHeight/this.itemPxHeight);
         }
     }
     //#endregion
 
+    //#region horizontalMode
+    private _horizontalMode: boolean;
+    get horizontalMode(): boolean {
+        if (this._horizontalMode) {
+            return this._horizontalMode;
+        }
+        return false;
+    }
+    set horizontalMode(value: boolean) {
+        if (value !== this._horizontalMode) {
+            this._horizontalMode = value;
+            if (this.horizontalMode) {
+                this.itemsPageSize = Math.floor(this.elementWidth/this.itemPxHeight);
+            } else {
+                this.itemsPageSize = Math.floor(this.elementHeight/this.itemPxHeight);
+            }
+        }
+    }
+    //#endregion
 
     //#region itemsCount
     private _itemsCount: number;
@@ -78,7 +101,6 @@ class ListViewController implements ng.IController {
     }
     //#endregion
 
-
     //#region itemsPageTop
     private _itemsPageTop: number = 0;
     public get itemsPageTop() : number {
@@ -93,6 +115,7 @@ class ListViewController implements ng.IController {
         }
     }
     //#endregion
+
     //#region itemPxWidth
     private _itemPxWidth: number;
     public get itemPxWidth() : number {
@@ -114,7 +137,22 @@ class ListViewController implements ng.IController {
     }
     public set elementHeight(v : number) {
         this._elementHeight = v;
-        this.itemsPageSize = Math.floor(v/this.itemPxHeight);
+        if (!this.horizontalMode) {
+            this.itemsPageSize = Math.floor(v/this.itemPxHeight);
+        }
+    }
+    //#endregion
+
+    //#region elementWidth
+    private _elementWidth: number;
+    public get elementWidth() : number {
+        return this._elementWidth;
+    }
+    public set elementWidth(v : number) {
+        this._elementWidth = v;
+        if (this.horizontalMode) {
+            this.itemsPageSize = Math.floor(v/this.itemPxHeight);
+        }
     }
     //#endregion
 
@@ -179,6 +217,9 @@ class ListViewController implements ng.IController {
     }
     public set itemsPageSize(v : number) {
         if (typeof(v) !== "undefined" && this._itemsPageSize !== v) {
+            if (v > Math.floor((this.horizontalMode?this.elementWidth:this.elementHeight)/this.itemPxHeight)) {
+                return;
+            }
             this._itemsPageSize = v;
         }
     }
@@ -200,6 +241,7 @@ class ListViewController implements ng.IController {
             return this.element.height() * this.element.width();
         }, () => {
             this.elementHeight = this.element.height();
+            this.elementWidth = this.element.width();
         });
     }
 
@@ -355,6 +397,7 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 itemPxWidth: "=?",
                 itemFocused: "=?",
                 showFocused: "<?",
+                horizontalMode: "<?",
                 callbackListviewObjects: "&",
                 overrideShortcuts: "<?",
                 theme: "<?"
@@ -365,6 +408,7 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
                     ScrollBarDirectiveFactory(rootNameSpace), "ScrollBar");
                 $registrationProvider.filter("qstatusfilter", qStatusFilter);
+                $registrationProvider.filter("qselectedfilter", qSelectedFilter);
             }
         };
     };

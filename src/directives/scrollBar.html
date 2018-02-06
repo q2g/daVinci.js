@@ -1,7 +1,10 @@
-﻿<div class="q2gScrollBar">
-    <div class="scrollBarContainer"
-         ng-class="vm.show ? 'fadeIn' : 'fadeOut' ">
-        <div class="scrollBarTracker theme-{{vm.theme}}">
+﻿<div    class="q2gScrollBar" 
+        ng-class="vm.horizontalMode ? 'horizontal' : 'vertical'">
+
+    <div    class="scrollBarContainer"
+            ng-class="vm.show ? 'fadeIn' : 'fadeOut' ">
+
+        <div    class="scrollBarTracker theme-{{vm.theme}}">
         </div>
     </div>
 </div>
