@@ -251,7 +251,7 @@ export class Q2gIndObject extends LiteEvent implements Iq2gIListObject {
                     resolve(collection);
                 })
                 .catch((e: Error) => {
-                    this.logger.error("ERROR", e);
+                    this.logger.error("ERROR in getDataPage", e);
                     reject(e);
                 });
         });
@@ -267,7 +267,7 @@ export class Q2gIndObject extends LiteEvent implements Iq2gIListObject {
             .then(() => {
                 resolve(true);
             }).catch((e) => {
-                this.logger.error("error", e);
+                this.logger.error("error in searchFor", e);
                 reject();
             });
         });
@@ -328,7 +328,7 @@ export class Q2gListObject extends LiteEvent implements Iq2gIListObject {
                     resolve(collection);
                 })
                 .catch((e: Error) => {
-                    this.logger.error("ERROR", e);
+                    this.logger.error("ERROR in getDataPage", e);
                     reject(e);
                 });
         });
@@ -344,7 +344,7 @@ export class Q2gListObject extends LiteEvent implements Iq2gIListObject {
                 .then(() => {
                     resolve(true);
                 }).catch((e) => {
-                    this.logger.error("error", e);
+                    this.logger.error("error in searchFor", e);
                     reject();
                 });
         });

@@ -12,6 +12,7 @@ import { IRegisterDirective } from "../utils/interfaces";
 export interface ICallbackListview {
     pos: number;
     event?: JQueryKeyEventObject;
+    index?: number;
 }
 
 export interface IDataModelItem {
@@ -46,6 +47,21 @@ class ListViewController implements ng.IController {
     showFocused: boolean = false;
     showScrollBar: boolean = false;
     timeout: ng.ITimeoutService;
+    // splitColumn: number;
+    //#endregion
+
+    //#region splitColumn
+    private _splitColumn: number;
+    public get splitColumn() : number {
+        return this._splitColumn;
+    }
+    public set splitColumn(v : number) {
+        if (typeof(this.element) !== "undefined") {
+            this._splitColumn = v;
+            this._itemsPageSize = Math.floor(
+                (this.horizontalMode?this.element.width():this.element.height())/this.itemPxHeight) * (this.splitColumn?this.splitColumn:1);
+        }
+    }
     //#endregion
 
     //#region itemPxHeight
@@ -169,12 +185,24 @@ class ListViewController implements ng.IController {
     //#endregion
 
     //#region items
-    private _items: IDataModelItem[];
-    get items(): IDataModelItem[] {
+    private _items: Array<IDataModelItem[]>;
+    get items(): Array<IDataModelItem[]> {
         return this._items;
     }
-    set items(value: IDataModelItem[]) {
-        this._items = value;
+    set items(value: Array<IDataModelItem[]>) {
+        if (typeof(value)!=="undefined") {
+            try {
+                if (this.splitMode) {
+                    this._items = value;
+                    this.splitColumn = value.length;
+                    return;
+                }
+                this._items = [value] as any;
+                this.splitColumn = 1;
+            } catch (e) {
+                this.logger.error("ERROR in setter of items: ", e);
+            }
+        }
     }
     //#endregion
 
@@ -189,6 +217,21 @@ class ListViewController implements ng.IController {
     set theme(value: string) {
         if (value !== this._theme) {
             this._theme = value;
+        }
+    }
+    //#endregion
+
+    //#region theme
+    private _splitMode: boolean;
+    get splitMode(): boolean {
+        if (this._splitMode) {
+            return this._splitMode;
+        }
+        return false;
+    }
+    set splitMode(value: boolean) {
+        if (value !== this._splitMode) {
+            this._splitMode = value;
         }
     }
     //#endregion
@@ -217,10 +260,11 @@ class ListViewController implements ng.IController {
     }
     public set itemsPageSize(v : number) {
         if (typeof(v) !== "undefined" && this._itemsPageSize !== v) {
-            if (v > Math.floor((this.horizontalMode?this.elementWidth:this.elementHeight)/this.itemPxHeight)) {
+            if (v > Math.floor(((this.horizontalMode?this.elementWidth:this.elementHeight)*(this.splitColumn?this.splitColumn:1))
+                /this.itemPxHeight)) {
                 return;
             }
-            this._itemsPageSize = v;
+            this._itemsPageSize = v*(this.splitColumn?this.splitColumn:1);
         }
     }
     //#endregion
@@ -369,10 +413,10 @@ class ListViewController implements ng.IController {
      * @param index position of selected Item
      * @param event event which got fired when selecting the item
      */
-    public selectItem(index: number, event: JQueryEventObject) {
+    public selectItem(index: number, event: JQueryEventObject, indexSplit: number) {
 
         if (this.callbackListviewObjects) {
-            this.callbackListviewObjects({pos: index, event:event});
+            this.callbackListviewObjects({pos: index, event: event, index: indexSplit});
         }
 
     }
@@ -400,7 +444,8 @@ export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFa
                 horizontalMode: "<?",
                 callbackListviewObjects: "&",
                 overrideShortcuts: "<?",
-                theme: "<?"
+                theme: "<?",
+                splitMode: "<?"
             },
             compile: function () {
                 checkDirectiveIsRegistrated($injector, $registrationProvider, rootNameSpace,
