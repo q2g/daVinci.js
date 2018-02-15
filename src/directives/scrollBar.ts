@@ -201,6 +201,7 @@ class DragableBar {
     public setHorizontalProperties() {
         try {
             this.elementDragable[0].style.width = "11px";
+            this.elementDragable[0].style.left = "0px";
         } catch (error) {
             this.logger.error("Error in setHorizontalProperties", error);
         }
@@ -422,13 +423,17 @@ class ScrollBarController implements ng.IController {
      * @param top the top position of the dragable element
      */
     private mousehandle(event: JQueryEventObject, upOrMove: string, startY: number, top: number): void {
+
         try {
-            this.dragableBarElement.setPosition((this.horizontalMode?event.screenX:event.screenY - startY) - top);
+            this.dragableBarElement.setPosition(((this.horizontalMode?event.screenX:event.screenY) - startY) - top);
+
             let newPosition: number = (this.dragableBarElement.getTop() /
                 ((this.horizontalMode?this.element.width():this.element.height()
                     - this.dragableBarElement.getHeight())
                     / (this.itemsCount - this.itemsPageSize)));
+
             this.itemsPageTop = Math.round(newPosition);
+
             if (upOrMove === "mouseup") {
                 $(document).unbind("mousemove");
                 $(document).unbind("mouseup");
