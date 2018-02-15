@@ -8,12 +8,15 @@
                 {name:'down', shortcut:'38'},
                 {name:'enterAll', shortcut:'strg + 32'},
                 {name:'pageUp', shortcut:'34'},
-                {name:'pageDown', shortcut:'33'}
-            ]"
+                {name:'pageDown', shortcut:'33'}]"
             shortcut-override="vm.overrideShortcuts"
-            shortcut-action="vm.shortcutHandler(shortcutObject, event, domcontainer)">
+            shortcut-action="vm.shortcutHandler(shortcutObject, event, domcontainer)"
+            ng-style="!horizontalMode && {'display': 'grid', 'grid-template-columns': 'repeat({{vm.splitColumn}}, 1fr)', 'height': '100%'}" ng-if="!vm.horizontalMode">
 
-        <ul class="lui-list list-theme-{{vm.theme}}">
+        <ul class="lui-list list-theme-{{vm.theme}}" 
+            ng-repeat="list in vm.items track by $index" 
+            ng-init="indexsplit = $index" 
+            style="grid-column: {{indexsplit+1}} / {{vm.splitColumn}}; grid-row: 1; width:100%">
 
             <li class="{{item.status | qstatusfilter}}"
                 ng-class="vm.horizontalMode ? 'horizontal' : 'vertical'"
@@ -21,16 +24,55 @@
                 tabindex="0"
                 role="application"
                 aria-hidden="{{vm.ieItemsReadable}}"
-                ng-repeat="item in vm.items track by $index"
+                ng-repeat="item in list track by $index"
                 ng-class="{'list-element-focussed': vm.hasFocus($index) && vm.showFocused}"
               
-                ng-click="vm.selectItem($index, $event)"
-                ng-keydown="vm.itemKeypressed($event, $index)">
+                ng-click="vm.selectItem($index, $event, indexsplit)"
+                ng-keydown="vm.itemKeypressed($event, $index, indexsplit)">
                     <span class="lui-list__text">{{item.title}}</span>
                     <i class="lui-icon lui-icon--tick"
                        ng-if="item.status | qselectedfilter"></i>
             </li>
         </ul>
+
+        
+    </div>
+
+    <div    q2g-shortcut
+            shortcut="[
+                {name:'up', shortcut:'40'},
+                {name:'down', shortcut:'38'},
+                {name:'enterAll', shortcut:'strg + 32'},
+                {name:'pageUp', shortcut:'34'},
+                {name:'pageDown', shortcut:'33'}]"
+            shortcut-override="vm.overrideShortcuts"
+            shortcut-action="vm.shortcutHandler(shortcutObject, event, domcontainer)"
+            style="display: grid; grid-template-rows: repeat({{vm.splitColumn}}, 1fr)"
+            ng-if="vm.horizontalMode">
+
+        <ul class="lui-list list-theme-{{vm.theme}}" 
+            ng-repeat="list in vm.items track by $index" 
+            ng-init="indexsplit = $index" 
+            style="grid-column: 1; grid-row: {{indexsplit+1}} / {{vm.splitColumn}}; width:100%">
+
+            <li class="{{item.status | qstatusfilter}}"
+                ng-class="vm.horizontalMode ? 'horizontal' : 'vertical'"
+                ng-style="vm.horizontalMode && {'width': vm.itemPxHeight+'px'} || {'height': vm.itemPxHeight+'px'}"
+                tabindex="0"
+                role="application"
+                aria-hidden="{{vm.ieItemsReadable}}"
+                ng-repeat="item in list track by $index"
+                ng-class="{'list-element-focussed': vm.hasFocus($index) && vm.showFocused}"
+              
+                ng-click="vm.selectItem($index, $event, indexsplit)"
+                ng-keydown="vm.itemKeypressed($event, $index, indexsplit)">
+                    <span class="lui-list__text">{{item.title}}</span>
+                    <i class="lui-icon lui-icon--tick"
+                       ng-if="item.status | qselectedfilter"></i>
+            </li>
+        </ul>
+
+        
     </div>
 
     <div class="invisibleOutput"
