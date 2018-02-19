@@ -69,9 +69,7 @@ import { IVMScope as _IVMScope,
          IRegisterDirective as _IRegisterDirective,
 } from "./utils/interfaces";
 
-import { RootExtension as _RootExtension,
-         IQlikSingleListController as _IQlikSingleListController,
-         RootSingleList as _RootSingleList
+import { RootSingleList as _RootSingleList
 } from "./utils/rootclasses";
 
 const version: string = "|GitVersionNumber|";
@@ -88,7 +86,6 @@ namespace utils {
     export const LiteEvent = _LiteEvent;
     export const Q2gIndObject = _Q2gIndObject;
     export const Q2gListObject = _Q2gListObject;
-    export const RootExtension = _RootExtension;
     export const RootSingleList = _RootSingleList;
 
     export const checkEqualityOfArrays = _checkEqualityOfArrays;
@@ -108,7 +105,6 @@ namespace utils {
     export type IListener = _IListener;
     export type ILiteEvent = _ILiteEvent;
     export type Iq2gIListObject = _Iq2gIListObject;
-    export type IQlikSingleListController = _IQlikSingleListController;
 
     export interface IQ2gListAdapter extends _Q2gListAdapter {}
     export interface IQ2gIndObject extends _Q2gListAdapter {}
