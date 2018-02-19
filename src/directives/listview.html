@@ -11,7 +11,9 @@
                 {name:'pageDown', shortcut:'33'}]"
             shortcut-override="vm.overrideShortcuts"
             shortcut-action="vm.shortcutHandler(shortcutObject, event, domcontainer)"
-            ng-style="!horizontalMode && {'display': 'grid', 'grid-template-columns': 'repeat({{vm.splitColumn}}, 1fr)', 'height': '100%'}" ng-if="!vm.horizontalMode">
+
+            style="height: 100%; display: grid; grid-template-columns: repeat({{vm.splitColumn}}, 1fr)"
+            ng-if="!vm.horizontalMode">
 
         <ul class="lui-list list-theme-{{vm.theme}}" 
             ng-repeat="list in vm.items track by $index" 
@@ -57,7 +59,7 @@
 
             <li class="{{item.status | qstatusfilter}}"
                 ng-class="vm.horizontalMode ? 'horizontal' : 'vertical'"
-                ng-style="vm.horizontalMode && {'width': vm.itemPxHeight+'px'} || {'height': vm.itemPxHeight+'px'}"
+                ng-style="vm.horizontalMode && {'width': vm.itemPxWidthCalculated+'px'} || {'height': vm.itemPxHeight+'px'}"
                 tabindex="0"
                 role="application"
                 aria-hidden="{{vm.ieItemsReadable}}"
