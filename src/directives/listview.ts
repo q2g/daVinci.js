@@ -47,6 +47,7 @@ class ListViewController implements ng.IController {
     showFocused: boolean = false;
     showScrollBar: boolean = false;
     timeout: ng.ITimeoutService;
+    itemPxWidthCalculated: number = 0;
     // splitColumn: number;
     //#endregion
 
@@ -60,6 +61,8 @@ class ListViewController implements ng.IController {
             this._splitColumn = v;
             this._itemsPageSize = Math.floor(
                 (this.horizontalMode?this.element.width():this.element.height())/this.itemPxHeight) * (this.splitColumn?this.splitColumn:1);
+
+                this.itemPxWidthCalculated = this.calcWidthOfElement();
         }
     }
     //#endregion
@@ -155,6 +158,7 @@ class ListViewController implements ng.IController {
         this._elementHeight = v;
         if (!this.horizontalMode) {
             this.itemsPageSize = Math.floor(v/this.itemPxHeight);
+            this.itemPxWidthCalculated = this.calcWidthOfElement();
         }
     }
     //#endregion
@@ -168,6 +172,7 @@ class ListViewController implements ng.IController {
         this._elementWidth = v;
         if (this.horizontalMode) {
             this.itemsPageSize = Math.floor(v/this.itemPxHeight);
+            this.itemPxWidthCalculated = this.calcWidthOfElement();
         }
     }
     //#endregion
@@ -265,6 +270,7 @@ class ListViewController implements ng.IController {
                 return;
             }
             this._itemsPageSize = v*(this.splitColumn?this.splitColumn:1);
+            this.itemPxWidthCalculated = this.calcWidthOfElement();
         }
     }
     //#endregion
@@ -336,6 +342,14 @@ class ListViewController implements ng.IController {
      */
     private calcFocusedPosition(itemFocused: number): number {
         return itemFocused - this.itemsPageTop;
+    }
+
+    private calcWidthOfElement() {
+        try {
+            return (this.elementWidth/(this.itemsPageSize/this.splitColumn));
+        } catch (error) {
+            return this.itemPxHeight;
+        }
     }
 
     /**

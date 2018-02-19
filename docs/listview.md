@@ -24,17 +24,19 @@ space + ctrl    | equivalent to left mouseclick + ctrl on element
 
 D* | Name                       |  Description
 ---|----------------------------|--------------------------------------------
-<  | items                      | Array of Items that are current visible; this parameter is mendatory
-=  | itemsCount                 | Total count of possible items to show; this parameter is mendatory
-=  | itemsPageTop               | Index of the first visible item on the current page; this parameter is mendatory
-=  | itemsPageSize              | Height of the current page; this parameter is mendatory
-=? | itemPxHeight               | Height of an item in px; this parameter is optional
-=? | itemPxWidth                | Width of an item in px; this parameter is optional
-=? | itemFocused                | The index of the; this parameter is optional
-<? | showFocused                | Defines if the focused Element is marked with a small boarder.; this parameter is optional
-&  | callbackListviewObjects    | Callback if an Element is clicked; this parameter is mendatory
-=? | overrrideShortCuts         | possibility to override default shortcuts; this parameter is optional
-<? | theme                      | choose the theme; this parameter is optional
+<  | items                      | mandatory; Array of Items that are current visible; this parameter is mendatory
+=  | itemsCount                 | mandatory; Total count of possible items to show; this parameter is mendatory
+=  | itemsPageTop               | mandatory; Index of the first visible item on the current page; this parameter is mendatory
+=  | itemsPageSize              | mandatory; Height of the current page; this parameter is mendatory
+&  | callbackListviewObjects    | mandatory; Callback if an Element is clicked; this parameter is mendatory
+=? | itemPxHeight               | optional; Height of an item in px; this parameter is optional
+=? | itemPxWidth                | optional; Width of an item in px; this parameter is optional
+=? | itemFocused                | optional; The index of the; this parameter is optional
+<? | showFocused                | optional; Defines if the focused Element is marked with a small boarder.; this parameter is optional
+=? | overrrideShortCuts         | optional; possibility to override default shortcuts; this parameter is optional
+<? | theme                      | optional; choose the theme; this parameter is optional
+<? | horizontalMode             | optional; switch to horizontal mode
+<? | splitMode                  | optional; activate split mode
 
 D* for further description see angular directives
 

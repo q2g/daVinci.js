@@ -10,10 +10,11 @@ nothing
 
 D* | Name            |  Description
 ---|-----------------|--------------------------------------------
- < | itemsCount      | total count of items
- = | itemsPageTop    | index of the first visible item
- < | itemsPageHeight | count of the visible items
- < | vertical        | vertical mode (TBD)
- < | show            | if visible
+ < | itemsCount      | mandatory; total count of items
+ = | itemsPageTop    | mandatory; index of the first visible item
+ < | itemsPageSize   | mandatory; count of the visible items
+ < | show            | mandatory; if visible
+ < | horizontalMode  | optional; switch to horizontal mode
+ < | theme           | optional; change between light and dark theme
 
 D* for further description see angular directives

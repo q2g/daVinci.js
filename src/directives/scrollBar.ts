@@ -234,6 +234,7 @@ class ScrollBarController implements ng.IController {
     dragableBarElement: DragableBar;
     timeout: angular.ITimeoutService;
     show: boolean;
+    toggleSetPositionBar: boolean = true;
     //#endregion
 
     //#region horizontalMode
@@ -274,7 +275,10 @@ class ScrollBarController implements ng.IController {
                     let newPostion = ((this.horizontalMode?this.element.width():this.element.height())
                         - this.dragableBarElement.getHeight())
                         / (this.itemsCount - this.itemsPageSize) * (value - oldVal);
-                    this.dragableBarElement.setPosition(newPostion);
+                    if (this.toggleSetPositionBar) {
+                        this.dragableBarElement.setPosition(newPostion);
+                    }
+                    this.toggleSetPositionBar = true;
                 }
                 if (this.timeout) {
                     this.timeout();
@@ -419,19 +423,21 @@ class ScrollBarController implements ng.IController {
      * calculates the position of the dragable element by controling with mouse
      * @param event jQuery event which is triggerd
      * @param upOrMove hint if mouse is moved or mouse up
-     * @param startY start position of the mouse Movement
-     * @param top the top position of the dragable element
+     * @param startPosition start position of the mouse Movement
+     * @param startDiff the top position of the dragable element
      */
-    private mousehandle(event: JQueryEventObject, upOrMove: string, startY: number, top: number): void {
+    private mousehandle(event: JQueryEventObject, upOrMove: string, startPosition: number, startDiff: number): void {
+
 
         try {
-            this.dragableBarElement.setPosition(((this.horizontalMode?event.screenX:event.screenY) - startY) - top);
+            this.dragableBarElement.setPosition(((this.horizontalMode?event.screenX:event.screenY) - startPosition) - startDiff);
 
             let newPosition: number = (this.dragableBarElement.getTop() /
-                ((this.horizontalMode?this.element.width():this.element.height()
+                (((this.horizontalMode?this.element.width():this.element.height())
                     - this.dragableBarElement.getHeight())
                     / (this.itemsCount - this.itemsPageSize)));
 
+            this.toggleSetPositionBar = false;
             this.itemsPageTop = Math.round(newPosition);
 
             if (upOrMove === "mouseup") {
