@@ -196,6 +196,21 @@ class DragableBar {
     }
 
     /**
+     * sets the top/left space as number
+     */
+    public setTop(top: number): void {
+        try {
+            if (this.horizontalMode) {
+                this.elementDragable[0].style.left = top + "px";
+            } else {
+                this.elementDragable[0].style.top = top + "px";
+            }
+        } catch (err) {
+            this.logger.error("Error in function get Top of class DragableElement", err);
+        }
+    }
+
+    /**
      * name
      */
     public setHorizontalProperties() {
@@ -249,6 +264,7 @@ class ScrollBarController implements ng.IController {
         if (value !== this._horizontalMode) {
             this._horizontalMode = value;
             if (typeof(this.dragableBarElement) !== "undefined") {
+                this.dragableBarElement.setTop(0);
                 this.dragableBarElement.horizontalMode = value;
             }
         }
@@ -455,7 +471,11 @@ class ScrollBarController implements ng.IController {
      */
     private scrollWheelHandle(event: JQueryEventObject): void {
         try {
-            this.itemsPageTop += (event.originalEvent as any).deltaY / 100;
+            if (typeof(event.originalEvent as any).wheelDelta === "undefined") {
+                this.itemsPageTop += (event.originalEvent as any).deltaY / 3;
+            } else {
+                this.itemsPageTop += (event.originalEvent as any).deltaY / 100;
+            }
         } catch (err) {
             this.dragableBarElement.setPosition(0);
             this.logger.error("ERROR", err);

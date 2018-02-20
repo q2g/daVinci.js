@@ -9,9 +9,9 @@
   },
   "author": "Thomas Häning, Konrad Mattheis (qlik2go)",
   "scripts": {
-    "test": "tsc -p tsconfig.test.json && mocha --recursive",
-    "build-umd": "tsc -p tsconfig.build.umd.json && gulp less-umd && gulp html-umd && gulp gitversionPackage && gulp addVersionNumber-umd",
-    "build-esm": "tsc -p tsconfig.build.esm.json && gulp less-esm && gulp html-esm && gulp gitversionPackage && gulp addVersionNumber-esm",
+    "test": "npm run build-umd && npm run build-esm && tsc -p tsconfig.test.json && mocha --recursive",
+    "build-umd": "gulp del-umd && tsc -p tsconfig.build.umd.json && gulp less-umd && gulp html-umd && gulp gitversionPackage && gulp addVersionNumber-umd",
+    "build-esm": "gulp del-esm && tsc -p tsconfig.build.esm.json && gulp less-esm && gulp html-esm && gulp gitversionPackage && gulp addVersionNumber-esm",
     "build": "npm run build-umd && npm run build-esm"
   },
   "devDependencies": {

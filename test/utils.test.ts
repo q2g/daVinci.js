@@ -1,6 +1,6 @@
 //#region
 import * as chai from "chai";
-import { regEscaper } from "../src/utils/utils";
+import { regEscaper } from "../dist/umd/utils/utils";
 //#endregion
 
 let expect = chai.expect;

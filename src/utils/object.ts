@@ -5,6 +5,7 @@ import { logging } from "./logger";
 import { checkEqualityOfArrays, AssistHypercube } from "./utils";
 //#endregion
 
+//#region interfaces
 
 export interface ILiteEvent {
     on(eventName: string, listener: IListener);
@@ -15,10 +16,25 @@ export interface IListener {
     (...arg: Array<any>): void;
 }
 
+export interface Iq2gIListObject extends LiteEvent {
+    getDataPage: (top: number, height: number) => Promise<any>;
+    searchFor: (searchString: string) => Promise<any>;
+    acceptListObjectSearch?: (toggelMode: boolean) => Promise<boolean>;
+}
+
+export interface ICollection {
+    status: string;
+    id: Array<string>;
+    defs: Array<string>;
+    title: string;
+}
+
 interface IEvent {
     eventName: string;
     listener: IListener;
 }
+
+//#endregion
 
 export class LiteEvent implements ILiteEvent {
 
@@ -43,22 +59,6 @@ export class LiteEvent implements ILiteEvent {
     }
 
 }
-
-
-//#region interfaces
-export interface Iq2gIListObject extends LiteEvent {
-    getDataPage: (top: number, height: number) => Promise<any>;
-    searchFor: (searchString: string) => Promise<any>;
-    acceptListObjectSearch?: (toggelMode: boolean) => Promise<boolean>;
-}
-
-export interface ICollection {
-    status: string;
-    id: Array<string>;
-    defs: Array<string>;
-    title: string;
-}
-//#endregion
 
 export class Q2gListAdapter {
 
