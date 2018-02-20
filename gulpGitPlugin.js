@@ -20,7 +20,7 @@ function getVersionNumber () {
         execCommand("git log")
         .then((logs) => {
             logs.forEach((log) => {
-                let pos = log.indexOf("v:");
+                var pos = log.indexOf("v:");
                 if (pos >= 0) {
                     resolve(log.substring(pos+2,pos + 8).trim());
                 }
@@ -37,10 +37,10 @@ function getNumberOfCommits () {
     return new Promise((resolve, reject) => {
         execCommand("git log")
         .then((logs) => {
-            let counter = 0;
+            var counter = 0;
             logs.shift();
             for (var log of logs) {
-                let pos = log.indexOf("v:");
+                var pos = log.indexOf("v:");
                 if (pos >= 0) {
                     resolve(counter);
                     return;
@@ -57,7 +57,7 @@ function getNumberOfCommits () {
 
 function getFullVersionString() {
     return new Promise((resolve, reject) => {
-        let str = "";
+        var str = "";
         getVersionNumber()
         .then((res) => {
             str += res + "+";
