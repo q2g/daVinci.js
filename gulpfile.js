@@ -40,21 +40,6 @@ gulp.task('html-esm', function () {
     .pipe(gulp.dest('./dist/esm'));
 })
 
-gulp.task("gitversionPackage", () => {  
-    gitVersion.getVersionNumber()
-    .then((versionnumber) => {
-        return gulp.src("./package.json")
-        .pipe(mod({
-            key: "version",
-            value: versionnumber
-        }))
-        .pipe(gulp.dest("./"));
-    })
-    .catch((error) => {
-        console.error("Error in gitversionPackage gulp task", error);
-    });
-});
-  
 gulp.task("addVersionNumber-umd", () => {
     gitVersion.getFullVersionString()
     .then((res) => {
@@ -76,6 +61,29 @@ gulp.task("addVersionNumber-esm", () => {
     })
     .catch((error) => {
         console.log("Error in addVersionNumber gulp task", error);
+    });
+});
+
+gulp.task("del-umd", function () {
+    return del(["dist/umd"]);
+});
+
+gulp.task("del-esm", function () {
+    return del(["dist/esm"]);
+});
+
+gulp.task("gitversionPackage", () => {  
+    gitVersion.getVersionNumber()
+    .then((versionnumber) => {
+        return gulp.src("./package.json")
+        .pipe(mod({
+            key: "version",
+            value: versionnumber
+        }))
+        .pipe(gulp.dest("./"));
+    })
+    .catch((error) => {
+        console.error("Error in gitversionPackage gulp task", error);
     });
 });
 

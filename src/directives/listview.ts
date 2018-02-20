@@ -295,6 +295,8 @@ class ListViewController implements ng.IController {
         });
     }
 
+    //#region private functions
+
     /**
      * calculates the new selected Positiion. Focus will will be set out of bounds (root div Element)
      * when the the selectet Value is less then 0 and heigher then the max value
@@ -344,14 +346,20 @@ class ListViewController implements ng.IController {
         return itemFocused - this.itemsPageTop;
     }
 
+    /**
+     * calculates the real width of the list elements in horizontal mode
+     */
     private calcWidthOfElement() {
         try {
-            return (this.elementWidth/(this.itemsPageSize/this.splitColumn));
+            return (this.elementWidth/(this.itemsPageSize/this.splitColumn)) - 1;
         } catch (error) {
             return this.itemPxHeight;
         }
     }
 
+    //#endregion
+
+    //#region public functions
     /**
      * manage all shortcut events on this directive
      * @param shortcutObject element which is returned from the shortcut directive
@@ -434,6 +442,8 @@ class ListViewController implements ng.IController {
         }
 
     }
+
+    //#endregion
 }
 
 export function ListViewDirectiveFactory(rootNameSpace: string): ng.IDirectiveFactory {
