@@ -1,6 +1,5 @@
 # daVinci.js
 
-[![Greenkeeper badge](https://badges.greenkeeper.io/q2g/daVinci.js.svg)](https://greenkeeper.io/) 
 [![TravisCI](https://travis-ci.org/q2g/daVinci.js.svg?branch=master)](https://travis-ci.org/q2g/daVinci.js) 
 [![npm version](https://badge.fury.io/js/davinci.js.svg)](https://www.npmjs.com/package/davinci.js) 
 [![npm downloads](https://img.shields.io/npm/dt/davinci.js.svg)](https://www.npmjs.com/package/davinci.js)
