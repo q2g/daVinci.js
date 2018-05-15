@@ -10,16 +10,16 @@ export function qStatusFilter() {
                 return "selected";
             case "A":
                 return "alternative";
-            case "O":
-                return "optional";
             case "X":
                 return "excluded";
             case "XS":
                 return "selectedExcluded";
             case "L":
                 return "locked";
+
+            default:
+                return "optional";
         }
-        return "option";
     };
 }
 
