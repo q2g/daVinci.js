@@ -7,6 +7,7 @@ import { logging } from "../utils/logger";
 import "css!./extensionHeader.css";
 import { IRegisterDirective } from "../utils/interfaces";
 //#endregion
+
 class ListElement {
     buttonType: string = "";
     isVisible: boolean = false;
@@ -41,12 +42,14 @@ class ExtensionHeaderController implements ng.IController {
     showPopoverMenu: boolean = false;
     timeout: ng.ITimeoutService;
     title: string;
+    numberOfVisibleElements: number = 0;
 
     private element: JQuery;
     private displayList: Array<ListElement> = [];
     private menuListRefactored: Array<ListElement>;
     private popOverList: Array<ListElement> = [];
     //#endregion
+
     //#region theme
     private _theme: string;
     get theme(): string {
@@ -61,6 +64,7 @@ class ExtensionHeaderController implements ng.IController {
         }
     }
     //#endregion
+
     //#region inputBarLogo
     private _inputBarLogo: string;
     get inputBarLogo(): string {
@@ -75,6 +79,7 @@ class ExtensionHeaderController implements ng.IController {
         }
     }
     //#endregion
+
     //#region inputBarPlaceholder
     private _inputBarPlaceholder: string;
     public get inputBarPlaceholder() : string {
@@ -89,6 +94,7 @@ class ExtensionHeaderController implements ng.IController {
         }
     }
     //#endregion
+
     //#region menuVisible
     private _menuVisible: boolean = false;
     get menuVisible(): boolean {
@@ -103,6 +109,7 @@ class ExtensionHeaderController implements ng.IController {
         }
     }
     //#endregion
+
     //#region menuList
     private _menuList: Array<any>;
     get menuList(): Array<any> {
@@ -117,6 +124,7 @@ class ExtensionHeaderController implements ng.IController {
         }
     }
     //#endregion
+
     //#region logger
     private _logger: logging.Logger;
     private get logger(): logging.Logger {
@@ -130,6 +138,7 @@ class ExtensionHeaderController implements ng.IController {
         return this._logger;
     }
     //#endregion
+
     //#region inputField
     private _inputField: string;
     public get inputField() : string {
@@ -199,27 +208,51 @@ class ExtensionHeaderController implements ng.IController {
      */
     calcLists() {
         let numberOfVisibleElements: number = (this.element.width() * this.reservedButtonWidth) / 60;
-        let counter: number = 0;
-        this.displayList = [];
-        this.popOverList = [];
-        try {
-            for (let x of this.menuListRefactored) {
-                counter++;
-                if (counter < this.maxNumberOfElements && counter < numberOfVisibleElements-1) {
-                    this.displayList.unshift(x);
-                } else {
-                    this.popOverList.push(x);
+
+        if (numberOfVisibleElements !== this.numberOfVisibleElements) {
+            this.numberOfVisibleElements = numberOfVisibleElements;
+            let counter: number = 0;
+            this.displayList = [];
+            this.popOverList = [];
+
+            try {
+                for (let x of this.menuListRefactored) {
+                    counter++;
+                    if (counter < this.maxNumberOfElements && counter < numberOfVisibleElements-1) {
+                        this.displayList.unshift(x);
+                    } else {
+                        this.popOverList.push(x);
+                    }
                 }
+
+                if (this.popOverList.length === 1) {
+                    this.displayList.unshift(this.popOverList[0]);
+                    this.popOverList.pop();
+                }
+
+                this.buttonGroupWidth = (this.displayList.length + 1) * 60;
+            } catch (e) {
+                this.logger.error("error in calcLists", e);
+            }
+            return;
+        }
+
+        let len = this.menuListRefactored.length;
+
+        for (let i = this.displayList.length-1; i >= 0; i--) {
+
+            if (this.displayList[i].isEnabled !== this.menuListRefactored[this.displayList.length-1-i].isEnabled) {
+                this.displayList[i].isEnabled = this.menuListRefactored[this.displayList.length-1-i].isEnabled;
+            }
+        }
+
+        let lenDisp = this.displayList.length;
+
+        for (let i = 0; i < this.popOverList.length; i++) {
+            if (this.popOverList[i].isEnabled !== this.menuListRefactored[lenDisp+i].isEnabled) {
+                this.popOverList[i].isEnabled = this.menuListRefactored[lenDisp+i].isEnabled;
             }
 
-            if (this.popOverList.length === 1) {
-                this.displayList.unshift(this.popOverList[0]);
-                this.popOverList.pop();
-            }
-
-            this.buttonGroupWidth = (this.displayList.length + 1) * 60;
-        } catch (e) {
-            this.logger.error("error in calcLists", e);
         }
     }
 }
