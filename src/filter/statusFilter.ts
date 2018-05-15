@@ -8,7 +8,11 @@ export function qStatusFilter() {
         switch (elementStatus) {
             case "S":
                 return "selected";
+            case "SP":
+                return "selected";
             case "A":
+                return "alternative";
+            case "AP":
                 return "alternative";
             case "X":
                 return "excluded";
@@ -19,6 +23,26 @@ export function qStatusFilter() {
 
             default:
                 return "optional";
+        }
+    };
+}
+
+/**
+ * Filter to check which selection state is active
+ */
+export function qPublicFilter() {
+    "use strict";
+    return function (elementStatus: string) {
+        switch (elementStatus) {
+            case "SP":
+                return "published";
+            case "AP":
+                return "published";
+            case "P":
+                return "published";
+
+            default:
+                return "unpublished";
         }
     };
 }
