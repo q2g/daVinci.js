@@ -34,3 +34,25 @@ D* | Name            |  Description
  < | isLocked | optional; locks the header for more input
 
 D* for further description see angular directives
+
+## Usage
+
+```html
+<q2g-extension-header 
+    max-number-of-elements="4"
+    reserved-button-width="0.5"
+    title="vm.titleDimension"
+    theme="vm.theme"
+
+    input-accept="vm.inputAcceptDimensions"
+    input-cancel="vm.inputCancelDimensions"
+    input-field="vm.textSearchDimension"
+    input-bar-visible="vm.showSearchFieldDimension"
+
+    menu-visible="vm.showButtonsDimension"
+    menu-callback="vm.menuListActionCallback(item)"
+    menu-list="vm.menuListDimension"
+    
+    shortcut-searchfield="'strg + alt + 83'">
+</q2g-extension-header>
+```

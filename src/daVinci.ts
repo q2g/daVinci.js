@@ -38,7 +38,9 @@ import { ITranslateProvider as _ITranslateProvider,
          TranslateService as _TranslateService
 } from "./services/translate";
 
+
 import { qStatusFilter as _qStatusFilter } from "./filter/statusFilter";
+import { qPublicFilter as _qPublicFilter } from "./filter/statusFilter";
 
 import { ExtensionHeaderDirectiveFactory as _ExtensionHeaderDirectiveFactory } from "./directives/extensionHeader";
 

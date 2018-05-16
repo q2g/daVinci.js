@@ -8,18 +8,42 @@ export function qStatusFilter() {
         switch (elementStatus) {
             case "S":
                 return "selected";
+            case "SP":
+                return "selected";
             case "A":
                 return "alternative";
-            case "O":
-                return "optional";
+            case "AP":
+                return "alternative";
             case "X":
                 return "excluded";
             case "XS":
                 return "selectedExcluded";
             case "L":
                 return "locked";
+
+            default:
+                return "optional";
         }
-        return "option";
+    };
+}
+
+/**
+ * Filter to check which selection state is active
+ */
+export function qPublicFilter() {
+    "use strict";
+    return function (elementStatus: string) {
+        switch (elementStatus) {
+            case "SP":
+                return "published";
+            case "AP":
+                return "published";
+            case "P":
+                return "published";
+
+            default:
+                return "unpublished";
+        }
     };
 }
 
