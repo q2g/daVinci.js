@@ -30,7 +30,7 @@
                 
                 ng-click="vm.selectItem($index, $event, indexsplit)"
                 ng-keydown="vm.itemKeypressed($event, $index, indexsplit)">
-                    <span class="lui-list__text">{{item.title}} {{item.status}}</span>
+                    <span class="lui-list__text">{{item.title}}</span>
                     <i class="lui-icon lui-icon--stream"
                        ng-if="item.status==='P' || item.status==='SP' || item.status==='AP'"></i>
                     <i class="lui-icon lui-icon--tick"
