@@ -231,28 +231,35 @@ class ExtensionHeaderController implements ng.IController {
                 }
 
                 this.buttonGroupWidth = (this.displayList.length + 1) * 60;
+
+
+
             } catch (e) {
                 this.logger.error("error in calcLists", e);
             }
             return;
         }
 
-        let len = this.menuListRefactored.length;
+        try {
+            let len = this.menuListRefactored.length;
 
-        for (let i = this.displayList.length-1; i >= 0; i--) {
+            for (let i = this.displayList.length-1; i >= 0; i--) {
 
-            if (this.displayList[i].isEnabled !== this.menuListRefactored[this.displayList.length-1-i].isEnabled) {
-                this.displayList[i].isEnabled = this.menuListRefactored[this.displayList.length-1-i].isEnabled;
-            }
-        }
-
-        let lenDisp = this.displayList.length;
-
-        for (let i = 0; i < this.popOverList.length; i++) {
-            if (this.popOverList[i].isEnabled !== this.menuListRefactored[lenDisp+i].isEnabled) {
-                this.popOverList[i].isEnabled = this.menuListRefactored[lenDisp+i].isEnabled;
+                if (this.displayList[i].isEnabled !== this.menuListRefactored[this.displayList.length-1-i].isEnabled) {
+                    this.displayList[i].isEnabled = this.menuListRefactored[this.displayList.length-1-i].isEnabled;
+                }
             }
 
+            let lenDisp = this.displayList.length;
+
+            for (let i = 0; i < this.popOverList.length; i++) {
+                if (this.popOverList[i].isEnabled !== this.menuListRefactored[lenDisp+i].isEnabled) {
+                    this.popOverList[i].isEnabled = this.menuListRefactored[lenDisp+i].isEnabled;
+                }
+
+            }
+        } catch (error) {
+            this.logger.error("ERROR in calcList", error);
         }
     }
 }
