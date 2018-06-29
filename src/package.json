@@ -1,0 +1,31 @@
+{
+  "name": "davinci.js",
+  "version": "1.4.0",
+  "license": "MIT",
+  "description": "Framework for visualisation extensions",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/q2g/daVinci.js"
+  },
+  "author": "Thomas Häning, Konrad Mattheis (qlik2go)",
+  "scripts": {
+    "build:esm": "node node_modules/q2g-build --builder typescript --config q2g-build.typescript.json",
+    "build:umd": "node node_modules/q2g-build --builder webpack --config q2g-build.webpack.json",
+    "build": "npm run build:umd && npm run build:esm"
+  },
+  "devDependencies": {
+    "@types/angular": "1.6.43",
+    "@types/chai": "^4.1.1",
+    "@types/jquery": "3.3.0",
+    "@types/mocha": "^2.2.44",
+    "@types/qlik-engineapi": "^12.67.0",
+    "q2g-build": "file:../../q2g-build",
+    "typescript": "^2.6.2"
+  },
+  "files": [
+    "dist"
+  ],
+  "main": "dist/umd/daVinci.js",
+  "module": "dist/esm/daVinci.js",
+  "types": "dist/umd/daVinci.d.ts"
+}
