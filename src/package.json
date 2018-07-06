@@ -9,7 +9,7 @@
   },
   "author": "Thomas Häning, Konrad Mattheis (qlik2go)",
   "scripts": {
-    "build:esm": "node node_modules/q2g-build --builder typescript --config q2g-build.typescript.json",
+    "build:esm": "node node_modules/q2g-build --builder typescript --config q2g-build.esm.json",
     "build:umd": "node node_modules/q2g-build --builder webpack --config q2g-build.webpack.json",
     "build": "npm run build:umd && npm run build:esm"
   },

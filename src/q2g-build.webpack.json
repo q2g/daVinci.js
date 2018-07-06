@@ -1,0 +1,7 @@
+{
+    "entryFile": "./daVinci.ts",
+    "environment": "production",
+    "outFileName": "daVinci.js",
+    "outputDirectory": "dist/umd",
+    "tsConfigFile": "tsconfig.build.umd.json"
+}
