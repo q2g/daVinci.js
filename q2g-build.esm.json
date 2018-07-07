@@ -1,4 +1,0 @@
-{
-    "excludeNcp": [ ".js", ".json", "dist"],
-    "tsConfigFile": "./tsconfig.build.esm.json"
-}

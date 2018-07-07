@@ -4,6 +4,7 @@
         "target": "es5",
         "declaration": true,
         "outDir": "./dist/esm/",
+        "rootDir": "./src",
         "lib": [
             "dom",
             "es2015"
@@ -17,6 +18,6 @@
     ],
     "include": [
         "./src/*.ts",
-        "./typeings/*.d.ts"
+        "./typings/*.d.ts"
     ]
 }

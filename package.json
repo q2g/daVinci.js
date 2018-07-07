@@ -9,8 +9,8 @@
   },
   "author": "Thomas Häning, Konrad Mattheis (qlik2go)",
   "scripts": {
-    "build:esm": "node node_modules/q2g-build --builder tsc --config q2g-build.esm.json --sourceRoot ./src",
-    "build:umd": "node node_modules/q2g-build --builder webpack --config q2g-build.webpack.json --sourceRoot ./src",
+    "build:esm": "node node_modules/q2g-build --builder tsc --config q2g-build.tsc.json",
+    "build:umd": "node node_modules/q2g-build --builder webpack --config q2g-build.webpack.json",
     "build": "npm run build:umd && npm run build:esm"
   },
   "devDependencies": {
