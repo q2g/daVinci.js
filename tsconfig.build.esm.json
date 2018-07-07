@@ -1,18 +1,22 @@
 {
     "compilerOptions": {
+        "module": "es2015",
         "target": "es5",
+        "declaration": true,
+        "outDir": "./dist/esm/",
         "lib": [
             "dom",
             "es2015"
         ],
         "noResolve": false
     },
-    "include": [
-        "./**/*.ts"
-    ],
     "exclude": [
         "node_modules",
         "dist",
         "test"
+    ],
+    "include": [
+        "**/*.ts",
+        "typings/*.d.ts"
     ]
 }

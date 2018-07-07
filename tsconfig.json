@@ -16,6 +16,7 @@
         "test"
     ],
     "include": [
-        "./*.ts"
+        "./src/*.ts",
+        "./typeings/*.d.ts"
     ]
 }

@@ -6,8 +6,8 @@ dist/*.d.ts
 package-lock.json
 
 ## Typescript q2g Folders
-src/node_modules
-src/dist/*
+node_modules/
+dist/*
 
 ## Include
 !q2g-ext-selector.js

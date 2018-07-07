@@ -9,8 +9,8 @@
   },
   "author": "Thomas Häning, Konrad Mattheis (qlik2go)",
   "scripts": {
-    "build:esm": "node node_modules/q2g-build --builder typescript --config q2g-build.esm.json",
-    "build:umd": "node node_modules/q2g-build --builder webpack --config q2g-build.webpack.json",
+    "build:esm": "node node_modules/q2g-build --builder tsc --config q2g-build.esm.json --sourceRoot ./src",
+    "build:umd": "node node_modules/q2g-build --builder webpack --config q2g-build.webpack.json --sourceRoot ./src",
     "build": "npm run build:umd && npm run build:esm"
   },
   "devDependencies": {
@@ -19,7 +19,7 @@
     "@types/jquery": "3.3.0",
     "@types/mocha": "^2.2.44",
     "@types/qlik-engineapi": "^12.67.0",
-    "q2g-build": "file:../../q2g-build",
+    "q2g-build": "file:../q2g-build",
     "typescript": "^2.6.2"
   },
   "files": [
