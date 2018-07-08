@@ -18,6 +18,6 @@
     ],
     "include": [
         "./src/*.ts",
-        "./typings/*.d.ts"
+        "./typings/**/*.ts"
     ]
 }

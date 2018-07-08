@@ -1,6 +1,6 @@
 {
-    "entryFile": "./daVinci.ts",
-    "environment": "production",
-    "outFileName": "daVinci.js",
+    "entryFile"   : "./daVinci.ts",
+    "environment" : "debug",
+    "outFileName" : "daVinci.js",
     "tsConfigFile": "./tsconfig.webpack.json"
 }

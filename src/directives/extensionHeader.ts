@@ -6,6 +6,7 @@ import { InputBarDirectiveFactory } from "./inputBar";
 import { logging } from "../utils/logger";
 import "css!./extensionHeader.css";
 import { IRegisterDirective } from "../utils/interfaces";
+import { unusedDirective } from "./unusedDirective";
 //#endregion
 
 class ListElement {
@@ -24,6 +25,8 @@ class ExtensionHeaderController implements ng.IController {
     public $onInit(): void {
         this.logger.debug("initial Run of MainMenuController");
     }
+
+    private unused: unusedDirective = new unusedDirective();
 
     //#region VARIABLES
     inputAccept: () => void;
