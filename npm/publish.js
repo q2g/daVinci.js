@@ -1,4 +1,4 @@
-const spawn   = require("child_process").spawn;
+const spawn   = require("child_process").spawn; // eslint-disable-line detect-child-process
 const dirname = require("path").dirname;
 const resolve = require("path").resolve;
 
