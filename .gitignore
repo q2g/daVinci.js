@@ -2,15 +2,14 @@
 *.map
 *.js
 *.css
-dist/*.d.ts
 package-lock.json
 
 ## publish script
 !npm/publish.js
 
-## Typescript q2g Folders
-node_modules/
-dist/*
+src/node_modules/
+src/dist/*
+test/node_modules/
 
 ## Include
 !q2g-ext-selector.js
