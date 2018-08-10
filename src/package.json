@@ -26,5 +26,6 @@
   ],
   "main": "dist/umd/daVinci.js",
   "module": "dist/esm/daVinci.js",
-  "types": "dist/umd/daVinci.d.ts"
+  "types": "dist/umd/daVinci.d.ts",
+  "dependencies": {}
 }
