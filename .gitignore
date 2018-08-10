@@ -5,9 +5,12 @@
 dist/*.d.ts
 package-lock.json
 
+## publish script
+!npm/publish.js
+
 ## Typescript q2g Folders
 node_modules/
-dist/
+dist/*
 
 ## Include
 !q2g-ext-selector.js
