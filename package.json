@@ -11,7 +11,8 @@
   "scripts": {
     "build:esm": "node node_modules/q2g-build --builder tsc --config q2g-build.tsc.json",
     "build:umd": "node node_modules/q2g-build --builder webpack --config q2g-build.webpack.json",
-    "build": "npm run build:umd && npm run build:esm"
+    "build": "npm run build:umd && npm run build:esm",
+    "pkg:publish": "npm run build:esm && node npm/publish"
   },
   "devDependencies": {
     "@types/angular": "1.6.43",
