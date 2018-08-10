@@ -1,21 +1,23 @@
 {
     "compilerOptions": {
-        "module": "umd",
+        "module": "es2015",
         "target": "es5",
         "declaration": true,
-        "outDir": "dist/umd/",
+        "outDir": "./dist/esm/",
+        "rootDir": "./src",
         "lib": [
             "dom",
             "es2015"
         ],
         "noResolve": false
     },
-    "include": [
-        "src/*.ts"
-    ],
     "exclude": [
         "node_modules",
         "dist",
         "test"
+    ],
+    "include": [
+        "./src/*.ts",
+        "./typings/**/*.ts"
     ]
 }
