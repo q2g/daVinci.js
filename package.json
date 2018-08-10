@@ -20,7 +20,7 @@
     "@types/jquery": "3.3.0",
     "@types/mocha": "^2.2.44",
     "@types/qlik-engineapi": "^12.67.0",
-    "q2g-build": "^1.0.3",
+    "q2g-build": "^1.0.4",
     "typescript": "^2.6.2"
   },
   "files": [
