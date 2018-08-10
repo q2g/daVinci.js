@@ -1,0 +1,6 @@
+{
+    "entryFile"   : "./daVinci.ts",
+    "environment" : "debug",
+    "outFileName" : "daVinci.js",
+    "tsConfigFile": "./tsconfig.webpack.json"
+}
