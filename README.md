@@ -1,5 +1,6 @@
 # daVinci.js
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/528f21b212c34df8b2a3023cb0f33d02)](https://app.codacy.com/app/konne/daVinci.js?utm_source=github.com&utm_medium=referral&utm_content=q2g/daVinci.js&utm_campaign=badger)
 [![TravisCI](https://travis-ci.org/q2g/daVinci.js.svg?branch=master)](https://travis-ci.org/q2g/daVinci.js) 
 [![npm version](https://badge.fury.io/js/davinci.js.svg)](https://www.npmjs.com/package/davinci.js) 
 [![npm downloads](https://img.shields.io/npm/dt/davinci.js.svg)](https://www.npmjs.com/package/davinci.js)
