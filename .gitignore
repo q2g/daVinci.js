@@ -5,7 +5,7 @@
 package-lock.json
 
 ## publish script
-!npm/publish.js
+!src/npm/publish.js
 
 src/node_modules/
 src/dist/*
