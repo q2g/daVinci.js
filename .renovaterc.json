@@ -13,6 +13,6 @@
         "packagePatterns": ["tslint", "prettier"]
       }
     ],
-    "shedule": "before 10am",
+    "schedule": "before 10am",
     "timezone": "Europe/Berlin"
 }
