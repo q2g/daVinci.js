@@ -10,6 +10,20 @@ const PUBLISH_BREAK = "break";
 let version = "";
 let packageVersionNumber;
 
+function spawnProcess(command, ...args) {
+    return new Promise((resolve, reject) => {
+        spawn(command, args, { stdio: "inherit"})
+            .on("exit", (exitCode) => {
+                if ( exitCode !== 0 ) {
+                    reject(`process exited with ${exitCode}`);
+                } else {
+                    resolve();
+                }
+            })
+            .on("error", (e) => reject(`process ${command} error ${e}`) );
+    });
+}
+
 switch ( process.argv.slice(-1)[0] ) {
 
     case PUBLISH_MINOR: case PUBLISH_ADD: 
@@ -19,7 +33,7 @@ switch ( process.argv.slice(-1)[0] ) {
         version = PUBLISH_MAJOR; 
         break;
     default: 
-        version = "patch"
+        version = "patch";
 }
 
 const npmCommand = resolve(dirname(process.argv[0]), "npm.cmd");
@@ -29,12 +43,12 @@ const npmVersionProcess = spawn(
     npmCommand,
     ["version", version],
     {
-        stdio: [0, 'pipe', 2]
+        stdio: [0, "pipe", 2]
     }
 );
 
 npmVersionProcess.stdout.on("data", (msg) => {
-    packageVersionNumber = msg.toString().replace(/(^\s*|\s*$)/gm, '');
+    packageVersionNumber = msg.toString().replace(/(^\s*|\s*$)/gm, "");
 });
 
 npmVersionProcess.on("exit", async (exitCode) => {
@@ -46,22 +60,8 @@ npmVersionProcess.on("exit", async (exitCode) => {
     try {
         await spawnProcess("git", "push");
         await spawnProcess("git", "push", "origin", packageVersionNumber);
-        await spawnProcess(npmCommand, `publish`);
+        await spawnProcess(npmCommand, "plublish");
     } catch ( error ) {
         process.exit(1);
     }
 });
-
-function spawnProcess(command, ...args) {
-    return new Promise((resolve, reject) => {
-        spawn(command, args, { stdio: 'inherit'})
-            .on("exit", (exitCode) => {
-                if ( exitCode !== 0 ) {
-                    reject(`process exited with ${exitCode}`);
-                } else {
-                    resolve();
-                }
-            })
-            .on("error", (e) => reject(`process ${command} error ${e}`) );
-    });
-}
