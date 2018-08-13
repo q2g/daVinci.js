@@ -2,7 +2,7 @@
     "assignees": ["r-hannuschka"],
     "automerge": false,
     "baseBranches": [
-      "devlopment"
+      "development"
     ],
     "extends": [
       "config:base"
