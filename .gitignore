@@ -2,7 +2,6 @@
 *.map
 *.js
 *.css
-package-lock.json
 
 ## publish script
 !src/npm/publish.js
