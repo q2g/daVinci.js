@@ -2,7 +2,7 @@
     "assignees": ["r-hannuschka"],
     "automerge": false,
     "baseBranches": [
-      "devlopment"
+      "development"
     ],
     "extends": [
       "config:base"
@@ -13,6 +13,6 @@
         "packagePatterns": ["tslint", "prettier"]
       }
     ],
-    "shedule": "before 10am",
+    "schedule": "before 10am",
     "timezone": "Europe/Berlin"
 }
