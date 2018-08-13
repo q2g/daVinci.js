@@ -3,8 +3,8 @@ sudo: false
 node_js:
   - 6  
 install:
-  - cd src
+  - cd test
   - npm install --dev
 script:
-  - cd src
+  - cd test
   - npm test
