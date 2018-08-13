@@ -58,7 +58,7 @@ npmVersionProcess.on("exit", async (exitCode) => {
     }
 
     try {
-        await spawnProcess("git", "add", "package.json package-lock.json");
+        await spawnProcess("git", "add", "package.json", "package-lock.json");
         await spawnProcess("git", "commit", "-m", `set new version to: ${packageVersionNumber}`);
         await spawnProcess("git", "tag", packageVersionNumber);
         await spawnProcess("git", "push");
