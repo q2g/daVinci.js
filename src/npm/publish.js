@@ -60,9 +60,9 @@ npmVersionProcess.on("exit", async (exitCode) => {
     try {
         await spawnProcess("git", "add", "--all");
         await spawnProcess("git", "commit", "-m", `set new version to: ${packageVersionNumber}`);
-        await spawnProcess("git", 'tag', packageVersionNumber);
-        await spawnProcess("git", 'push');
-        await spawnProcess("git", 'push', 'origin', packageVersionNumber);
+        await spawnProcess("git", "tag", packageVersionNumber);
+        await spawnProcess("git", "push");
+        await spawnProcess("git", "push", "origin", packageVersionNumber);
         await spawnProcess(npmCommand, `publish`);
     } catch ( error ) {
         process.exit(1);
