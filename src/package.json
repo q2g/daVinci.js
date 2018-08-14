@@ -15,7 +15,7 @@
     "pkg:publish": "npm run build && node npm/publish"
   },
   "devDependencies": {
-    "@types/angular": "1.6.43",
+    "@types/angular": "1.6.50",
     "@types/jquery": "3.3.0",
     "@types/qlik-engineapi": "12.67.3",
     "q2g-build": "1.1.4",
