@@ -1,16 +1,14 @@
 {
-  "compileOnSave": true,
-  "exclude": [
-    ".vscode",
-    "node_modules"
-  ],
   "compilerOptions": {
-    "module": "umd",
+    "module": "commonjs",
     "noEmitOnError": true,
     "noImplicitAny": false,
     "removeComments": false,
     "sourceMap": true,
     "target": "es5",
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
     "lib": [
       "dom",
       "es5",
@@ -18,5 +16,6 @@
       "es2015.iterable",
       "scripthost"
     ]
-  }
+  }, 
+  "esModuleInterop": true
 }
