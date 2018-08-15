@@ -9,13 +9,18 @@
     "typeRoots": [
       "./node_modules/@types"
     ],
+    "types": [
+      "chai", "mocha", "sinon", "angularjs", "qlik-engineapi"
+    ],
     "lib": [
       "dom",
-      "es5",
-      "es2015.promise",
-      "es2015.iterable",
-      "scripthost"
-    ]
+      "es2015"
+    ],
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["../src/*"],
+      "@utils/*": ["../src/utils/*"]
+    },
   }, 
   "esModuleInterop": true
 }
