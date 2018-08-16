@@ -5,19 +5,17 @@
     }
 
     export class LogConfig {
-        private static logLevelperClass: Array<KV> = new Array<KV>();
+        private static logLevelperClass: Map<string, LogLevel> = new Map<string, LogLevel>();
 
         static GetLogLevel(name: string): LogLevel {
-            for (var t of this.logLevelperClass) {
-                if (t.key === name || t.key === "*") {
-                    return t.value;
-                }
+            if ( this.logLevelperClass.has(name) ) {
+                return this.logLevelperClass.get(name);
             }
-            return LogLevel.off;
+            return LogLevel.off
         }
 
         static SetLogLevel(name: string, level: LogLevel): void {
-            this.logLevelperClass.push({ key: name, value: level });
+            this.logLevelperClass.set(name, level);
         }
     }
 

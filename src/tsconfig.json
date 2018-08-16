@@ -9,7 +9,10 @@
             "dom",
             "es2015"
         ],
-        "noResolve": false
+        "noResolve": false,
+        "typeRoots": [
+            "node_modules/@types"
+        ]
     },
     "exclude": [
         "node_modules",
