@@ -19,7 +19,7 @@
     "@types/jquery": "3.3.6",
     "@types/qlik-engineapi": "12.67.4",
     "q2g-build": "1.1.5",
-    "typescript": "3.0.3"
+    "typescript": "3.1.6"
   },
   "files": [
     "dist"
