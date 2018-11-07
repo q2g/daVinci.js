@@ -17,7 +17,7 @@
   "devDependencies": {
     "@types/angular": "1.6.51",
     "@types/jquery": "3.3.6",
-    "@types/qlik-engineapi": "12.67.4",
+    "@types/qlik-engineapi": "12.67.6",
     "q2g-build": "1.1.5",
     "typescript": "3.1.6"
   },
