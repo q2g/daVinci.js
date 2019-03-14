@@ -180,32 +180,6 @@ class ShortCutController implements ng.IController {
     constructor(element: JQuery) {
         this.logger.debug("Constructor ShortCutController", "");
         this.element = element;
-
-        if (typeof this.shortcutTriggerHandler === "undefined") {
-            this.shortcutTriggerHandler = "";
-        }
-
-        if (typeof this.shortcutAction === "undefined") {
-            for (var i: number = 0; i < this.shortcutObject.length; i++) {
-                this.shortcutObject[i].action = "";
-                if (this.shortcutTriggerHandler = "") {
-                    this.shortcutTriggerHandler = "focus";
-                }
-            }
-        }
-
-        if (this.shortcutObject && typeof this.shortcut === "string") {
-            this.shortcutObject[0].preventdefault = this.shortcutPreventdefault;
-            this.shortcutObject[0].rootscope = this.shortcutRootscope;
-        }
-
-        this.keyDownFunction = (e: JQueryKeyEventObject) => {
-            this.keydownHandler(e);
-        };
-
-        if (this.shortcut) {
-            $(document).on("keydown", this.keyDownFunction);
-        }
     }
 
     /**
@@ -274,6 +248,34 @@ class ShortCutController implements ng.IController {
             $(document).unbind("keydown", this.keyDownFunction);
         } catch (e) {
             this.logger.error("ERROR in function $onDestroy",e);
+        }
+    }
+
+    $onInit(): void {
+        if (typeof this.shortcutTriggerHandler === "undefined") {
+            this.shortcutTriggerHandler = "";
+        }
+
+        if (typeof this.shortcutAction === "undefined") {
+            for (var i: number = 0; i < this.shortcutObject.length; i++) {
+                this.shortcutObject[i].action = "";
+                if (this.shortcutTriggerHandler = "") {
+                    this.shortcutTriggerHandler = "focus";
+                }
+            }
+        }
+
+        if (this.shortcutObject && typeof this.shortcut === "string") {
+            this.shortcutObject[0].preventdefault = this.shortcutPreventdefault;
+            this.shortcutObject[0].rootscope = this.shortcutRootscope;
+        }
+
+        this.keyDownFunction = (e: JQueryKeyEventObject) => {
+            this.keydownHandler(e);
+        };
+
+        if (this.shortcut) {
+            $(document).on("keydown", this.keyDownFunction);
         }
     }
 
