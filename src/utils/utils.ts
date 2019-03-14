@@ -159,9 +159,9 @@ export function getObjectId(scope: ng.IScope) {
 
 /**
  * generate uid by template
- * 
- * template can only contain following characters 
- * x, X and - . Capital X stands for Capital Letters and none captial x stands for none 
+ *
+ * template can only contain following characters
+ * x, X and - . Capital X stands for Capital Letters and none captial x stands for none
  * capital letters or numbers.
  *
  * @export
@@ -186,7 +186,7 @@ export function generateUid(template: string = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx
             if ( char === "X" ) {
                 fromSource = asciiCodesCapital;
             } else {
-                fromSource = Math.round(Math.random() * 2) === 0 
+                fromSource = Math.round(Math.random() * 2) === 0
                     ? asciiCodesChars : (isCharCode = false, numberValues);
             }
 
