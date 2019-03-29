@@ -1,22 +1,22 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Subject } from "rxjs";
-import { takeUntil } from "rxjs/operators";
+import { Component, OnInit } from "@angular/core";
+import { FormBuilder, FormControl } from "@angular/forms";
 
 @Component({
     selector: "davinci-input-bar",
     templateUrl: "input-bar.component.html",
     styleUrls: ["input-bar.component.scss"]
 })
-export class InputBarComponent implements OnInit, OnDestroy {
+export class InputBarComponent implements OnInit {
 
-    private destroy$: Subject<boolean> = new Subject();
+
+    test = "test";
+
 
     constructor() {}
 
-    ngOnInit() { }
-
-    ngOnDestroy() {
-        this.destroy$.next(true);
-        this.destroy$.complete();
+    ngOnInit() {
     }
+
+
+
 }
