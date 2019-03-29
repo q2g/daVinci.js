@@ -1,31 +1,56 @@
 {
-  "name": "davinci.js",
-  "version": "1.4.5",
-  "license": "MIT",
-  "description": "Framework for visualisation extensions",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/q2g/daVinci.js"
-  },
-  "author": "Thomas Häning, Konrad Mattheis (qlik2go)",
+  "name": "da-vinci.js",
+  "version": "0.0.0",
   "scripts": {
-    "build:esm": "node node_modules/q2g-build --builder tsc --config q2g-build.tsc.json",
-    "build:umd": "node node_modules/q2g-build --builder webpack --env production --config q2g-build.webpack.json",
-    "build": "npm run build:umd && npm run build:esm",
-    "pkg:publish": "npm run build && node npm/publish"
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e",
+    "postinstall": "npm run schema:install",
+    "schema:install": "cd schematics && npm i && cd .. && npm run schema:build && npm link schematics",
+    "schema:uninstall": "npm unlink schematics",
+    "schema:build": "tsc -p schematics"
+  },
+  "private": true,
+  "dependencies": {
+    "@angular/animations": "~7.2.0",
+    "@angular/common": "~7.2.0",
+    "@angular/compiler": "~7.2.0",
+    "@angular/core": "~7.2.0",
+    "@angular/forms": "~7.2.0",
+    "@angular/platform-browser": "~7.2.0",
+    "@angular/platform-browser-dynamic": "~7.2.0",
+    "@angular/router": "~7.2.0",
+    "core-js": "^2.5.4",
+    "leonardo-ui": "^1.7.1",
+    "rxjs": "~6.3.3",
+    "tslib": "^1.9.0",
+    "zone.js": "~0.8.26"
   },
   "devDependencies": {
-    "@types/angular": "1.6.54",
-    "@types/jquery": "3.3.29",
-    "@types/qlik-engineapi": "12.67.8",
-    "q2g-build": "1.3.2",
-    "typescript": "3.3.4000"
-  },
-  "files": [
-    "dist"
-  ],
-  "main": "dist/umd/daVinci.js",
-  "module": "dist/esm/daVinci.js",
-  "types": "dist/umd/daVinci.d.ts",
-  "dependencies": {}
+    "@angular-devkit/build-angular": "~0.13.0",
+    "@angular-devkit/build-ng-packagr": "~0.13.0",
+    "@angular/cli": "~7.3.2",
+    "@angular/compiler-cli": "~7.2.0",
+    "@angular/language-service": "~7.2.0",
+    "@types/node": "~8.9.4",
+    "@types/jasmine": "~2.8.8",
+    "@types/jasminewd2": "~2.0.3",
+    "codelyzer": "~4.5.0",
+    "jasmine-core": "~2.99.1",
+    "jasmine-spec-reporter": "~4.2.1",
+    "karma": "~3.1.1",
+    "karma-chrome-launcher": "~2.2.0",
+    "karma-coverage-istanbul-reporter": "~2.0.1",
+    "karma-jasmine": "~1.1.2",
+    "karma-jasmine-html-reporter": "^0.2.2",
+    "ng-packagr": "^4.2.0",
+    "protractor": "~5.4.0",
+    "ts-node": "~7.0.0",
+    "tslint": "~5.11.0",
+    "tsickle": ">=0.34.0",
+    "typescript": "~3.2.2"
+  }
 }

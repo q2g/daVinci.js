@@ -1,25 +1,22 @@
 {
-    "compilerOptions": {
-        "module": "es2015",
-        "target": "es5",
-        "declaration": true,
-        "outDir": "./dist/esm/",
-        "rootDir": ".",
-        "lib": [
-            "dom",
-            "es2015"
-        ],
-        "noResolve": false,
-        "typeRoots": [
-            "node_modules/@types"
-        ]
-    },
-    "exclude": [
-        "node_modules",
-        "dist",
-        "test"
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "sourceMap": true,
+    "declaration": false,
+    "module": "es2015",
+    "moduleResolution": "node",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "importHelpers": true,
+    "target": "es5",
+    "typeRoots": [
+      "node_modules/@types"
     ],
-    "include": [
-        "./**/*.ts"
+    "lib": [
+      "es2018",
+      "dom"
     ]
+  }
 }

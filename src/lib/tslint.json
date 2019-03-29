@@ -1,0 +1,18 @@
+
+{
+    "extends": "../tslint.json",
+    "rules": {
+      "directive-selector": [
+        true,
+        "attribute",
+        "davinci",
+        "camelCase"
+      ],
+      "component-selector": [
+        true,
+        "element",
+        "davinci",
+        "kebab-case"
+      ]
+    }
+  }

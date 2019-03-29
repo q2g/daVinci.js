@@ -1,33 +1,14 @@
-## Typescript q2g Files
-*.map
-*.js
-*.css
-src/**/*.d.ts
+# See http://help.github.com/ignore-files/ for more about ignoring files.
 
-## publish script
-!src/npm/publish.js
-
-src/node_modules/
-src/dist/*
-test/node_modules/
-
-## Include
-!q2g-ext-selector.js
-
-## Standard vccode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-.history/*
-
-
-src/tmp
-src/out-tsc
+# compiled output
+/dist
+/tmp
+/out-tsc
 # Only exists if Bazel was run
-src/bazel-out
+/bazel-out
 
+# dependencies
+/node_modules
 
 # profiling files
 chrome-profiler-events.json
@@ -42,6 +23,13 @@ speed-measure-plugin.json
 .settings/
 *.sublime-workspace
 
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
 
 # misc
 /.sass-cache

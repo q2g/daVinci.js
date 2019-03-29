@@ -1,5 +1,0 @@
-{
-    "entryFile"   : "./daVinci.ts",
-    "outFileName" : "daVinci",
-    "tsConfigFile": "./tsconfig.webpack.json"
-}
