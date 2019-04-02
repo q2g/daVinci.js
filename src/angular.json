@@ -4,7 +4,7 @@
   "newProjectRoot": "projects",
   "projects": {
       "daVinci.js": {
-          "root": "/",
+          "root": "",
           "sourceRoot": "lib",
           "projectType": "library",
           "prefix": "davinci",
