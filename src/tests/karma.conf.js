@@ -6,15 +6,16 @@ module.exports = function (config) {
     basePath: '',
     frameworks: ["jasmine", "@angular-devkit/build-angular"],
     plugins: [
-      require("karma-jasmine"),
-      require("karma-chrome-launcher"),
-      require("karma-mocha-reporter"),
-      require("@angular-devkit/build-angular/plugins/karma")
+      "karma-jasmine",
+      "karma-chrome-launcher",
+      "karma-mocha-reporter",
+      "@angular-devkit/build-angular/plugins/karma",
+      "karma-coverage-istanbul-reporter"
     ],
     client: {
       clearContext: false // leave Jasmine Spec Runner output visible in browser
     },
-    reporters: ["mocha"],
+    reporters: ["mocha", "coverage-istanbul"],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
