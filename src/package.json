@@ -8,7 +8,6 @@
     "test": "ng test --watch=false --code-coverage",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "npm run schema:install",
     "schema:install": "cd schematics && npm i && cd .. && npm run schema:build && npm link schematics",
     "schema:uninstall": "npm unlink schematics",
     "schema:build": "tsc -p schematics"
