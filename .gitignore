@@ -13,6 +13,7 @@ test/node_modules/
 
 ## Include
 !q2g-ext-selector.js
+!src/tests/karma.conf.js
 
 ## Standard vccode
 .vscode/*
@@ -56,3 +57,4 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+
