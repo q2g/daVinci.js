@@ -44,5 +44,5 @@ In template add
 - **search** emits current value after the value has been changed
 
 ```html
-<davinci-search (search)="onSearch($event)"></davinci-search>
+<davinci-search (input)="onSearch($event)"></davinci-search>
 ```

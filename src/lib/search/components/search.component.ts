@@ -19,7 +19,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     public placeholder = "Search";
 
     @Output()
-    public searchValue: EventEmitter<string>;
+    public input: EventEmitter<string>;
 
     private destroy$: Subject<boolean> = new Subject();
 
@@ -29,7 +29,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     constructor(
         private formBuilder: FormBuilder
     ) {
-        this.searchValue = new EventEmitter();
+        this.input = new EventEmitter();
     }
 
     /**
@@ -52,7 +52,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             filter(() => this.searchField.enabled),
             distinctUntilChanged()
         )
-        .subscribe((value: string) => this.searchValue.emit(value));
+        .subscribe((value: string) => this.input.emit(value));
     }
 
     /**

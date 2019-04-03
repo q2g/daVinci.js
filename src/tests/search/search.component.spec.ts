@@ -68,7 +68,7 @@ describe("SearchComponent", () => {
         it("should emit search if value has been changed", () => {
             // enable search field
             let inputValue: string;
-            searchComponent.searchValue.subscribe((val) => inputValue = val);
+            searchComponent.input.subscribe((val) => inputValue = val);
 
             searchComponent.enable();
             searchEl.nativeElement.value = "hello world";
@@ -80,7 +80,7 @@ describe("SearchComponent", () => {
         it("should emit no value if component is disabled", () => {
             // enable search field
             let inputValue: string;
-            searchComponent.searchValue.subscribe((val) => inputValue = val);
+            searchComponent.input.subscribe((val) => inputValue = val);
 
             searchComponent.disable();
             searchEl.nativeElement.value = "hello world";
@@ -92,7 +92,7 @@ describe("SearchComponent", () => {
         it("should not emit a value if nothing has been changed", () => {
             const subSpy = jasmine.createSpy("subscription", () => {});
             // apply spy which should not called twice
-            searchComponent.searchValue.subscribe(subSpy);
+            searchComponent.input.subscribe(subSpy);
             searchComponent.enable();
             searchEl.nativeElement.value = "hello world";
             searchEl.nativeElement.dispatchEvent(new Event("input"));
