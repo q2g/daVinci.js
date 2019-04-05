@@ -1,7 +1,10 @@
 :host {
-    box-sizing: border-box;
-}
-
-.root {
     background-color: aqua;
+    display: flex;
+
+    ::ng-deep {
+        davinci-search {
+            flex: 1;
+        }
+    }
 }
