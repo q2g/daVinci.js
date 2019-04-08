@@ -8,12 +8,12 @@ import { Directive, ViewContainerRef, ElementRef, TemplateRef, Input, AfterViewI
 export class DefaultContentDirective implements AfterViewInit {
 
     private template: TemplateRef<any>;
-
     private node: HTMLElement;
+
     hasContent: boolean;
 
     constructor(
-        element: ElementRef,
+        private element: ElementRef,
         private container: ViewContainerRef,
         private renderer: Renderer2
     ) {
