@@ -1,200 +1,113 @@
 // unit tests comes here
 import {
-  async,
-  ComponentFixture,
-  TestBed,
-  tick,
-  fakeAsync,
-  flush
+    async,
+    ComponentFixture,
+    TestBed,
+    fakeAsync,
+    flush
 } from "@angular/core/testing";
-import { ListViewComponent } from "davinci.js/listview/public_api";
-import { ScrollingModule } from "@angular/cdk/scrolling";
 import { By } from "@angular/platform-browser";
-import { GenericListMock } from "../mockup/generic-object.mockup";
+import { ListViewComponent } from "davinci.js/listview/public_api";
+import { ScrollingModule, CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
+import { ListSourceMock } from "@testing/mocks/list-source.mock";
+import { createCell } from "@testing/mocks/util";
 
 describe("ListView", () => {
-  describe("ListComponent", () => {
-    let listComponent: ListViewComponent;
-    let fixture: ComponentFixture<ListViewComponent>;
+    describe("ListViewComponent", () => {
+        let listComponent: ListViewComponent<EngineAPI.INxCell>;
+        let fixture: ComponentFixture<ListViewComponent<EngineAPI.INxCell>>;
+        let cdkVirtualScroll: CdkVirtualScrollViewport;
 
-    beforeEach(async(() => {
-      TestBed.configureTestingModule({
-        imports: [ScrollingModule],
-        declarations: [ListViewComponent]
-      }).compileComponents();
-    }));
+        let listSource: ListSourceMock;
+        let selectSpy;
+        let deselectSpy;
 
-    beforeEach(() => {
-      fixture = TestBed.createComponent(ListViewComponent);
-      listComponent = fixture.componentInstance;
+        beforeAll(() => {
+            listSource = new ListSourceMock();
+            const cells = Array.from(Array(1000), (val, index) => createCell(index, index));
+            spyOn(listSource, "loadItems").and.returnValue(
+                Promise.resolve(cells)
+            );
+
+            selectSpy = spyOn(listSource, "select");
+            deselectSpy = spyOn(listSource, "deselect");
+        });
+
+        beforeEach(async(() => {
+            TestBed.configureTestingModule({
+                imports: [ScrollingModule],
+                declarations: [ListViewComponent]
+            }).compileComponents();
+        }));
+
+        beforeEach(() => {
+            fixture = TestBed.createComponent<
+                ListViewComponent<EngineAPI.INxCell>
+            >(ListViewComponent);
+            listComponent = fixture.componentInstance;
+
+            const cdkScrollDebugEl = fixture.debugElement.query(By.directive(CdkVirtualScrollViewport));
+            cdkVirtualScroll = cdkScrollDebugEl.componentInstance;
+            cdkScrollDebugEl.nativeNode.style.height = "400px";
+        });
+
+        it("should create", () => {
+            expect(listComponent).toBeTruthy();
+        });
+
+        it("should render items from source", fakeAsync(() => {
+            listComponent.dataSource = listSource;
+            fixture.autoDetectChanges();
+            flush();
+
+            const renderedRange = cdkVirtualScroll.getRenderedRange();
+            const listElements = fixture.debugElement.queryAll(
+                By.css("div.lui-list__item")
+            );
+
+            expect(listElements.length).not.toBe(0);
+            expect(listElements.length).toBe(renderedRange.end - renderedRange.start);
+        }));
+
+        it("should make single selections", fakeAsync(async () => {
+            const items = await listSource.loadItems();
+            listComponent.dataSource = listSource;
+            fixture.autoDetectChanges();
+            flush();
+
+            const listElement = fixture.debugElement.query(
+                By.css("div.lui-list__item")
+            );
+            listElement.triggerEventHandler("click", null);
+
+            expect(selectSpy).toHaveBeenCalled();
+            expect(selectSpy).toHaveBeenCalledWith(items[0]);
+
+            fixture.detectChanges();
+            expect(listElement.classes.selected).toBeTruthy();
+        }));
+
+        it("should deselect an item", fakeAsync(async () => {
+            const items = await listSource.loadItems();
+            listComponent.dataSource = listSource;
+            fixture.autoDetectChanges();
+            flush();
+
+            const listElement = fixture.debugElement.query(
+                By.css("div.lui-list__item")
+            );
+
+            /** click twice to select and then deselect item */
+            listElement.triggerEventHandler("click", null);
+            listElement.triggerEventHandler("click", null);
+
+            expect(deselectSpy).toHaveBeenCalled();
+            expect(deselectSpy).toHaveBeenCalledWith(items[0]);
+
+            fixture.detectChanges();
+            expect(listElement.classes.selected).toBeFalsy();
+        }));
+
+        it("should select multiple items", async () => {});
     });
-
-    describe("default", () => {
-      it("should create", () => {
-        expect(listComponent).toBeTruthy();
-      });
-
-      it("should render 2 items from hypercube", fakeAsync(() => {
-        const genericObjectMock = new GenericListMock();
-        spyOn(genericObjectMock, "getListObjectData").and.returnValue(
-          Promise.resolve(createListObjectData(createMatrix(4, 1)))
-        );
-
-        listComponent.dataSource = genericObjectMock;
-        fixture.autoDetectChanges();
-        flush();
-
-        const listElements = fixture.debugElement.queryAll(
-          By.css("div.lui-list__item")
-        );
-
-        expect(listElements.length).toBe(4);
-      }));
-    });
-
-    describe("selections", () => {
-      let selection;
-      let genericObjectMock;
-
-      beforeEach(fakeAsync(() => {
-        genericObjectMock = new GenericListMock();
-        spyOn<EngineAPI.IGenericObject>(
-          genericObjectMock,
-          "getListObjectData"
-        ).and.returnValue(
-          Promise.resolve(createListObjectData(createMatrix(4, 1)))
-        );
-
-        selection = spyOn(genericObjectMock, "selectListObjectValues");
-
-        listComponent.dataSource = genericObjectMock;
-        fixture.autoDetectChanges();
-        flush();
-      }));
-
-      it("should make single selections", () => {
-        const listElement = fixture.debugElement.query(
-          By.css("div.lui-list__item")
-        );
-        listElement.triggerEventHandler("click", null);
-        expect(selection).toHaveBeenCalled();
-      });
-
-      it("should selected first item", async () => {
-        const data = (await genericObjectMock.getListObjectData()) as EngineAPI.INxDataPage[];
-        const listElement = fixture.debugElement.query(
-          By.css("div.lui-list__item")
-        );
-        listElement.triggerEventHandler("click", null);
-        expect(selection).toHaveBeenCalledWith(
-          "/qListObjectDef",
-          [data[0].qMatrix[0][0].qElemNumber],
-          true,
-          false
-        );
-      });
-
-      it("should has class selected", async () => {
-        const data = (await genericObjectMock.getListObjectData()) as EngineAPI.INxDataPage[];
-        const listElement = fixture.debugElement.query(
-          By.css("div.lui-list__item")
-        );
-        listElement.triggerEventHandler("click", null);
-        fixture.autoDetectChanges();
-        expect(listElement.classes.selected).toBeTruthy();
-      });
-
-      it("should not have class selected", async () => {
-        const data = (await genericObjectMock.getListObjectData()) as EngineAPI.INxDataPage[];
-        const listElement = fixture.debugElement.query(
-          By.css("div.lui-list__item")
-        );
-        listElement.triggerEventHandler("click", null);
-        fixture.autoDetectChanges();
-        listElement.triggerEventHandler("click", null); // click twice since it should toggle
-        fixture.autoDetectChanges();
-        expect(listElement.classes.selected).toBeFalsy();
-      });
-
-      it("should select multiple items", async () => {
-        const data = (await genericObjectMock.getListObjectData()) as EngineAPI.INxDataPage[];
-        const listElement = fixture.debugElement.query(
-          By.css("div.lui-list__item")
-        );
-        listElement.triggerEventHandler("click", null);
-        expect(selection).toHaveBeenCalledWith(
-          "/qListObjectDef",
-          [data[0].qMatrix[0][0].qElemNumber],
-          true,
-          false
-        );
-      });
-    });
-  });
 });
-
-/** generate list object data */
-function createListObjectData(
-  matrix: EngineAPI.INxCellRows[]
-): EngineAPI.INxDataPage[] {
-  /** generate rows */
-  return [
-    {
-      qMatrix: matrix,
-      qArea: {
-        qHeight: 10,
-        qLeft: 0,
-        qTop: 0,
-        qWidth: 1
-      },
-      qIsReduced: false,
-      qTails: []
-    }
-  ];
-}
-
-/** generate matrix */
-function createMatrix(
-  rowCount: number,
-  colCount: number = 0
-): EngineAPI.INxCellRows[] {
-  /** generate rows */
-  const rows = Array.from(
-    new Array(rowCount),
-    (rVal, rIdx): EngineAPI.INxCellRows => {
-      /** generate cols */
-      const col = Array.from(
-        new Array(colCount),
-        (cVal, cIdx): EngineAPI.INxCell => {
-          return {
-            qAttrDims: {
-              qValues: []
-            },
-            qAttrExps: {
-              qValues: []
-            },
-            qElemNumber: parseInt(
-              `${rIdx}${pad(cIdx, colCount.toString().length)}`,
-              10
-            ),
-            qIsNull: false,
-            qState: "L",
-            qText: `row: ${rIdx}, col: ${cIdx}`
-          };
-        }
-      );
-      return col;
-    }
-  );
-
-  return rows;
-}
-
-/** add leading zeros */
-function pad(num, size) {
-  let s = String(num);
-  while (s.length < size) {
-    s = `0${s}`;
-  }
-  return s;
-}

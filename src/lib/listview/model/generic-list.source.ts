@@ -32,23 +32,23 @@ export class GenericListSource implements IListSource<EngineAPI.INxCell> {
     /**
      * deselect one or multiple items on hypercube
      */
-    public deselect(item: EngineAPI.INxCell | EngineAPI.INxCell[]) {
+    public deselect(item: IListItem<EngineAPI.INxCell>| IListItem<EngineAPI.INxCell>[]) {
         this.toggleSelection(item);
     }
 
     /**
      * select one or multiple items on listobject
      */
-    public select(item: EngineAPI.INxCell | EngineAPI.INxCell[]) {
+    public select(item: IListItem<EngineAPI.INxCell>| IListItem<EngineAPI.INxCell>[]) {
         this.toggleSelection(item);
     }
 
     /**
      * toggle selection on selected values
      */
-    private toggleSelection(item: EngineAPI.INxCell | EngineAPI.INxCell[]) {
-        const items: EngineAPI.INxCell[] = Array.isArray(item) ? item : [item];
-        const selected = items.map((cell) => cell.qElemNumber);
+    private toggleSelection(item: IListItem<EngineAPI.INxCell>| IListItem<EngineAPI.INxCell>[]) {
+        const items: IListItem<EngineAPI.INxCell>[] = Array.isArray(item) ? item : [item];
+        const selected = items.map((cell) => cell.raw.qElemNumber);
         this.listObject.selectListObjectValues("/qListObjectDef", selected, true, false);
     }
 
@@ -61,13 +61,10 @@ export class GenericListSource implements IListSource<EngineAPI.INxCell> {
     /**
      * flatten matrix to simple array of list items
      */
-    private convertDataPage(
-        data: EngineAPI.INxDataPage[]
-    ): IListItem<EngineAPI.INxCell>[] {
+    private convertDataPage(data: EngineAPI.INxDataPage[]): IListItem<EngineAPI.INxCell>[] {
         if (!Array.isArray(data) || !data.length) {
             return [];
         }
-
         const pageData = data[0].qMatrix;
         const reduced = pageData.reduce<IListItem<EngineAPI.INxCell>[]>((prev, col) => {
             const items = col.map(value => {
@@ -75,12 +72,12 @@ export class GenericListSource implements IListSource<EngineAPI.INxCell> {
             });
             return prev.concat(...items);
         }, []);
-
         return reduced;
     }
 
     private registerEvents() {
         this.listObject.on("changed", () => {
+            this.update$.next();
         });
     }
 }

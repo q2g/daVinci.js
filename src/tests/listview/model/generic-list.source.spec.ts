@@ -1,16 +1,15 @@
-import { GenericListMock } from "../mockup/generic-object.mockup";
+import { GenericListMock } from "../../_mockup/generic-list.mockup";
 import { GenericListSource } from "davinci.js/listview/model/generic-list.source";
 import { IListItem } from "davinci.js/listview/api/list-item.interface";
-import { createListObjectData, createMatrix } from "../mockup/util";
+import { createListObjectData, createMatrix } from "@testing/mocks/util";
 
-fdescribe("ListView", () => {
+describe("ListView", () => {
     describe("GenericList Source", () => {
         let dataSource: GenericListMock;
         let listSource: GenericListSource;
 
         beforeEach(() => {
             dataSource = new GenericListMock();
-
             listSource = new GenericListSource(dataSource);
         });
 
@@ -54,7 +53,7 @@ fdescribe("ListView", () => {
             expect(items[0].label).toBeDefined();
             expect(items[0].raw).toBeDefined();
 
-            expect(items[0].label).toBe("row: 0, col: 0");
+            expect(items[0].label).toBe("cell-0");
             expect(items[0].raw).toBe(matrix[0][0]);
         });
 
@@ -70,12 +69,10 @@ fdescribe("ListView", () => {
             );
 
             const selectSpy = spyOn(dataSource, "selectListObjectValues");
-            const items: IListItem<
-                EngineAPI.INxCell
-            >[] = await listSource.loadItems();
+            const items: IListItem<EngineAPI.INxCell>[] = await listSource.loadItems();
 
             // select item
-            listSource.select(items[0].raw);
+            listSource.select(items[0]);
 
             expect(selectSpy).toHaveBeenCalled();
             expect(selectSpy).toHaveBeenCalledWith(
@@ -98,12 +95,10 @@ fdescribe("ListView", () => {
             );
 
             const selectSpy = spyOn(dataSource, "selectListObjectValues");
-            const items: IListItem<
-                EngineAPI.INxCell
-            >[] = await listSource.loadItems();
+            const items: IListItem<EngineAPI.INxCell>[] = await listSource.loadItems();
 
             // select item
-            listSource.select([items[0].raw, items[1].raw]);
+            listSource.select(items.slice(0, 2));
             expect(selectSpy).toHaveBeenCalledWith(
                 "/qListObjectDef",
                 [items[0].raw.qElemNumber, items[1].raw.qElemNumber],
@@ -123,7 +118,7 @@ fdescribe("ListView", () => {
             const items = await listSource.loadItems();
             const selectSpy = spyOn(dataSource, "selectListObjectValues");
 
-            listSource.deselect(items[0].raw);
+            listSource.deselect(items[0]);
             expect(selectSpy).toHaveBeenCalledWith(
                 "/qListObjectDef",
                 [items[0].raw.qElemNumber],
@@ -145,10 +140,10 @@ fdescribe("ListView", () => {
             });
 
             const changedSpy = jasmine.createSpy("changed");
-            listSource.update$.subscribe(() => changedSpy);
+            listSource.update$.subscribe(changedSpy);
 
             const items = await listSource.loadItems();
-            listSource.select([items[0].raw]);
+            listSource.select([items[0]]);
 
             expect(changedSpy).toHaveBeenCalled();
         });

@@ -5,9 +5,9 @@ export interface IListSource<T> {
 
     update$: Subject<IListItem<T>[]>;
 
-    loadItems: () => Promise<IListItem<T>[]>;
+    loadItems(): Promise<IListItem<T>[]>;
 
-    select(item: T);
+    select(item: IListItem<T>);
 
-    deselect(item: T);
+    deselect(item: IListItem<T>);
 }

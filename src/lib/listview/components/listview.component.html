@@ -1,7 +1,5 @@
 <cdk-virtual-scroll-viewport [itemSize]=40 class="list-container list-group">
-
     <div *cdkVirtualFor="let item of items" class="lui-list__item" (click)="itemClick(item)" [ngClass]="{'selected': selections.hasValue(item)}">
-        item
+        {{item.label}}
     </div>
-
 </cdk-virtual-scroll-viewport>

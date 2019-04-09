@@ -19,7 +19,8 @@
       "dom"
     ],
     "paths": {
-      "davinci.js/*": ["lib/*"]
+      "davinci.js/*": ["lib/*"],
+      "@testing/mocks/*": ["tests/_mockup/*"],
     }
   }
 }
