@@ -1,3 +1,10 @@
-<div class="root">
-    <span>extension-header works</span>
+<ng-template #title>
+    <div>something</div>
+</ng-template>
+
+
+<div [davinciDefaultTemplate]="title">
+    <ng-content select="[search]"></ng-content>
 </div>
+
+<ng-content select="[action]"></ng-content>
