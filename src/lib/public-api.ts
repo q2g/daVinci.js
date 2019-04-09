@@ -3,3 +3,4 @@ export * from "./extension-header/extension-header.module";
 export * from "./input-bar/input-bar.module";
 export * from "./search/public_api";
 export * from "./core/core.module";
+export * from "./listview/public_api";
