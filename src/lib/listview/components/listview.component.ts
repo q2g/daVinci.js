@@ -4,13 +4,13 @@ import {
     OnDestroy,
     Input,
     Output,
-    EventEmitter
+    EventEmitter,
 } from "@angular/core";
 import { Subject } from "rxjs";
 import { ISelection } from "../api/selection.interface";
 import { SelectionModel } from "@angular/cdk/collections";
-import { IListSource } from "../api/list-source.interface";
 import { IListItem } from "../api/list-item.interface";
+import { ListSource } from "../model/list-source";
 
 @Component({
     selector: "davinci-listview",
@@ -21,13 +21,13 @@ export class ListViewComponent<T> implements OnInit, OnDestroy {
     @Output()
     public select: EventEmitter<ISelection>;
 
-    public items: IListItem<T>[];
+    public ready = false;
+
+    public source: ListSource<T>;
+
+    public selections: SelectionModel<IListItem<T>>;
 
     private destroy$: Subject<boolean> = new Subject();
-
-    private selections: SelectionModel<IListItem<T>>;
-
-    private source: IListSource<T>;
 
     constructor() {
         this.select = new EventEmitter();
@@ -35,16 +35,14 @@ export class ListViewComponent<T> implements OnInit, OnDestroy {
     }
 
     @Input()
-    public set dataSource(source: IListSource<T>) {
+    public set dataSource(source: ListSource<T>) {
         this.source = source;
-        this.source.loadItems().then((items: IListItem<T>[]) => {
-            this.items = items;
-        });
     }
 
-    async ngOnInit() {}
+    public ngOnInit() {
+    }
 
-    ngOnDestroy() {
+    public ngOnDestroy() {
         this.destroy$.next(true);
         this.destroy$.complete();
     }

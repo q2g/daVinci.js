@@ -88,6 +88,7 @@ describe("ListView", () => {
         }));
 
         it("should deselect an item", fakeAsync(async () => {
+
             const items = await listSource.loadItems();
             listComponent.dataSource = listSource;
             fixture.autoDetectChanges();
@@ -108,6 +109,8 @@ describe("ListView", () => {
             expect(listElement.classes.selected).toBeFalsy();
         }));
 
-        it("should select multiple items", async () => {});
+        it("should select multiple items", () => {});
+
+        it("should reset listview if new data has been loaded", () => {});
     });
 });

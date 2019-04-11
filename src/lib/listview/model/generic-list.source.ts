@@ -1,30 +1,25 @@
-import { IListSource } from "../api/list-source.interface";
 import { IListItem } from "../api/list-item.interface";
-import { Subject } from "rxjs";
+import { ListSource } from "./list-source";
+// import { createCell } from "@testing/mocks/util";
 
-export class GenericListSource implements IListSource<EngineAPI.INxCell> {
+declare type bn = IListItem<EngineAPI.INxCell> | IListItem<EngineAPI.INxCell>[];
 
-    public update$: Subject<IListItem<EngineAPI.INxCell>[]> = new Subject();
+/** only possible to make it free from listsource is to use a decorator */
+export class GenericListSource extends ListSource<EngineAPI.INxCell> {
 
     /** data source we get data */
-    private listObject: EngineAPI.IGenericList;
+    private genericList: EngineAPI.IGenericList;
 
-    public constructor(listObject: EngineAPI.IGenericList) {
-        this.listObject = listObject;
+    public constructor(genericList: EngineAPI.IGenericList) {
+        super();
+        this.genericList = genericList;
         this.registerEvents();
     }
 
-    public async loadItems(): Promise<IListItem<EngineAPI.INxCell>[]> {
-        const data = await this.listObject.getListObjectData(
+    public async loadItems(page: number): Promise<IListItem<EngineAPI.INxCell>[]> {
+        const data = await this.genericList.getListObjectData(
             "/qListObjectDef",
-            [
-                {
-                    qHeight: 10,
-                    qLeft: 0,
-                    qTop: 0,
-                    qWidth: 1
-                }
-            ]
+            [this.calculatePage(page)]
         );
         return this.convertDataPage(data);
     }
@@ -32,24 +27,34 @@ export class GenericListSource implements IListSource<EngineAPI.INxCell> {
     /**
      * deselect one or multiple items on hypercube
      */
-    public deselect(item: IListItem<EngineAPI.INxCell>| IListItem<EngineAPI.INxCell>[]) {
+    public deselect(item: bn) {
         this.toggleSelection(item);
     }
 
     /**
      * select one or multiple items on listobject
      */
-    public select(item: IListItem<EngineAPI.INxCell>| IListItem<EngineAPI.INxCell>[]) {
+    public select(
+        item: IListItem<EngineAPI.INxCell> | IListItem<EngineAPI.INxCell>[]
+    ) {
         this.toggleSelection(item);
     }
 
     /**
      * toggle selection on selected values
      */
-    private toggleSelection(item: IListItem<EngineAPI.INxCell>| IListItem<EngineAPI.INxCell>[]) {
+    private toggleSelection(
+        item: IListItem<EngineAPI.INxCell> | IListItem<EngineAPI.INxCell>[]
+    ) {
         const items: IListItem<EngineAPI.INxCell>[] = Array.isArray(item) ? item : [item];
-        const selected = items.map((cell) => cell.raw.qElemNumber);
-        this.listObject.selectListObjectValues("/qListObjectDef", selected, true, false);
+        const selected = items.map(cell => cell.raw.qElemNumber);
+
+        this.genericList.selectListObjectValues(
+            "/qListObjectDef",
+            selected,
+            true,
+            false
+        );
     }
 
     /**
@@ -66,18 +71,30 @@ export class GenericListSource implements IListSource<EngineAPI.INxCell> {
             return [];
         }
         const pageData = data[0].qMatrix;
-        const reduced = pageData.reduce<IListItem<EngineAPI.INxCell>[]>((prev, col) => {
-            const items = col.map(value => {
-                return { label: value.qText, raw: value };
-            });
-            return prev.concat(...items);
-        }, []);
+        const reduced = pageData.reduce<IListItem<EngineAPI.INxCell>[]>(
+            (prev, col) => {
+                const items = col.map(value => {
+                    return { label: value.qText, raw: value };
+                });
+                return prev.concat(...items);
+            },
+            []
+        );
         return reduced;
     }
 
     private registerEvents() {
-        this.listObject.on("changed", () => {
+        this.genericList.on("changed", () => {
             this.update$.next();
         });
+    }
+
+    private calculatePage(page: number): EngineAPI.INxPage {
+        return {
+            qHeight: 20,
+            qLeft: 0,
+            qTop: page * 20,
+            qWidth: 1
+        };
     }
 }

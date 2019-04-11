@@ -1,3 +1,11 @@
 :host {
     box-sizing: border-box;
+
+    .list-container {
+        height: 300px;
+    }
+
+    .lui-list__item {
+        height: 40px;
+    }
 }

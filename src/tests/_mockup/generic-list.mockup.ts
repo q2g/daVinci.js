@@ -1,4 +1,5 @@
 export class GenericListMock implements EngineAPI.IGenericList {
+
     id: string;
     type: string;
     genericType: string;
@@ -140,6 +141,7 @@ export class GenericListMock implements EngineAPI.IGenericList {
     getLayout(): Promise<EngineAPI.IGenericListLayout> {
         throw new Error("Method not implemented.");
     }
+
     getProperties(): Promise<EngineAPI.IGenericListProperties> {
         throw new Error("Method not implemented.");
     }

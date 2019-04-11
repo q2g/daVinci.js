@@ -1,12 +1,20 @@
 import { NgModule } from "@angular/core";
 import { ListViewComponent } from "./components/listview.component";
+import { ScrollingModule } from "@angular/cdk/scrolling";
+import { CommonModule } from "@angular/common";
 
 @NgModule({
     declarations: [
         ListViewComponent
     ],
     exports: [
-        ListViewComponent
+        CommonModule,
+        ListViewComponent,
+        ScrollingModule
+    ],
+    imports: [
+        CommonModule,
+        ScrollingModule
     ]
 })
-export class ListModule {}
+export class ListViewModule {}

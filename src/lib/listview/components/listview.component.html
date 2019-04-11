@@ -1,5 +1,7 @@
 <cdk-virtual-scroll-viewport [itemSize]=40 class="list-container list-group">
-    <div *cdkVirtualFor="let item of items" class="lui-list__item" (click)="itemClick(item)" [ngClass]="{'selected': selections.hasValue(item)}">
-        {{item.label}}
+    <div *cdkVirtualFor="let item of source" class="lui-list__item" (click)="itemClick(item)"
+        [ngClass]="{selected: selections.isSelected(item)}">
+        <ng-container *ngIf="item">{{item.label}}</ng-container>
+        <ng-container *ngIf="!item">Loading ...</ng-container>
     </div>
 </cdk-virtual-scroll-viewport>
