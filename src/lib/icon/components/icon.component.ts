@@ -8,10 +8,10 @@ import { Component, Input, ElementRef, Output, EventEmitter } from "@angular/cor
 export class IconComponent {
 
     @Input()
-    icon = "tick";
+    buttonType: string;
 
     @Input()
-    buttonType: string;
+    icon = "tick";
 
     @Input()
     isActive = false;
@@ -22,16 +22,16 @@ export class IconComponent {
     @Output()
     click = new EventEmitter<void>();
 
+    constructor(
+    ) {
+        this.click = new EventEmitter();
+    }
+
     onClick(event) {
         event.stopPropagation();
         if (this.isActive) {
             this.click.emit();
         }
-    }
-
-    constructor(
-    ) {
-        this.click = new EventEmitter();
     }
 
 }

@@ -10,7 +10,6 @@ describe("IconComponent", () => {
     let iconEl: DebugElement;
     let buttonEl: DebugElement;
 
-
     beforeEach(async(() => {
 
         TestBed.configureTestingModule({
