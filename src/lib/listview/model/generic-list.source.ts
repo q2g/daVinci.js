@@ -1,7 +1,6 @@
 import { IListItem } from "../api/list-item.interface";
 import { ListSource } from "./list-source";
 import { IListConfig } from "../api/list-config.interface";
-// import { createCell } from "@testing/mocks/util";
 
 declare type ListItem = IListItem<EngineAPI.INxCell> | IListItem<EngineAPI.INxCell>[];
 
