@@ -1,7 +1,15 @@
-<cdk-virtual-scroll-viewport [itemSize]=40 class="list-container list-group">
-    <div *cdkVirtualFor="let item of source" class="lui-list__item" (click)="itemClick(item)"
-        [ngClass]="{selected: selections.isSelected(item)}">
-        <ng-container *ngIf="item">{{item.label}}</ng-container>
+<cdk-virtual-scroll-viewport [itemSize]=30 class="list-container list-group">
+    <div *cdkVirtualFor="let item of source" (click)="itemClick(item)"
+        class="lui-list__item"
+        [ngClass]="[item && item.state !== 'none' ? item.state : '']">
+
+        <!-- list label and icon -->
+        <ng-container *ngIf="item">
+            <span class="item-label">{{item.label}}</span>
+            <i [ngClass]="[item.icon !== 'none' ? 'lui-icon lui-icon--' + item.icon : '']"></i>
+        </ng-container>
+
+        <!-- icon is loading -->
         <ng-container *ngIf="!item">Loading ...</ng-container>
     </div>
 </cdk-virtual-scroll-viewport>

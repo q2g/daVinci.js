@@ -1,30 +1,38 @@
 import { DataSource, CollectionViewer } from "@angular/cdk/collections";
 import { IListItem } from "../public_api";
-import { Subject, Observable, BehaviorSubject, Subscription } from "rxjs";
+import {  Observable, BehaviorSubject, Subscription } from "rxjs";
 import { IListConfig } from "../api/list-config.interface";
 
 export abstract class ListSource<T> extends DataSource<IListItem<T>> {
-    public update$: Subject<IListItem<T>[]> = new Subject();
 
+    /** items per page we want to display */
     protected pageSize: number;
 
+    /** total amount of data we have to shown */
     protected totalSize = 0;
 
     /** current page we display */
     protected currentPages: number[];
 
+    /**
+     * all data we have been loaded and displayed in list
+     * values will be overriden if new data page has been
+     * loaded
+     */
     private cachedData: IListItem<T>[];
 
+    /** datastream which will bound to cdk virtual for */
     private dataStream: BehaviorSubject<IListItem<T>[]>;
 
     private subscription = new Subscription();
 
+    /** all pages we have allready loaded so we dont need to load it again */
     private fetchedPages: Set<number> = new Set();
 
-    /** deselect an item */
+    /** abstract method to deselect an item */
     public abstract deselect(item: IListItem<T>);
 
-    /** select an item */
+    /** abstract method to select an item */
     public abstract select(item: IListItem<T>);
 
     /** load items from concrete source */
@@ -74,17 +82,23 @@ export abstract class ListSource<T> extends DataSource<IListItem<T>> {
         this.subscription.unsubscribe();
     }
 
+    /**
+     * remove all cached data
+     */
     protected cleanCache() {
         this.fetchedPages.clear();
         this.cachedData = [];
     }
 
+    /**
+     * reload page
+     */
     protected reload() {
         this.cleanCache();
         this.cachedData = Array.from<IListItem<T>>({ length: this.totalSize });
         this.currentPages.forEach((page: number) => {
             this.loadDataPage(page);
-        })
+        });
     }
 
     /**
