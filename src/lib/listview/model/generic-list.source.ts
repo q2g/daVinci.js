@@ -57,11 +57,6 @@ export class GenericListSource extends ListSource<EngineAPI.INxCell> {
         );
     }
 
-    /** what do do here i think we dont need it */
-    public update() {
-        throw { message: "Method not implemented" };
-    }
-
     /**  */
     protected async loadItems(page: number): Promise<IListItem<EngineAPI.INxCell>[]> {
         const data = await this.genericList.getListObjectData(
@@ -97,8 +92,10 @@ export class GenericListSource extends ListSource<EngineAPI.INxCell> {
 
     /** register on changed events on session object */
     private registerEvents() {
-        this.genericList.on("changed", () => {
-            this.update$.next();
+        this.genericList.on("changed", async () => {
+            const data     = await this.genericList.getLayout();
+            this.totalSize = data.qListObject.qSize.qcy;
+            this.reload();
         });
     }
 }
