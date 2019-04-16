@@ -1,8 +1,37 @@
+@import '~ngx-customscrollbar/scss/ngx-customscrollbars.theme';
+@import '~ngx-customscrollbar/scss/common';
+
 :host {
     box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    height: 100%;
+    position: relative;
+
+    .ngx-customscrollbars {
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        right: .2rem;
+    }
+
+    /** to make it work we need to use ng-deep */
+    ::ng-deep {
+        @include ngxCustomScrollbarsTheme();
+
+        .scrollbar-track, 
+        .scrollbar-thumb {
+            position: relative;
+        }
+
+        .scrollbar-track {
+            opacity: 1;
+            background: transparent;
+        }
+    }
 
     .list-container {
-        height: 300px;
+        flex: 1;
     }
 
     .lui-list__item {

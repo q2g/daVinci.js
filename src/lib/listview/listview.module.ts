@@ -2,6 +2,7 @@ import { NgModule } from "@angular/core";
 import { ListViewComponent } from "./components/listview.component";
 import { ScrollingModule } from "@angular/cdk/scrolling";
 import { CommonModule } from "@angular/common";
+import { NgxCustomScrollbarModule } from "ngx-customscrollbar";
 
 @NgModule({
     declarations: [
@@ -10,11 +11,13 @@ import { CommonModule } from "@angular/common";
     exports: [
         CommonModule,
         ListViewComponent,
-        ScrollingModule
+        ScrollingModule,
+        NgxCustomScrollbarModule
     ],
     imports: [
         CommonModule,
-        ScrollingModule
+        ScrollingModule,
+        NgxCustomScrollbarModule
     ]
 })
 export class ListViewModule {}

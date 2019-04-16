@@ -4,11 +4,13 @@ import { ISelection } from "../api/selection.interface";
 import { SelectionModel } from "@angular/cdk/collections";
 import { IListItem } from "../api/list-item.interface";
 import { ListSource } from "../model/list-source";
+import { ViewportControl } from "ngx-customscrollbar";
 
 @Component({
     selector: "davinci-listview",
     templateUrl: "listview.component.html",
-    styleUrls: ["listview.component.scss"]
+    styleUrls: ["listview.component.scss"],
+    viewProviders: [ViewportControl]
 })
 export class ListViewComponent<T> implements OnDestroy {
     @Output()

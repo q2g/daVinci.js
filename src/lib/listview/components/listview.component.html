@@ -1,4 +1,4 @@
-<cdk-virtual-scroll-viewport [itemSize]=30 class="list-container list-group">
+<cdk-virtual-scroll-viewport [itemSize]=30 class="list-container list-group" ngxCustomScrollbarScrollable>
     <div *cdkVirtualFor="let item of source" (click)="itemClick(item)"
         class="lui-list__item"
         [ngClass]="[item && item.state !== 'none' ? item.state : '']">
@@ -13,3 +13,4 @@
         <ng-container *ngIf="!item">Loading ...</ng-container>
     </div>
 </cdk-virtual-scroll-viewport>
+<ngx-customscrollbar *ngxCustomScrollbarOverflowY></ngx-customscrollbar>
