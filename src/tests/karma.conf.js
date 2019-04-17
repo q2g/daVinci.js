@@ -5,6 +5,10 @@ module.exports = function (config) {
   config.set({
     basePath: '',
     frameworks: ["jasmine", "@angular-devkit/build-angular"],
+    files: [
+      "leonardo-ui/dist/leonardo-ui.js",
+      "leonardo-ui/dist/leonardo-ui.css"
+    ],
     plugins: [
       "karma-jasmine",
       "karma-chrome-launcher",
