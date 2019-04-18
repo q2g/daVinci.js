@@ -1,6 +1,6 @@
 import { DataSource, CollectionViewer } from "@angular/cdk/collections";
 import { IListItem } from "../public_api";
-import {  Observable, BehaviorSubject, Subscription } from "rxjs";
+import { Observable, BehaviorSubject, Subscription } from "rxjs";
 import { IListConfig } from "../api/list-config.interface";
 
 export abstract class ListSource<T> extends DataSource<IListItem<T>> {
@@ -30,13 +30,13 @@ export abstract class ListSource<T> extends DataSource<IListItem<T>> {
     private fetchedPages: Set<number> = new Set();
 
     /** abstract method to deselect an item */
-    public abstract deselect(item: IListItem<T>);
+    public abstract deselect( item: IListItem<T> );
 
     /** abstract method to select an item */
-    public abstract select(item: IListItem<T>);
+    public abstract select( item: IListItem<T> );
 
     /** load items from concrete source */
-    protected abstract loadItems(page: number): Promise<IListItem<T>[]>;
+    protected abstract loadItems( page: number ): Promise<IListItem<T>[]>;
 
     public constructor(protected config: IListConfig) {
         super();
@@ -48,26 +48,26 @@ export abstract class ListSource<T> extends DataSource<IListItem<T>> {
      * create datastream which will connected to angular cdk virtual for loop
      */
     public async prepare(): Promise<ListSource<T>> {
-        this.cachedData = Array.from<IListItem<T>>({ length: this.totalSize });
-        this.dataStream = new BehaviorSubject<IListItem<T>[]>(this.cachedData);
+        this.cachedData = Array.from<IListItem<T>>( { length: this.totalSize } );
+        this.dataStream = new BehaviorSubject<IListItem<T>[]>( this.cachedData );
         return this;
     }
 
     /**
      * connect to cdkVirtualFor as data source
      */
-    public connect(collectionViewer: CollectionViewer): Observable<IListItem<T>[]> {
+    public connect( collectionViewer: CollectionViewer ): Observable<IListItem<T>[]> {
         this.subscription.add(
-            collectionViewer.viewChange.subscribe(range => {
-                const startPage = this.getPageForIndex(range.start);
-                const endPage = this.getPageForIndex(range.end);
+            collectionViewer.viewChange.subscribe( range => {
+                const startPage = this.getPageForIndex( range.start );
+                const endPage = this.getPageForIndex( range.end );
 
                 this.currentPages = [];
-                for (let i = startPage; i <= endPage; i++) {
-                    this.loadDataPage(i);
-                    this.currentPages.push(i);
+                for ( let i = startPage; i <= endPage; i++ ) {
+                    this.loadDataPage( i );
+                    this.currentPages.push( i );
                 }
-            })
+            } )
         );
         return this.dataStream;
     }
@@ -78,7 +78,7 @@ export abstract class ListSource<T> extends DataSource<IListItem<T>> {
     /**
      * disconnect from cdkVirtualFor
      */
-    public disconnect(collectionViewer: CollectionViewer): void {
+    public disconnect( collectionViewer: CollectionViewer ): void {
         this.subscription.unsubscribe();
     }
 
@@ -95,20 +95,20 @@ export abstract class ListSource<T> extends DataSource<IListItem<T>> {
      */
     protected reload() {
         this.cleanCache();
-        this.cachedData = Array.from<IListItem<T>>({ length: this.totalSize });
-        this.currentPages.forEach((page: number) => {
-            this.loadDataPage(page);
-        });
+        this.cachedData = Array.from<IListItem<T>>( { length: this.totalSize } );
+        this.currentPages.forEach( ( page: number ) => {
+            this.loadDataPage( page );
+        } );
     }
 
     /**
      * load data for page
      */
-    protected async loadDataPage(page) {
-        if (this.fetchedPages.has(page)) {
+    protected async loadDataPage( page ) {
+        if ( this.fetchedPages.has( page ) ) {
             return;
         }
-        const items = await this.loadItems(page);
+        const items = await this.loadItems( page );
 
         /** replace data in cache */
         this.cachedData.splice(
@@ -116,14 +116,14 @@ export abstract class ListSource<T> extends DataSource<IListItem<T>> {
             this.config.pageSize,
             ...items
         );
-        this.fetchedPages.add(page);
-        this.dataStream.next(this.cachedData);
+        this.fetchedPages.add( page );
+        this.dataStream.next( this.cachedData );
     }
 
     /**
      * get starting page index
      */
-    private getPageForIndex(index: number): number {
-        return Math.floor(index / this.config.pageSize);
+    private getPageForIndex( index: number ): number {
+        return Math.floor( index / this.config.pageSize );
     }
 }

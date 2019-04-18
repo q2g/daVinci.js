@@ -1,10 +1,12 @@
-import { Component, OnDestroy, Input, Output, EventEmitter } from "@angular/core";
+import { Component, OnDestroy, Input, Output, EventEmitter, HostBinding, ViewChild } from "@angular/core";
 import { Subject } from "rxjs";
 import { ISelection } from "../api/selection.interface";
 import { SelectionModel } from "@angular/cdk/collections";
 import { IListItem } from "../api/list-item.interface";
 import { ListSource } from "../model/list-source";
-import { ViewportControl } from "ngx-customscrollbar";
+import { ViewportControl, Viewport } from "ngx-customscrollbar";
+import { ListOrientation } from "../api/list-config.interface";
+import { CdkVirtualScrollViewport } from "@angular/cdk/scrolling";
 
 @Component({
     selector: "davinci-listview",
@@ -13,10 +15,17 @@ import { ViewportControl } from "ngx-customscrollbar";
     viewProviders: [ViewportControl]
 })
 export class ListViewComponent<T> implements OnDestroy {
+
     @Output()
     public select: EventEmitter<ISelection>;
 
-    public ready = false;
+    @Input()
+    @HostBinding("class")
+    @HostBinding("class.davinci-listview")
+    public orientation: ListOrientation = "vertical";
+
+    @ViewChild(CdkVirtualScrollViewport)
+    private cdkScrollViewport: CdkVirtualScrollViewport;
 
     public source: ListSource<T>;
 
@@ -24,7 +33,9 @@ export class ListViewComponent<T> implements OnDestroy {
 
     private destroy$: Subject<boolean> = new Subject();
 
-    constructor() {
+    constructor(
+        private viewportCtrl: ViewportControl,
+    ) {
         this.select     = new EventEmitter();
         this.selections = new SelectionModel<IListItem<T>>(true);
     }
@@ -34,6 +45,11 @@ export class ListViewComponent<T> implements OnDestroy {
         if (source) {
             this.addDataSource(source);
         }
+    }
+
+    public resize() {
+        this.viewportCtrl.update();
+        this.cdkScrollViewport.checkViewportSize();
     }
 
     public ngOnDestroy() {

@@ -16,7 +16,7 @@ export class GenericListSource extends ListSource<EngineAPI.INxCell> {
         private genericList: EngineAPI.IGenericList,
         config: IListConfig
     ) {
-        super(config);
+        super( config );
         this.registerEvents();
     }
 
@@ -24,14 +24,14 @@ export class GenericListSource extends ListSource<EngineAPI.INxCell> {
      * deselect one or multiple items on hypercube
      */
     public deselect(item: ListItem) {
-        this.toggleSelection(item);
+        this.toggleSelection( item );
     }
 
     /**
      * select one or multiple items on listobject
      */
     public select(item: ListItem) {
-        this.toggleSelection(item);
+        this.toggleSelection( item );
     }
 
     /**
@@ -48,10 +48,10 @@ export class GenericListSource extends ListSource<EngineAPI.INxCell> {
      * toggle selection on selected values
      */
     private toggleSelection(item: ListItem) {
-        const items: IListItem<EngineAPI.INxCell>[] = Array.isArray(item)
+        const items: IListItem<EngineAPI.INxCell>[] = Array.isArray( item )
             ? item
-            : [item];
-        const selected = items.map(cell => cell.raw.qElemNumber);
+            : [ item ];
+        const selected = items.map( cell => cell.raw.qElemNumber );
 
         this.genericList.selectListObjectValues(
             "/qListObjectDef",
@@ -62,9 +62,7 @@ export class GenericListSource extends ListSource<EngineAPI.INxCell> {
     }
 
     /** load all items for specific page */
-    protected async loadItems(
-        page: number
-    ): Promise<IListItem<EngineAPI.INxCell>[]> {
+    protected async loadItems( page: number ): Promise<IListItem<EngineAPI.INxCell>[]> {
         const data = await this.genericList.getListObjectData(
             "/qListObjectDef",
             [
@@ -76,30 +74,28 @@ export class GenericListSource extends ListSource<EngineAPI.INxCell> {
                 }
             ]
         );
-        return this.convertDataPage(data);
+        return this.convertDataPage( data );
     }
 
     /** flatten matrix to resolve a list we could display */
-    private convertDataPage(
-        data: EngineAPI.INxDataPage[]
-    ): IListItem<EngineAPI.INxCell>[] {
-        if (!Array.isArray(data) || !data.length) {
+    private convertDataPage( data: EngineAPI.INxDataPage[] ): IListItem<EngineAPI.INxCell>[] {
+        if ( !Array.isArray( data ) || !data.length ) {
             return [];
         }
 
-        const pageData = data[0].qMatrix;
+        const pageData = data[ 0 ].qMatrix;
         const reduced = pageData.reduce<IListItem<EngineAPI.INxCell>[]>(
-            (prev, col) => {
-                const items = col.map(value => {
+            ( prev, col ) => {
+                const items = col.map( value => {
                     const item: IListItem<EngineAPI.INxCell> = {
                         label: value.qText,
                         raw: value,
-                        icon: this.getIcon(value.qState),
-                        state: this.getState(value.qState)
+                        icon: this.getIcon( value.qState ),
+                        state: this.getState( value.qState )
                     };
                     return item;
-                });
-                return prev.concat(...items);
+                } );
+                return prev.concat( ...items );
             },
             []
         );
@@ -108,18 +104,18 @@ export class GenericListSource extends ListSource<EngineAPI.INxCell> {
 
     /** register on changed events on session object */
     private registerEvents() {
-        this.genericList.on("changed", async () => {
+        this.genericList.on( "changed", async () => {
             const data = await this.genericList.getLayout();
             this.totalSize = data.qListObject.qSize.qcy;
             this.reload();
-        });
+        } );
     }
 
     /**
      * get icon for state
      */
-    private getIcon(state: EngineAPI.NxCellStateType): ItemIcon {
-        switch (state) {
+    private getIcon( state: EngineAPI.NxCellStateType ): ItemIcon {
+        switch ( state ) {
             case SelectionState.EXCLUDED_SELECTED:
             case SelectionState.SELECTED:
                 return ItemIcon.SELECTED;
@@ -136,8 +132,8 @@ export class GenericListSource extends ListSource<EngineAPI.INxCell> {
     /**
      * get state for item
      */
-    private getState(state: EngineAPI.NxCellStateType): ItemState {
-        switch (state) {
+    private getState( state: EngineAPI.NxCellStateType ): ItemState {
+        switch ( state ) {
 
             case SelectionState.EXCLUDED_LOCKED:
             case SelectionState.EXCLUDED_SELECTED:

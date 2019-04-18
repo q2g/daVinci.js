@@ -13,9 +13,15 @@
         top: 0;
         bottom: 0;
         right: .2rem;
+
+        &.horizontal {
+            top: auto;
+            left: 0;
+            right: calc(.2rem + 10px);
+        }
     }
 
-    /** to make it work we need to use ng-deep */
+    /** style custom elments like scrollbars / cdk-virtual-scroll */
     ::ng-deep {
         @include ngxCustomScrollbarsTheme();
 
@@ -28,6 +34,11 @@
             opacity: 1;
             background: transparent;
         }
+
+        /** cdk virtual scroll */
+        .cdk-virtual-scroll-content-wrapper {
+            display: flex;
+        }
     }
 
     .list-container {
@@ -35,7 +46,6 @@
     }
 
     .lui-list__item {
-        height: 1.875rem;
         display: flex;
         align-items: center;
         font-size: .75rem;
@@ -70,5 +80,37 @@
     .lui-list__item.excluded {
         color: white;
         background: #A9A9A9;
+    }
+}
+
+:host-context(.vertical) { 
+    
+    ::ng-deep {
+        /** cdk virtual scroll */
+        .cdk-virtual-scroll-content-wrapper {
+            flex-direction: column;
+        }
+    }
+
+    .lui-list__item {
+        height: 150px;
+    }
+
+}
+
+:host-context(.horizontal) {
+
+    ::ng-deep {
+        /** cdk virtual scroll */
+        .cdk-virtual-scroll-content-wrapper {
+            flex-direction: row;
+            /** hotfix it seems i have something broken in scss here */
+        }
+    }
+
+    .lui-list__item {
+        height: auto;
+        /** bad this is hardcoded here we need to inject this */
+        width: 150px;
     }
 }
