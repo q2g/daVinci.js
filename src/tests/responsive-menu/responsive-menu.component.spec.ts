@@ -25,7 +25,7 @@ class WrapperComponent {
 
 }
 
-fdescribe("Responsive Menu Component", () => {
+describe("Responsive Menu Component", () => {
     let fixture: ComponentFixture<WrapperComponent>;
     let wrapperComponent: WrapperComponent;
     let menuComponent: DebugElement;
