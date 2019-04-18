@@ -1,11 +1,6 @@
-import { Component, OnInit, OnDestroy, ElementRef, AfterViewInit, Renderer2, ComponentFactoryResolver, ViewChild } from "@angular/core";
+import { Component, OnDestroy, ElementRef, AfterViewInit, Renderer2, Output } from "@angular/core";
 import { Subject } from "rxjs";
-
-interface ITest {
-    lable: string;
-    icon: string;
-    click: () => void;
-}
+import { EventEmitter } from "@angular/core";
 
 @Component({
     selector: "davinci-responsive-menu",
@@ -15,16 +10,19 @@ interface ITest {
 export class ResponsiveMenuComponent implements OnDestroy, AfterViewInit {
 
     private destroy$: Subject<boolean> = new Subject();
-
     private element: HTMLElement;
-    private children;
+    private children: HTMLCollection;
     private elementWidth: number;
-    private listElements: ITest[] = [];
+
+    @Output()
+    listElements: EventEmitter<Element[]>;
 
     constructor(
         private elementRef: ElementRef,
         private renderer: Renderer2
-    ) { }
+    ) {
+        this.listElements = new EventEmitter ();
+     }
 
     ngAfterViewInit() {
 
@@ -37,14 +35,13 @@ export class ResponsiveMenuComponent implements OnDestroy, AfterViewInit {
         const moreWidth = this.children[0].getBoundingClientRect().width;
         const maxNumberOfElements = this.children.length - 1;
         const childsToBeShown: number[] = [];
+        const elmsd: Element[] = [];
 
         for (const {} of this.children) {
             const elw = this.children[childsToBeShown.length].getBoundingClientRect().width;
-
             if (!this.children[childsToBeShown.length + 1] || maxLength + elw > this.elementWidth) {
                 break;
             }
-
             childsToBeShown.push(elw);
             maxLength += elw;
         }
@@ -67,11 +64,7 @@ export class ResponsiveMenuComponent implements OnDestroy, AfterViewInit {
         for (let i = 0; i < maxNumberOfElements; i++) {
             if (typeof childsToBeShown[i] === "undefined") {
 
-                this.listElements.push({
-                    lable: this.children[counter].title,
-                    icon: (this.children[counter].attributes as any).icon ? (this.children[counter].attributes as any).icon : "",
-                    click: (this.children[counter].attributes as any).click ? (this.children[counter].attributes as any).click : null,
-                });
+                elmsd.push(this.children[counter]);
 
                 this.renderer.removeChild(this.elementRef.nativeElement, this.children[counter]);
                 counter--;
@@ -82,6 +75,8 @@ export class ResponsiveMenuComponent implements OnDestroy, AfterViewInit {
         if (childsToBeShown.length > maxNumberOfElements) {
             this.renderer.removeChild(this.elementRef.nativeElement, this.children[0]);
         }
+
+        this.listElements.emit(elmsd);
     }
 
     ngOnDestroy() {
