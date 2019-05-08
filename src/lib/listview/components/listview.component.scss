@@ -25,7 +25,7 @@
     ::ng-deep {
         @include ngxCustomScrollbarsTheme();
 
-        .scrollbar-track, 
+        .scrollbar-track,
         .scrollbar-thumb {
             position: relative;
         }
@@ -41,8 +41,10 @@
         }
     }
 
-    .list-container {
+    .lui-list {
         flex: 1;
+        height: 100%;
+        overflow: hidden;
     }
 
     .lui-list__item {
@@ -55,6 +57,10 @@
         min-height: auto;
         box-sizing: border-box;
 
+        >* {
+            flex: 1;
+        }
+
         .item-label {
             flex: 1;
         }
@@ -66,47 +72,39 @@
         }
     }
 
-    .lui-list__item.selected {
+    .list-item {
+        display: flex;
+        align-self: stretch;
+        align-items: center;
+        padding: 0 10px;
+    }
+
+    .list-item.selected {
         background: #52CC52;
         color: white;
         border-bottom-color: rgb(186, 235, 186);
     }
 
-    .lui-list__item.alternative {
+    .list-item.alternative {
         background: #DDD;
         border-bottom-color: #FFF;
     }
 
-    .lui-list__item.excluded {
+    .list-item.excluded {
         color: white;
         background: #A9A9A9;
     }
 }
 
-:host-context(.vertical) { 
-    
-    ::ng-deep {
-        /** cdk virtual scroll */
-        .cdk-virtual-scroll-content-wrapper {
-            flex-direction: column;
-        }
-    }
+:host-context(.vertical) {
 
     .lui-list__item {
-        height: 150px;
+        height: 30px;
     }
 
 }
 
 :host-context(.horizontal) {
-
-    ::ng-deep {
-        /** cdk virtual scroll */
-        .cdk-virtual-scroll-content-wrapper {
-            flex-direction: row;
-            /** hotfix it seems i have something broken in scss here */
-        }
-    }
 
     .lui-list__item {
         height: auto;

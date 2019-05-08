@@ -1,5 +1,5 @@
 import { GenericListMock } from "../../_mockup/generic-list.mockup";
-import { GenericListSource } from "davinci.js/listview/model/generic-list.source";
+import { GenericListSource } from "../../q2g-ext-listbox/src/listbox/src/app/generic-list.source";
 import { IListItem } from "davinci.js/listview/api/list-item.interface";
 import { createListObjectData, createMatrix } from "@testing/mocks/util";
 

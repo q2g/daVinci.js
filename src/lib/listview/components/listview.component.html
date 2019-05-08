@@ -1,44 +1,18 @@
-<!--
-    angular cdk virtual scroll seems not to handle orientation change very good
-    if we switch from vertical to horizontal, the horizontal view is prety much broken
-    and we need to check this.
-
-    a quick fix is currently just to show 2 diffrent templates one for vertical and one for 
-    horizontal view.
--->
+<ng-template #empty>
+    <span class="list-item"></span>
+</ng-template>
 
 <!-- vertical template -->
-<ng-template #vertical>
-    <cdk-virtual-scroll-viewport [itemSize]=150 class="list-container list-group" ngxCustomScrollbarScrollable>
-        <div *cdkVirtualFor=" let item of source" (click)="itemClick(item)" class="lui-list__item"
-            [ngClass]="[item && item.state !== 'none' ? item.state : '']">
-            <!-- list label and icon -->
-            <ng-container *ngIf="item">
+<ul class="lui-list" davinciVirtualScroll [itemSize]=itemSize [itemsTotal]=total (scroll)="scrolled($event)">
+    <li *ngFor="let row of rows" style="height: 30px;" class="lui-list__item">
+        <ng-container *ngFor="let item of row">
+            <span *ngIf="item; else empty" (click)="itemClick(item)" class="list-item" [ngClass]="[item && item.state !== 'none' ? item.state : '']">
                 <span class="item-label">{{item.label}}</span>
                 <i [ngClass]="[item.icon !== 'none' ? 'lui-icon lui-icon--' + item.icon : '']"></i>
-            </ng-container>
-        </div>
-    </cdk-virtual-scroll-viewport>
-</ng-template>
-
-<!-- horizontal template -->
-<ng-template #horizontal>
-    <cdk-virtual-scroll-viewport [itemSize]=150 class="list-container list-group" ngxCustomScrollbarScrollable
-        [orientation]="'horizontal'">
-        <div *cdkVirtualFor=" let item of source" (click)="itemClick(item)" class="lui-list__item"
-            [ngClass]="[item && item.state !== 'none' ? item.state : '']">
-
-            <!-- list label and icon -->
-            <ng-container *ngIf="item">
-                <span class="item-label">{{item.label}}</span>
-                <i [ngClass]="[item.icon !== 'none' ? 'lui-icon lui-icon--' + item.icon : '']"></i>
-            </ng-container>
-        </div>
-    </cdk-virtual-scroll-viewport>
-</ng-template>
-
-<ng-container *ngTemplateOutlet="orientation === 'vertical' ? vertical : horizontal">
-</ng-container>
+            </span>
+        </ng-container>
+    </li>
+</ul>
 
 <ngx-customscrollbar *ngxCustomScrollbarOverflowY></ngx-customscrollbar>
 <ngx-customscrollbar *ngxCustomScrollbarOverflowX [scrollDirection]="'horizontal'"></ngx-customscrollbar>

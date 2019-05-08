@@ -1,22 +1,20 @@
 import { NgModule } from "@angular/core";
 import { ListViewComponent } from "./components/listview.component";
-import { ScrollingModule } from "@angular/cdk/scrolling";
 import { CommonModule } from "@angular/common";
 import { NgxCustomScrollbarModule } from "ngx-customscrollbar";
+import { VirtualScrollDirective } from "./virtual-scroll/virtual-viewport.directive";
 
 @NgModule({
     declarations: [
-        ListViewComponent
+        ListViewComponent,
+        VirtualScrollDirective
     ],
     exports: [
         CommonModule,
         ListViewComponent,
-        ScrollingModule,
-        NgxCustomScrollbarModule
     ],
     imports: [
         CommonModule,
-        ScrollingModule,
         NgxCustomScrollbarModule
     ]
 })
