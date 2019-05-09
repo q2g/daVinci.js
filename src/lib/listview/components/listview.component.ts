@@ -34,11 +34,13 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
 
     private source: ListSource<T>;
 
+    public header: any[] = [];
+
     /** @todo put to model */
     private pageSize: number;
 
     /** @todo put to model */
-    private start: 0;
+    private start = 0;
 
     /** @todo put to model */
     private domSize: DomHelper.IElementMeasure;
@@ -170,6 +172,12 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
         this.total = rows.length + missingRows;
         this.rows = rows;
 
+        this.header = this.source.getHeader();
+
         this.changeDetector.detectChanges();
+    }
+
+    public expandCollapseItem?(item: IListItem<T>) {
+        this.source.expandCollapseItem(item);
     }
 }

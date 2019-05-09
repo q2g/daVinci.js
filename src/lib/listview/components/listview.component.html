@@ -3,13 +3,35 @@
 </ng-template>
 
 <!-- vertical template -->
-<ul class="lui-list" davinciVirtualScroll [itemSize]=itemSize [itemsTotal]=total (scroll)="scrolled($event)">
+<!-- <ul class="lui-list" davinciVirtualScroll [itemSize]=itemSize [itemsTotal]=total (scroll)="scrolled($event)">
     <li *ngFor="let row of rows" style="height: 30px;" class="lui-list__item">
         <ng-container *ngFor="let item of row">
             <span *ngIf="item; else empty" (click)="itemClick(item)" class="list-item" [ngClass]="[item && item.state !== 'none' ? item.state : '']">
                 <span class="item-label">{{item.label}}</span>
                 <i [ngClass]="[item.icon !== 'none' ? 'lui-icon lui-icon--' + item.icon : '']"></i>
             </span>
+        </ng-container>
+    </li>
+</ul> -->
+
+<!-- tree template -->
+<div class="list">
+    <span *ngFor="let head of header">
+        {{head.label}}
+    </span>
+</div>
+<ul class="lui-list" davinciVirtualScroll [itemSize]=itemSize [itemsTotal]=total (scroll)="scrolled($event)">
+    <li *ngFor="let row of rows" style="height: 30px;" class="lui-list__item">
+        <ng-container *ngFor="let item of row">
+            <!-- <span class="colspan{{item.colNumber}}"></span> -->
+            <i [ngClass]="[item.hasChild ? 'lui-icon lui-icon--minus' : 'lui-icon lui-icon--plus']"
+                (click)="expandCollapseItem(item)"></i>
+            <span *ngIf="item; else empty" (click)="itemClick(item)" class="list-item"
+                [ngClass]="[item && item.state !== 'none' ? item.state : '']">
+                <span class="item-label">{{item.label}}-{{item.colNumber}}</span>
+                <i [ngClass]="[item.icon !== 'none' ? 'lui-icon lui-icon--' + item.icon : '']"></i>
+            </span>
+            <span>{{item.measureValue}}</span>
         </ng-container>
     </li>
 </ul>
