@@ -186,7 +186,4 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
         this.changeDetector.detectChanges();
     }
 
-    public expandCollapseItem?(item: IListItem<T>) {
-        this.source.expandCollapseItem(item);
-    }
 }

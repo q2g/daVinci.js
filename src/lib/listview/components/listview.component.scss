@@ -4,10 +4,14 @@
 :host {
     box-sizing: border-box;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     height: 100%;
     width: 100%;
     position: relative;
+
+    .list {
+        border-bottom: solid black 1px;
+    }
 
     .ngx-customscrollbars {
         position: absolute;
@@ -121,16 +125,4 @@
         /** bad this is hardcoded here we need to inject this */
         width: 150px;
     }
-}
-
-.colspan0 {
-    width: 0px;
-}
-
-.colspan1 {
-    width: 10px;
-}
-
-.colspan2 {
-    width: 20px;
 }
