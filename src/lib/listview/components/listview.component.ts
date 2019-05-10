@@ -1,5 +1,5 @@
 // tslint:disable-next-line: max-line-length
-import { Component, OnDestroy, Input, Output, EventEmitter, HostBinding, OnInit, ElementRef, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnDestroy, Input, Output, EventEmitter, HostBinding, OnInit, ElementRef, AfterViewInit, ChangeDetectorRef, ChangeDetectionStrategy, TemplateRef } from "@angular/core";
 import { SelectionModel } from "@angular/cdk/collections";
 import { ViewportControl, DomHelper } from "ngx-customscrollbar";
 import { Subject, ReplaySubject } from "rxjs";
@@ -34,11 +34,13 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
 
     private source: ListSource<T>;
 
+    public header: any[] = [];
+
     /** @todo put to model */
     private pageSize: number;
 
     /** @todo put to model */
-    private start: 0;
+    private start = 0;
 
     /** @todo put to model */
     private domSize: DomHelper.IElementMeasure;
@@ -82,6 +84,9 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
 
     @Input()
     public itemSize: number;
+
+    @Input()
+    public itemTemplate: TemplateRef<T>;
 
     public ngOnInit() {
         this.changeDetector.detach();
@@ -176,6 +181,12 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
         this.total = rows.length + missingRows;
         this.rows = rows;
 
+        this.header = this.source.getHeader();
+
         this.changeDetector.detectChanges();
+    }
+
+    public expandCollapseItem?(item: IListItem<T>) {
+        this.source.expandCollapseItem(item);
     }
 }
