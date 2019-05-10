@@ -55,7 +55,7 @@ export abstract class ListSource<T> {
 
     public expandCollapseItem?(item: IListItem<T>): void;
 
-    public getHeader?() {
+    public getHeader() {
         return [];
     }
 }
