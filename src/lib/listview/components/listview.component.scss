@@ -6,6 +6,7 @@
     display: flex;
     flex-direction: row;
     height: 100%;
+    width: 100%;
     position: relative;
 
     .ngx-customscrollbars {
@@ -45,6 +46,7 @@
         flex: 1;
         height: 100%;
         overflow: hidden;
+        display: flex;
     }
 
     .lui-list__item {
@@ -98,6 +100,10 @@
 
 :host-context(.vertical) {
 
+    .lui-list {
+        flex-direction: column;
+    }
+
     .lui-list__item {
         height: 30px;
     }
@@ -105,6 +111,10 @@
 }
 
 :host-context(.horizontal) {
+
+    .lui-list {
+        flex-direction: row;
+    }
 
     .lui-list__item {
         height: auto;

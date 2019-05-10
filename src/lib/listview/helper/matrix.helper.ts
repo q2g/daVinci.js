@@ -14,7 +14,7 @@ export class MatrixHelper {
      * const maxRows = 6;
      * const cols = 3;
      *
-     * const matrix = createVerticalDataMatrix(data, cols, maxRows);
+     * const matrix = createVerticalAlignMatrix(data, cols, maxRows);
      *
      * // prints 6 rows with max 2 cols, 2 items will be undefined since we only got 10 items in our data array
      * // [
@@ -35,7 +35,7 @@ export class MatrixHelper {
      * const maxRows = 4;
      * const cols = 3;
      *
-     * const matrix = createVerticalDataMatrix(data, cols, maxRows);
+     * const matrix = createHorizontalAlignMatrix(data, cols, maxRows);
      *
      * // prints 4 rows with max 3 cols, 2 items will be undefined since we only got 10 items in our data array
      * // [
@@ -46,40 +46,71 @@ export class MatrixHelper {
      * // ]
      * console.log(matrix);
      */
-    public static createVerticalDataMatrix<T>(data: T[], colCount: number, rowCount: number): T[][] {
+    public static createVerticalAlignMatrix<T>( data: T[], colCount: number, rowCount: number): T[][] {
 
         // max rows we can paint
-        const rowsMax   = Math.min(data.length, rowCount);
-
+        const rowsMax = Math.min(data.length, rowCount);
         // max cols we can paint
-        const colsPossible = Math.ceil(data.length / rowCount);
-        // const colsMax      = colsPossible > colCount ? colCount : colsPossible;
+        const colsPossible = Math.ceil( data.length / rowCount );
         const colsMax = Math.min(colsPossible, colCount);
 
         /** create new matrix */
-        const matrix = Array.from({length: rowsMax}, (val, row) => {
+        const matrix = Array.from( { length: rowsMax }, ( val, row ) => {
             const cols = [];
             /** internal loop to fill up a row with items */
-            for (let i = 0; i < colsMax; i++) {
+            for ( let i = 0; i < colsMax; i++ ) {
                 const idx = rowCount * i + row;
-                cols.push(data[idx]);
+                cols.push( data[idx] );
             }
             return cols;
-        });
+        } );
         return matrix;
     }
 
-    public static getVerticalMatrixSize(maxHeight: number, contentHeight: number, items: number, rows: number, cols = 1) {
+    /**
+     * in this matrix we allways need all cols (except we have only one item)
+     */
+    public static createHorizontalAlignMatrix<T>( data: T[], colCount: number, rowCount: number): T[][] {
+
+        const matrix = [];
+        let row = [];
+
+        for (let idx = 0, j = 1, ln = data.length; idx < ln; idx++, j++) {
+            /** if we reached maxrows we could stop matrix generation */
+            if (matrix.length === rowCount) {
+                break;
+            }
+
+            row.push(data[idx]);
+            if (j !== 0 && j % colCount === 0) {
+                matrix.push(row);
+                row = [];
+            }
+        }
+
+        /**
+         * if last row not empty and we could add some items
+         * push it
+         */
+        if (row.length && matrix.length < rowCount) {
+            matrix.push(row);
+        }
+
+        row = null;
+        return matrix;
+    }
+
+    public static getMatrixSize( maxHeight: number, contentHeight: number, items: number, rows: number, cols = 1 ) {
 
         const size = { cols, rows };
 
         /** if we dont have an overflow or only one column return matrix size as we need it */
-        if (cols === 1 || maxHeight > contentHeight) {
+        if ( cols === 1 || maxHeight > contentHeight ) {
             return size;
         }
 
         /** if we can show all items in a simple row */
-        if (items < rows * cols - cols) {
+        if ( items < rows * cols - cols ) {
             return {
                 cols,
                 rows: rows - 1
@@ -87,10 +118,5 @@ export class MatrixHelper {
         }
 
         return size;
-    }
-
-    /** convert list data which has been loaded to horiztal matrix */
-    public static createHorizontalDataMatrix<T>(data: T[], colCount: number): T[][] {
-        return [[]];
     }
 }

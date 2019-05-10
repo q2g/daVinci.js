@@ -3,8 +3,8 @@
 </ng-template>
 
 <!-- vertical template -->
-<ul class="lui-list" davinciVirtualScroll [itemSize]=itemSize [itemsTotal]=total (scroll)="scrolled($event)">
-    <li *ngFor="let row of rows" style="height: 30px;" class="lui-list__item">
+<ul class="lui-list" davinciVirtualScroll [direction]="'horizontal'" [itemSize]=150 [itemsTotal]=total (scroll)="scrolled($event)">
+    <li *ngFor="let row of rows" style="height: 30px; width: 150px;" class="lui-list__item">
         <ng-container *ngFor="let item of row">
             <span *ngIf="item; else empty" (click)="itemClick(item)" class="list-item" [ngClass]="[item && item.state !== 'none' ? item.state : '']">
                 <span class="item-label">{{item.label}}</span>

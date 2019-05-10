@@ -1,10 +1,10 @@
-import { ScrollModel } from "./scrolling.model";
+import { VirtualScrollModel } from "./virtual-scroll.model";
 import { Scrollbar } from "ngx-customscrollbar/ngx-customscrollbars/api/scrollbar.interface";
 
 export interface IScrollStrategy {
 
     /** get area we could display, in the most cases this will be a single array list */
-    initialize(model: ScrollModel);
+    initialize(model: VirtualScrollModel);
 
     /** new scroll offset has been given, scroll by specific amount */
     scroll(offset: Scrollbar.IOffset);

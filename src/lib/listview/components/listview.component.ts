@@ -9,7 +9,7 @@ import { ISelection } from "../api/selection.interface";
 import { IListItem } from "../api/list-item.interface";
 import { ListOrientation } from "../api/list-config.interface";
 import { ListSource } from "../model/list-source";
-import { MatrixHelper } from "../helper/matrix";
+import { MatrixHelper } from "../helper/matrix.helper";
 
 @Component({
     selector: "davinci-listview",
@@ -72,9 +72,13 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
     }
 
     @Input()
-    @HostBinding( "class" )
-    @HostBinding( "class.davinci-listview" )
+    @HostBinding("class")
+    @HostBinding("class.davinci-listview")
     public orientation: ListOrientation = "vertical";
+
+    @Input()
+    @HostBinding("class.listview-split--align")
+    public splitAlign: ListOrientation = "vertical";
 
     @Input()
     public itemSize: number;
@@ -100,8 +104,9 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
         this.domSize = DomHelper.getMeasure(el);
 
         this.sourceConnector.subscribe(async (source) => {
-            this.source       = source;
-            this.pageSize     = Math.ceil(this.domSize.innerHeight / this.itemSize);
+            const size = this.orientation === "vertical" ? this.domSize.innerHeight : this.domSize.innerWidth;
+            this.source   = source;
+            this.pageSize = Math.ceil(size / this.itemSize);
             this.paint(await this.loadItems());
         });
     }
@@ -156,13 +161,14 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
     }
 
     private paint(data) {
-        const viewportHeight = this.domSize.innerHeight;
-        const contentHeight  = this.pageSize * this.itemSize;
+
+        const viewportSize = this.orientation === "vertical" ? this.domSize.innerHeight : this.domSize.innerWidth;
+        const contentSize  = this.pageSize * this.itemSize;
 
         /** get matrix dimension */
-        const matrix = MatrixHelper.getVerticalMatrixSize(viewportHeight, contentHeight, data.length, this.pageSize, this._cols);
-        /** convert to matrix */
-        const rows = MatrixHelper.createVerticalDataMatrix<IListItem<T>>(data, matrix.cols, matrix.rows);
+        const matrix = MatrixHelper.getMatrixSize(viewportSize, contentSize, data.length, this.pageSize, this._cols);
+        /** convert to matrix for template */
+        const rows = MatrixHelper.createVerticalAlignMatrix<IListItem<T>>(data, matrix.cols, matrix.rows);
 
         /** get max rows which can displayed per page */
         /** get rows which will be added on scroll */

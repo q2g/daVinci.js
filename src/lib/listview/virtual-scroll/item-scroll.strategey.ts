@@ -1,12 +1,12 @@
 import { IScrollStrategy } from "./scroll-strategy.interface";
-import { ScrollModel } from "./scrolling.model";
+import { VirtualScrollModel } from "./virtual-scroll.model";
 import { Scrollbar } from "ngx-customscrollbar/ngx-customscrollbars/api/scrollbar.interface";
 
 export class ItemScrollStrategy implements IScrollStrategy {
 
-    private model: ScrollModel;
+    private model: VirtualScrollModel;
 
-    public initialize( model: ScrollModel ) {
+    public initialize( model: VirtualScrollModel ) {
         this.model = model;
     }
 
@@ -58,12 +58,12 @@ export class ItemScrollStrategy implements IScrollStrategy {
 
     /** getArea */
     private getArea(offset) {
-        const scrolledTop  = this.calculateTop(offset.top);
-        const scrolledLeft = this.calculateLeft(offset.left);
+        const topValue = this.model.alignment === "vertical" ? this.calculateTop(offset.top) : this.calculateLeft(offset.left);
+        const height   = this.model.alignment === "vertical" ? this.model.viewportHeight     : this.model.viewportWidth;
         const area = {
-            top: scrolledTop,
-            height: Math.ceil(this.model.viewportHeight / this.model.itemSize),
-            left: scrolledLeft,
+            top: topValue,
+            height: Math.ceil(height / this.model.itemSize),
+            left: 0,
             width: 0
         };
         return area;
@@ -73,16 +73,20 @@ export class ItemScrollStrategy implements IScrollStrategy {
      * scroll start index for scrolled top
      */
     private calculateTop(offset): number {
-        const currentPage = offset / this.model.viewportHeight;
-        const startIndex  = Math.floor(currentPage * this.model.viewportHeight / this.model.itemSize);
-        const maxStart = Math.floor(this.model.maxScrollOffset.top / this.model.itemSize);
-        return startIndex > maxStart ? maxStart : startIndex;
+        return this.getStartIndex(this.model.viewportHeight, offset, this.model.maxScrollOffset.top);
     }
 
     /**
      * calculate scrolled left value
      */
     private calculateLeft(offset): number {
-        return 0;
+        return this.getStartIndex(this.model.viewportWidth, offset, this.model.maxScrollOffset.left);
+    }
+
+    private getStartIndex(viewportSize, offset, maxScrollOffset) {
+        const currentPage = offset / viewportSize;
+        const startIndex  = Math.floor(currentPage * viewportSize / this.model.itemSize);
+        const maxStart = Math.floor(maxScrollOffset / this.model.itemSize);
+        return startIndex > maxStart ? maxStart : startIndex;
     }
 }

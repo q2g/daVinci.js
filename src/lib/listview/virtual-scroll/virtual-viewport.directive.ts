@@ -2,7 +2,7 @@
 import { Directive, Host, ElementRef, OnDestroy, AfterViewInit, Input, EventEmitter, Output, HostListener } from "@angular/core";
 import { ViewportControl, Viewport, DomHelper } from "ngx-customscrollbar";
 import { Scrollbar } from "ngx-customscrollbar/ngx-customscrollbars/api/scrollbar.interface";
-import { ScrollModel } from "./scrolling.model";
+import { VirtualScrollModel } from "./virtual-scroll.model";
 import { ItemScrollStrategy } from "./item-scroll.strategey";
 import { IScrollStrategy } from "./scroll-strategy.interface";
 
@@ -19,11 +19,9 @@ export class VirtualScrollDirective extends Viewport implements AfterViewInit, O
     @Output()
     public scroll: EventEmitter<any>;
 
-    private _scrollOffset;
-
     private _scrollStrategy: IScrollStrategy;
 
-    private model: ScrollModel;
+    private model: VirtualScrollModel;
 
     private loaded = false;
 
@@ -32,14 +30,8 @@ export class VirtualScrollDirective extends Viewport implements AfterViewInit, O
         private el: ElementRef
     ) {
         super();
-
-        this.model  = new ScrollModel();
+        this.model  = new VirtualScrollModel();
         this.scroll = new EventEmitter();
-
-        this._scrollOffset = {
-            left: 0,
-            top: 0,
-        };
     }
 
     @Input()
@@ -71,13 +63,15 @@ export class VirtualScrollDirective extends Viewport implements AfterViewInit, O
         this._scrollStrategy.initialize(this.model);
     }
 
+    @Input()
+    public set direction(align: "horizontal" | "vertical") {
+        this.model.alignment = align;
+    }
+
     private updateSize() {
+        /** we have to set max scroll offset */
         const domMeasure = DomHelper.getMeasure(this.el.nativeElement);
-        this.model.viewportHeight = domMeasure.innerHeight;
-        this.model.maxScrollOffset = {
-            top: (this.model.itemSize * this.model.itemCount) - this.model.viewportHeight,
-            left: 0
-        };
+        this.model.containerMeasure = domMeasure;
     }
 
     /**
@@ -97,15 +91,7 @@ export class VirtualScrollDirective extends Viewport implements AfterViewInit, O
      * calculate offset of scroll container
      */
     public measureSize(): DomHelper.IScrollContainerMeasure {
-        const domMeasure = DomHelper.getMeasure(this.el.nativeElement);
-        const measure: DomHelper.IScrollContainerMeasure = {
-            ...domMeasure,
-            scrollHeight: this.model.itemSize * this.model.itemCount,
-            scrollLeft: 0,
-            scrollTop: this._scrollOffset.top,
-            scrollWidth: domMeasure.innerWidth
-        };
-        return measure;
+        return this.model.scrollMeasure;
     }
 
     /** scrolled to */
