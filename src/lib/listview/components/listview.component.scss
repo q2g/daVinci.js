@@ -72,6 +72,10 @@
             font-size: .5rem;
             text-align: center;
         }
+
+        &:last-child {
+            border: 0 !important;
+        }
     }
 
     .list-item {
@@ -120,6 +124,20 @@
         height: auto;
         /** bad this is hardcoded here we need to inject this */
         width: 150px;
+        border-right: 1px solid #DDD;
+        border-bottom: 0;
+    }
+
+    .split-align--vertical {
+        .lui-list__item {
+            flex-direction: row;
+        }
+    }
+
+    .split-align--horizontal {
+        .lui-list__item {
+            flex-direction: column;
+        }
     }
 }
 

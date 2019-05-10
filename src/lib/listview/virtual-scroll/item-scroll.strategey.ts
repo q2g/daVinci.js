@@ -23,13 +23,12 @@ export class ItemScrollStrategy implements IScrollStrategy {
      * scroll up, returns new offset which has been scrolled
      */
     public scrollUp(): Scrollbar.IOffset {
-        let newTop = this.model.scrollOffset.top;
-        newTop -= this.model.itemSize;
-        newTop = newTop < 0 ? 0 : newTop;
+        const top  = this.model.scrollOffset.top;
+        const left = this.model.scrollOffset.left;
 
         return {
-            top: newTop,
-            left: this.model.scrollOffset.left
+            top:  this.model.alignment === "vertical" ? this.calcScrollOffsetTop(top, "up") : top,
+            left: this.model.alignment === "vertical" ? left : this.calcScrollOffsetLeft(left, "up")
         };
     }
 
@@ -37,12 +36,12 @@ export class ItemScrollStrategy implements IScrollStrategy {
      * scroll down, returns new offset which should be scrolled
      */
     public scrollDown(): Scrollbar.IOffset {
-        let newTop = this.model.scrollOffset.top;
-        newTop += this.model.itemSize;
-        newTop = newTop > this.model.maxScrollOffset.top ? this.model.maxScrollOffset.top : newTop;
+        const top  = this.model.scrollOffset.top;
+        const left = this.model.scrollOffset.left;
+
         return {
-            top: newTop,
-            left: this.model.scrollOffset.left
+            top:  this.model.alignment === "vertical" ? this.calcScrollOffsetTop(top, "down") : top,
+            left: this.model.alignment === "vertical" ? left : this.calcScrollOffsetLeft(left, "down")
         };
     }
 
@@ -67,6 +66,28 @@ export class ItemScrollStrategy implements IScrollStrategy {
             width: 0
         };
         return area;
+    }
+
+    private calcScrollOffsetLeft(left: number, direction: "up" | "down"): number {
+        if (direction === "up") {
+            left -= this.model.itemSize;
+            left = left < 0 ? 0 : left;
+        } else {
+            left += this.model.itemSize;
+            left = left > this.model.maxScrollOffset.left ? this.model.maxScrollOffset.left : left;
+        }
+        return left;
+    }
+
+    private calcScrollOffsetTop(top: number, direction: "up" | "down"): number {
+        if (direction === "up") {
+            top -= this.model.itemSize;
+            top = top < 0 ? 0 : top;
+        } else {
+            top += this.model.itemSize;
+            top = top > this.model.maxScrollOffset.top ? this.model.maxScrollOffset.top : top;
+        }
+        return top;
     }
 
     /**

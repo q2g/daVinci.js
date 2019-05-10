@@ -15,7 +15,7 @@
         {{head.label}}
     </span>
 </div>
-<ul class="lui-list" davinciVirtualScroll [itemSize]=itemSize [itemsTotal]=total (scroll)="scrolled($event)">
+<ul class="lui-list" davinciVirtualScroll [direction]="'horizontal'" [itemSize]=itemSize [itemsTotal]=total (scroll)="scrolled($event)" [ngClass]="['split-align--' + splitAlign]">
     <li *ngFor="let row of rows" style="height: 30px;" class="lui-list__item">
         <ng-container *ngFor="let item of row" [ngTemplateOutlet]="itemTemplate || defaultItemTemplate" [ngTemplateOutletContext]="{item: item}"></ng-container>
     </li>

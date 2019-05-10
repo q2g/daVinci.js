@@ -30,10 +30,6 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
 
     public selections: SelectionModel<IListItem<T>>;
 
-    private sourceConnector: ReplaySubject<ListSource<T>>;
-
-    private source: ListSource<T>;
-
     public header: any[] = [];
 
     /** @todo put to model */
@@ -47,6 +43,10 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
 
     /** @todo put to model */
     private _cols = 1;
+
+    private sourceConnector: ReplaySubject<ListSource<T>>;
+
+    private source: ListSource<T>;
 
     /** subject which emits true if component gets destroyed */
     private destroy$: Subject<boolean> = new Subject();
@@ -76,10 +76,9 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
     @Input()
     @HostBinding("class")
     @HostBinding("class.davinci-listview")
-    public orientation: ListOrientation = "vertical";
+    public listAlign: ListOrientation = "vertical";
 
     @Input()
-    @HostBinding("class.listview-split--align")
     public splitAlign: ListOrientation = "vertical";
 
     @Input()
@@ -109,7 +108,7 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
         this.domSize = DomHelper.getMeasure(el);
 
         this.sourceConnector.subscribe(async (source) => {
-            const size = this.orientation === "vertical" ? this.domSize.innerHeight : this.domSize.innerWidth;
+            const size = this.listAlign === "vertical" ? this.domSize.innerHeight : this.domSize.innerWidth;
             this.source   = source;
             this.pageSize = Math.ceil(size / this.itemSize);
             this.paint(await this.loadItems());
@@ -167,7 +166,7 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
 
     private paint(data) {
 
-        const viewportSize = this.orientation === "vertical" ? this.domSize.innerHeight : this.domSize.innerWidth;
+        const viewportSize = this.listAlign === "vertical" ? this.domSize.innerHeight : this.domSize.innerWidth;
         const contentSize  = this.pageSize * this.itemSize;
 
         /** get matrix dimension */
