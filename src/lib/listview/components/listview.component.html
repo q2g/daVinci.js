@@ -2,17 +2,12 @@
     <span class="list-item"></span>
 </ng-template>
 
-<!-- vertical template -->
-<!-- <ul class="lui-list" davinciVirtualScroll [direction]="'horizontal'" [itemSize]=itemSize [itemsTotal]=total (scroll)="scrolled($event)">
-    <li *ngFor="let row of rows" style="height: 30px;" class="lui-list__item">
-        <ng-container *ngFor="let item of row">
-            <span *ngIf="item; else empty" (click)="itemClick(item)" class="list-item" [ngClass]="[item && item.state !== 'none' ? item.state : '']">
-                <span class="item-label">{{item.label}}</span>
-                <i [ngClass]="[item.icon !== 'none' ? 'lui-icon lui-icon--' + item.icon : '']"></i>
-            </span>
-        </ng-container>
-    </li>
-</ul> -->
+<ng-template #defaultItemTemplate let-item="item">
+    <span *ngIf="item; else empty" (click)="itemClick(item)" class="list-item" [ngClass]="[item && item.state !== 'none' ? item.state : '']">
+        <span class="item-label">{{item.label}}</span>
+        <i [ngClass]="[item.icon !== 'none' ? 'lui-icon lui-icon--' + item.icon : '']"></i>
+    </span>
+</ng-template>
 
 <!-- tree template -->
 <div class="list">
@@ -22,7 +17,7 @@
 </div>
 <ul class="lui-list" davinciVirtualScroll [itemSize]=itemSize [itemsTotal]=total (scroll)="scrolled($event)">
     <li *ngFor="let row of rows" style="height: 30px;" class="lui-list__item">
-        <ng-container *ngFor="let item of row" [ngTemplateOutlet]="itemTemplate" [ngTemplateOutletContext]="{item: item}"></ng-container>
+        <ng-container *ngFor="let item of row" [ngTemplateOutlet]="itemTemplate || defaultItemTemplate" [ngTemplateOutletContext]="{item: item}"></ng-container>
     </li>
 </ul>
 
