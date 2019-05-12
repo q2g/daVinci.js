@@ -24,6 +24,7 @@
 
     /** style custom elments like scrollbars / cdk-virtual-scroll */
     ::ng-deep {
+
         @include ngxCustomScrollbarsTheme();
 
         .scrollbar-track,
@@ -123,7 +124,8 @@
     .lui-list__item {
         height: auto;
         /** bad this is hardcoded here we need to inject this */
-        width: 150px;
+        width: 80px;
+        box-sizing: border-box;
         border-right: 1px solid #DDD;
         border-bottom: 0;
     }
@@ -139,16 +141,4 @@
             flex-direction: column;
         }
     }
-}
-
-.colspan0 {
-    width: 0px;
-}
-
-.colspan1 {
-    width: 10px;
-}
-
-.colspan2 {
-    width: 20px;
 }

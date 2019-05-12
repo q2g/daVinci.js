@@ -94,19 +94,18 @@ export class ItemScrollStrategy implements IScrollStrategy {
      * scroll start index for scrolled top
      */
     private calculateTop(offset): number {
-        return this.getStartIndex(this.model.viewportHeight, offset, this.model.maxScrollOffset.top);
+        return this.getStartIndex(offset, this.model.maxScrollOffset.top);
     }
 
     /**
      * calculate scrolled left value
      */
     private calculateLeft(offset): number {
-        return this.getStartIndex(this.model.viewportWidth, offset, this.model.maxScrollOffset.left);
+        return this.getStartIndex(offset, this.model.maxScrollOffset.left);
     }
 
-    private getStartIndex(viewportSize, offset, maxScrollOffset) {
-        const currentPage = offset / viewportSize;
-        const startIndex  = Math.floor(currentPage * viewportSize / this.model.itemSize);
+    private getStartIndex(offset: number, maxScrollOffset) {
+        const startIndex  = Math.floor(offset / this.model.itemSize);
         const maxStart = Math.floor(maxScrollOffset / this.model.itemSize);
         return startIndex > maxStart ? maxStart : startIndex;
     }

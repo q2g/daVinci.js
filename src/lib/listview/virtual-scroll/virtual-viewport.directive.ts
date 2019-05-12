@@ -12,7 +12,8 @@ import { IScrollStrategy } from "./scroll-strategy.interface";
  * react on dom changes and updates scrollbar
  */
 @Directive({
-    selector: "[davinciVirtualScroll]"
+    selector: "[davinciVirtualScroll]",
+    exportAs: "virtualScrollViewport"
 })
 export class VirtualScrollDirective extends Viewport implements AfterViewInit, OnDestroy {
 
@@ -22,8 +23,6 @@ export class VirtualScrollDirective extends Viewport implements AfterViewInit, O
     private _scrollStrategy: IScrollStrategy;
 
     private model: VirtualScrollModel;
-
-    private loaded = false;
 
     constructor(
         @Host() private viewportControl: ViewportControl,
@@ -39,9 +38,6 @@ export class VirtualScrollDirective extends Viewport implements AfterViewInit, O
         if (!this.model.itemSize || this.model.itemSize !== size) {
             this.model.itemSize = size;
             this.updateSize();
-            if (this.loaded) {
-                this.viewportControl.update();
-            }
         }
     }
 
@@ -49,11 +45,7 @@ export class VirtualScrollDirective extends Viewport implements AfterViewInit, O
     public set itemsTotal(count: number) {
         if (!this.model.itemCount || this.model.itemCount !== count) {
             this.model.itemCount = count;
-
             this.updateSize();
-            if (this.loaded) {
-                this.viewportControl.update();
-            }
         }
     }
 
@@ -68,10 +60,14 @@ export class VirtualScrollDirective extends Viewport implements AfterViewInit, O
         this.model.alignment = align;
     }
 
-    private updateSize() {
+    public updateSize() {
         /** we have to set max scroll offset */
         const domMeasure = DomHelper.getMeasure(this.el.nativeElement);
         this.model.containerMeasure = domMeasure;
+
+        if (this.viewportControl.viewPort) {
+            this.viewportControl.update();
+        }
     }
 
     /**
@@ -116,7 +112,7 @@ export class VirtualScrollDirective extends Viewport implements AfterViewInit, O
      * We only want to know if we add or remove some items
      */
     public ngAfterViewInit(): void {
-        this.loaded = true;
+
         if (!this._scrollStrategy) {
             this.scrollStrategy = new ItemScrollStrategy();
         }
