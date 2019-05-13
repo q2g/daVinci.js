@@ -28,7 +28,6 @@ export abstract class ListSource<T> {
     /** load items from concrete source */
     public abstract load(start: number, count: number): Promise<IListItem<T>[]>;
 
-
     /**
      * called only once before source is bound to cdk virtual for
      * create cached data array to save all loaded values so we not calling them again

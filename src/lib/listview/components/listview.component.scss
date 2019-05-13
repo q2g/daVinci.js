@@ -28,6 +28,7 @@
 
     /** style custom elments like scrollbars / cdk-virtual-scroll */
     ::ng-deep {
+
         @include ngxCustomScrollbarsTheme();
 
         .scrollbar-track,
@@ -76,6 +77,10 @@
             font-size: .5rem;
             text-align: center;
         }
+
+        &:last-child {
+            border: 0 !important;
+        }
     }
 
     .list-item {
@@ -123,6 +128,24 @@
     .lui-list__item {
         height: auto;
         /** bad this is hardcoded here we need to inject this */
-        width: 150px;
+        width: 80px;
+        box-sizing: border-box;
+        border-right: 1px solid #DDD;
+        border-bottom: 0;
     }
+<<<<<<< HEAD
+=======
+
+    .split-align--vertical {
+        .lui-list__item {
+            flex-direction: row;
+        }
+    }
+
+    .split-align--horizontal {
+        .lui-list__item {
+            flex-direction: column;
+        }
+    }
+>>>>>>> feature/ngx/listview
 }
