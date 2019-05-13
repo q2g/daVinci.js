@@ -52,7 +52,7 @@ export abstract class ListSource<T> {
         return this.dataModel.total;
     }
 
-    public expandCollapseItem?(item: IListItem<T>): void;
+    public expandCollapseItem?(item): void;
 
     public getHeader() {
         return [];

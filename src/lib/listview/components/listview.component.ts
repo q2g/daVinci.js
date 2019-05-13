@@ -116,7 +116,6 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
         this.windowResize.onChange()
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
-                console.log("window resize");
                 this.resize();
             });
     }

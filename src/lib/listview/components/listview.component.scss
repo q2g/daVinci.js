@@ -4,10 +4,14 @@
 :host {
     box-sizing: border-box;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     height: 100%;
     width: 100%;
     position: relative;
+
+    .list {
+        border-bottom: solid black 1px;
+    }
 
     .ngx-customscrollbars {
         position: absolute;
