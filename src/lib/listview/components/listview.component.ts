@@ -254,10 +254,7 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
         this.viewControl.update();
     }
 
-<<<<<<< HEAD
-=======
     public expandCollapseItem?( item: IListItem<T> ) {
         this.source.expandCollapseItem( item );
     }
->>>>>>> feature/ngx/listview
 }
