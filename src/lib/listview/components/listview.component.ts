@@ -93,6 +93,10 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
         }
     }
 
+    public get cols(): number {
+        return this._cols;
+    }
+
     @Input()
     @HostBinding( "class" )
     @HostBinding( "class.davinci-listview" )
