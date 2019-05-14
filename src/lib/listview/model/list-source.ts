@@ -54,6 +54,10 @@ export abstract class ListSource<T> {
 
     public expandCollapseItem?(item): void;
 
+    public acceptListObjectSearch?(): void;
+
+    public abortListObjectSearch?(): void;
+
     public getHeader() {
         return [];
     }
