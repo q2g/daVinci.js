@@ -192,7 +192,7 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
     /** load items for current page */
     private async loadItems(): Promise<IListItem<T>[]> {
         if ( this.source ) {
-            return await this.source.load( this.start, this.pageSize * this._cols );
+            return await this.source.load(this.start, this.pageSize * this._cols);
         }
         return [];
     }
