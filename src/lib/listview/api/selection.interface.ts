@@ -1,11 +1,3 @@
-export interface ISelection {
-    select: EngineAPI.INxCell[];
-
-    deselect: EngineAPI.INxCell[];
-
-    selections: EngineAPI.INxCell[];
-}
-
 export enum SelectionState {
     ALTERNATIVE = "A", // light grey
     DESELECTED = "D", //

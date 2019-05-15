@@ -17,12 +17,6 @@ export abstract class ListSource<T> {
 
     protected dataModel: SourceData;
 
-    /** abstract method to deselect an item */
-    public abstract deselect( item: IListItem<T> );
-
-    /** abstract method to select an item */
-    public abstract select(item: IListItem<T>);
-
     public abstract search(searchVal: string): Promise<boolean>;
 
     /** load items from concrete source */
@@ -52,11 +46,11 @@ export abstract class ListSource<T> {
         return this.dataModel.total;
     }
 
-    public expandCollapseItem?(item): void;
+    public expandCollapseItem(item): void {}
 
-    public acceptListObjectSearch?(): void;
+    public acceptListObjectSearch(): void {}
 
-    public abortListObjectSearch?(): void;
+    public abortListObjectSearch(): void {}
 
     public getHeader() {
         return [];

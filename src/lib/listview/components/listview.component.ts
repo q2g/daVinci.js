@@ -13,12 +13,10 @@ import {
     ChangeDetectionStrategy,
     TemplateRef
 } from "@angular/core";
-import { SelectionModel } from "@angular/cdk/collections";
 import { ViewportControl, DomHelper } from "ngx-customscrollbar";
 import { Subject, ReplaySubject } from "rxjs";
 import { takeUntil, switchMap } from "rxjs/operators";
 import { WindowResize } from "../../core/window-resize.service";
-import { ISelection } from "../api/selection.interface";
 import { IListItem } from "../api/list-item.interface";
 import { ListOrientation } from "../api/list-config.interface";
 import { ListSource } from "../model/list-source";
@@ -36,16 +34,14 @@ import { VirtualScrollDirective } from "../virtual-scroll/virtual-viewport.direc
 export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
 
     @Output()
-    public select: EventEmitter<ISelection>;
+    public selectItem: EventEmitter<IListItem<T>>;
 
-    @ViewChild(VirtualScrollDirective)
+    @ViewChild( VirtualScrollDirective )
     private scrollbarViewport: VirtualScrollDirective;
 
     public total = 0;
 
     public rows: IListItem<T>[][] = [];
-
-    public selections: SelectionModel<IListItem<T>>;
 
     public header: any[] = [];
 
@@ -75,8 +71,7 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
         private viewControl: ViewportControl
     ) {
         this.sourceConnector = new ReplaySubject( 1 );
-        this.select = new EventEmitter();
-        this.selections = new SelectionModel<IListItem<T>>( true );
+        this.selectItem = new EventEmitter();
     }
 
     @Input()
@@ -114,10 +109,10 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
     public ngOnInit() {
 
         this.windowResize.onChange()
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => {
+            .pipe( takeUntil( this.destroy$ ) )
+            .subscribe( () => {
                 this.resize();
-            });
+            } );
     }
 
     /**
@@ -154,7 +149,12 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
 
     /** if we click on an item select / deselect */
     public itemClick( item: IListItem<T> ) {
-        this.selections.isSelected( item ) ? this.deselectItem( item ) : this.selectItem( item );
+
+        /**
+         * we dont want make selections here, since we dont know what should happen on a click
+         */
+        this.selectItem.emit( item );
+        // this.selections.isSelected( item ) ? this.deselectItem( item ) : this.selectItem( item );
     }
 
     public async resize() {
@@ -173,17 +173,17 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
     private updateSize() {
         this.domSize = DomHelper.getMeasure( this.hostEl.nativeElement );
         const size = this.listAlign === "vertical" ? this.domSize.innerHeight : this.domSize.innerWidth;
-        this.pageSize = Math.ceil(size / this.itemSize);
+        this.pageSize = Math.ceil( size / this.itemSize );
 
-        if (this.source) {
+        if ( this.source ) {
             /** @todo refactoring move to own method */
             const viewportSize = this.listAlign === "vertical" ? this.domSize.innerHeight : this.domSize.innerWidth;
             const contentSize = this.pageSize * this.itemSize;
 
             /** get matrix dimension */
-            const possibleSize = Math.min(this.source.total, this.pageSize * this._cols);
-            const matrix = MatrixHelper.getMatrixSize(viewportSize, contentSize, possibleSize, this.pageSize, this._cols);
-            const missingRows = Math.max(this.source.total - (matrix.rows * this._cols), 0);
+            const possibleSize = Math.min( this.source.total, this.pageSize * this._cols );
+            const matrix = MatrixHelper.getMatrixSize( viewportSize, contentSize, possibleSize, this.pageSize, this._cols );
+            const missingRows = Math.max( this.source.total - ( matrix.rows * this._cols ), 0 );
 
             this.scrollbarViewport.itemsTotal = matrix.rows + missingRows;
         }
@@ -192,21 +192,9 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
     /** load items for current page */
     private async loadItems(): Promise<IListItem<T>[]> {
         if ( this.source ) {
-            return await this.source.load(this.start, this.pageSize * this._cols);
+            return await this.source.load( this.start, this.pageSize * this._cols );
         }
         return [];
-    }
-
-    /** select an item */
-    private selectItem( item: IListItem<T> ) {
-        this.selections.select( item );
-        this.source.select( item );
-    }
-
-    /** deselect an item */
-    private deselectItem( item: IListItem<T> ) {
-        this.selections.deselect( item );
-        this.source.deselect( item );
     }
 
     /** add new datasource to our view */
@@ -221,15 +209,15 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
         this.sourceConnector.next( this.source );
 
         this.source.update$
-            .pipe(switchMap(() => this.loadItems()))
-            .subscribe((result ) => this.paint(result));
+            .pipe( switchMap( () => this.loadItems() ) )
+            .subscribe( ( result ) => this.paint( result ) );
     }
 
     /**
      * @todo refactoring, we should not calculate total amount of items and matrix size every time
      * the amount of items will be reduced by search only and not if we scroll
      */
-    private paint(data) {
+    private paint( data ) {
 
         if ( !this.source ) {
             return;
@@ -239,16 +227,16 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
         const contentSize = this.pageSize * this.itemSize;
 
         /** get matrix dimension */
-        const matrix = MatrixHelper.getMatrixSize(viewportSize, contentSize, data.length, this.pageSize, this._cols);
+        const matrix = MatrixHelper.getMatrixSize( viewportSize, contentSize, data.length, this.pageSize, this._cols );
 
         /** convert to matrix for template */
         const rows = this.splitAlign === "vertical"
-            ? MatrixHelper.createVerticalAlignMatrix<IListItem<T>>( data, matrix.cols, matrix.rows)
-            : MatrixHelper.createHorizontalAlignMatrix<IListItem<T>>( data, matrix.cols, matrix.rows);
+            ? MatrixHelper.createVerticalAlignMatrix<IListItem<T>>( data, matrix.cols, matrix.rows )
+            : MatrixHelper.createHorizontalAlignMatrix<IListItem<T>>( data, matrix.cols, matrix.rows );
 
         /** get max rows which can displayed per page */
         /** get rows which will be added on scroll */
-        const missingRows = Math.max(this.source.total - (matrix.rows * this._cols), 0);
+        const missingRows = Math.max( this.source.total - ( matrix.rows * this._cols ), 0 );
         this.total = rows.length + missingRows;
         this.rows = rows;
 
