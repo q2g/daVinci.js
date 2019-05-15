@@ -2,9 +2,13 @@
     <span class="list-item"></span>
 </ng-template>
 
-<ng-template #defaultItemTemplate let-item="item" let-align="align" let-count="cols">
+<ng-template #defaultListItem let-item="item" let-align="align" let-count="cols" let-size="size">
     <span *ngIf="item; else empty" (click)="itemClick(item)" class="list-item" 
-        [ngClass]="[item && item.state !== 'none' ? item.state : '']" [ngStyle]="{flex: align === 'horizontal' ? '0 0 ' + 100 / count + '%' : null}">
+        [ngClass]="[item && item.state !== 'none' ? item.state : '']" 
+        [ngStyle]="{
+            flex: align === 'horizontal' ? '0 0 ' + 100 / count + '%' : null,
+            width: align === 'horizontal' ? size + 'px' : null
+        }">
         <span class="item-label">{{item.label}}</span>
         <i *ngIf="item.icon !== 'none'" [ngClass]="['lui-icon lui-icon--' + item.icon]"></i>
     </span>
@@ -18,11 +22,12 @@
 </div>
 <ul class="lui-list" davinciVirtualScroll [direction]="listAlign" [itemSize]=itemSize [itemsTotal]=total (scrolled)="scrolled($event)" [ngClass]="['split-align--' + splitAlign]">
     <li *ngFor="let row of rows" class="lui-list__item">
-        <ng-container *ngFor="let item of row" [ngTemplateOutlet]="itemTemplate || defaultItemTemplate" 
+        <ng-container *ngFor="let item of row" [ngTemplateOutlet]="itemTemplate || defaultListItem" 
             [ngTemplateOutletContext]="{
                 item: item,
                 align: listAlign,
-                cols: cols 
+                cols: cols,
+                size: itemSize 
             }"></ng-container>
     </li>
 </ul>
