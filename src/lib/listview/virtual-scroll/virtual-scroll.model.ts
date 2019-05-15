@@ -17,6 +17,11 @@ export class VirtualScrollModel {
 
     private _itemSize: number;
 
+    private _viewOffset = {
+        top: 0,
+        left: 0
+    };
+
     private _align: "vertical" | "horizontal" = "vertical";
 
     public constructor() {
@@ -86,6 +91,22 @@ export class VirtualScrollModel {
 
     public get viewportWidth(): number {
         return this.containerMeasure.innerWidth;
+    }
+
+    public set viewOffsetTop(offset: number) {
+        this._viewOffset.top = offset;
+    }
+
+    public get viewOffsetTop(): number {
+        return this._viewOffset.top;
+    }
+
+    public set viewOffsetLeft(offset: number) {
+        this._viewOffset.left = offset;
+    }
+
+    public get viewOffsetLeft(): number {
+        return this._viewOffset.left;
     }
 
     /** get scroll container measures */

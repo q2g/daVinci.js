@@ -15,8 +15,8 @@ export class ItemScrollStrategy implements IScrollStrategy {
      * we want to show
      */
     public scroll(offset: Scrollbar.IOffset) {
-        this.model.scrollOffset = offset;
-        return this.getArea(offset);
+        this.model.scrollOffset = this.calculateScrollbarOffset(offset);
+        return this.getArea(this.model.scrollOffset);
     }
 
     /**
@@ -45,20 +45,20 @@ export class ItemScrollStrategy implements IScrollStrategy {
         };
     }
 
-    /** @todo should be in parent class */
     scrollTo(pixel: number): Scrollbar.IOffset {
         return this.model.scrollOffset;
     }
 
-    /** @todo should be in parent class */
     scrollBy(pixel: number): Scrollbar.IOffset {
         return this.model.scrollOffset;
     }
 
     /** getArea */
     private getArea(offset) {
+        console.log(offset);
         const topValue = this.model.alignment === "vertical" ? this.calculateTop(offset.top) : this.calculateLeft(offset.left);
         const height   = this.model.alignment === "vertical" ? this.model.viewportHeight     : this.model.viewportWidth;
+
         const area = {
             top: topValue,
             height: Math.ceil(height / this.model.itemSize),
@@ -68,6 +68,9 @@ export class ItemScrollStrategy implements IScrollStrategy {
         return area;
     }
 
+    /**
+     * calculate offset left by item width
+     */
     private calcScrollOffsetLeft(left: number, direction: "up" | "down"): number {
         if (direction === "up") {
             left -= this.model.itemSize;
@@ -79,6 +82,9 @@ export class ItemScrollStrategy implements IScrollStrategy {
         return left;
     }
 
+    /**
+     * calculate offset left by item width
+     */
     private calcScrollOffsetTop(top: number, direction: "up" | "down"): number {
         if (direction === "up") {
             top -= this.model.itemSize;
@@ -91,9 +97,49 @@ export class ItemScrollStrategy implements IScrollStrategy {
     }
 
     /**
+     * scrolbars first ask the viewport to scroll
+     * before they move to new position, calculate new offset for scrollbars
+     * to tell them there they will be positioned
+     */
+    private calculateScrollbarOffset(offset): Scrollbar.IOffset {
+
+        const offsetTop  = this.model.alignment === "vertical" ? this.calculateScrollbarOffsetTop(offset.top) : offset.top;
+        const offsetLeft = this.model.alignment === "vertical" ? offset.left : this.calculateScrollbarOffsetLeft(offset.left);
+
+        return {
+            left: offsetLeft,
+            top: offsetTop
+        };
+    }
+
+    private calculateScrollbarOffsetTop(offset: number): number {
+        if (offset < this.model.maxScrollOffset.top && this.model.viewOffsetTop > 0) {
+            return this.model.maxScrollOffset.top - this.model.viewOffsetTop;
+        }
+        return offset;
+    }
+
+    private calculateScrollbarOffsetLeft(offset: number): number {
+        if (offset < this.model.maxScrollOffset.left && this.model.viewOffsetLeft > 0) {
+            return this.model.maxScrollOffset.left - this.model.viewOffsetLeft;
+        }
+        return offset;
+    }
+
+    /**
      * scroll start index for scrolled top
      */
     private calculateTop(offset): number {
+
+        const maxScrollOffset = this.model.maxScrollOffset.top;
+        const maxStart = Math.floor(maxScrollOffset / this.model.itemSize);
+
+        if (offset === maxScrollOffset) {
+            this.model.viewOffsetTop = maxScrollOffset - maxStart * this.model.itemSize;
+        } else {
+            this.model.viewOffsetTop = 0;
+        }
+
         return this.getStartIndex(offset, this.model.maxScrollOffset.top);
     }
 
@@ -101,6 +147,16 @@ export class ItemScrollStrategy implements IScrollStrategy {
      * calculate scrolled left value
      */
     private calculateLeft(offset): number {
+
+        const maxScrollOffset = this.model.maxScrollOffset.left;
+        const maxStart = Math.floor(maxScrollOffset / this.model.itemSize);
+
+        if (offset === maxScrollOffset) {
+            this.model.viewOffsetLeft = maxScrollOffset - maxStart * this.model.itemSize;
+        } else {
+            this.model.viewOffsetLeft = 0;
+        }
+
         return this.getStartIndex(offset, this.model.maxScrollOffset.left);
     }
 

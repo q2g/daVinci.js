@@ -18,7 +18,7 @@ import { IScrollStrategy } from "./scroll-strategy.interface";
 export class VirtualScrollDirective extends Viewport implements AfterViewInit, OnDestroy {
 
     @Output()
-    public scroll: EventEmitter<any>;
+    public scrolled: EventEmitter<any>;
 
     private _scrollStrategy: IScrollStrategy;
 
@@ -30,7 +30,7 @@ export class VirtualScrollDirective extends Viewport implements AfterViewInit, O
     ) {
         super();
         this.model  = new VirtualScrollModel();
-        this.scroll = new EventEmitter();
+        this.scrolled = new EventEmitter();
     }
 
     @Input()
@@ -93,7 +93,9 @@ export class VirtualScrollDirective extends Viewport implements AfterViewInit, O
     /** scrolled to */
     public scrollTo(offset: Scrollbar.IOffset) {
         const test = this._scrollStrategy.scroll(offset);
-        this.scroll.emit(test);
+        /** scroll element */
+        this.el.nativeElement.scrollTo(this.model.viewOffsetLeft, this.model.viewOffsetTop);
+        this.scrolled.emit(test);
         this.scrolled$.next();
     }
 
