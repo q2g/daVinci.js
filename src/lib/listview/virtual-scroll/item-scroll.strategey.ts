@@ -15,6 +15,7 @@ export class ItemScrollStrategy implements IScrollStrategy {
      * we want to show
      */
     public scroll(offset: Scrollbar.IOffset) {
+        console.log(offset.top);
         this.model.scrollOffset = this.calculateScrollbarOffset(offset);
         return this.getArea(this.model.scrollOffset);
     }
@@ -55,7 +56,6 @@ export class ItemScrollStrategy implements IScrollStrategy {
 
     /** getArea */
     private getArea(offset) {
-        console.log(offset);
         const topValue = this.model.alignment === "vertical" ? this.calculateTop(offset.top) : this.calculateLeft(offset.left);
         const height   = this.model.alignment === "vertical" ? this.model.viewportHeight     : this.model.viewportWidth;
 
@@ -88,11 +88,12 @@ export class ItemScrollStrategy implements IScrollStrategy {
     private calcScrollOffsetTop(top: number, direction: "up" | "down"): number {
         if (direction === "up") {
             top -= this.model.itemSize;
-            top = top < 0 ? 0 : top;
+            top = top <= 0 ? 0 : top;
         } else {
             top += this.model.itemSize;
-            top = top > this.model.maxScrollOffset.top ? this.model.maxScrollOffset.top : top;
+            top = top >= this.model.maxScrollOffset.top ? this.model.maxScrollOffset.top : top;
         }
+        console.log("scroll offset top %i", top);
         return top;
     }
 
@@ -106,6 +107,8 @@ export class ItemScrollStrategy implements IScrollStrategy {
         const offsetTop  = this.model.alignment === "vertical" ? this.calculateScrollbarOffsetTop(offset.top) : offset.top;
         const offsetLeft = this.model.alignment === "vertical" ? offset.left : this.calculateScrollbarOffsetLeft(offset.left);
 
+        console.log("offset top %i, scrollbarOffsetTop %i, maxScrollOffsetTop", offset.top, offsetTop, this.model.maxScrollOffset.top);
+
         return {
             left: offsetLeft,
             top: offsetTop
@@ -113,6 +116,7 @@ export class ItemScrollStrategy implements IScrollStrategy {
     }
 
     private calculateScrollbarOffsetTop(offset: number): number {
+        console.log(this.model.viewOffsetTop);
         if (offset < this.model.maxScrollOffset.top && this.model.viewOffsetTop > 0) {
             return this.model.maxScrollOffset.top - this.model.viewOffsetTop;
         }

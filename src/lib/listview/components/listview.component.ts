@@ -236,9 +236,12 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
 
         /** get max rows which can displayed per page */
         /** get rows which will be added on scroll */
-        const missingRows = Math.max( this.source.total - ( matrix.rows * this._cols ), 0 );
-        this.total = rows.length + missingRows;
+        const missingRows = Math.max(this.source.total - (this.pageSize * this._cols), 0 );
+        // this.total = rows.length + missingRows;
+        this.total = this.pageSize + missingRows;
         this.rows = rows;
+
+        console.log(this.total);
 
         this.header = this.source.getHeader();
         this.changeDetector.detectChanges();
