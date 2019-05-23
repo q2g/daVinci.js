@@ -14,12 +14,6 @@
     </span>
 </ng-template>
 
-<!-- tree template -->
-<div class="list-header">
-    <span *ngFor="let head of header">
-        {{head.label}}
-    </span>
-</div>
 <ul class="lui-list" davinciVirtualScroll [direction]="listAlign" [itemSize]=itemSize [itemsTotal]=total (scrolled)="scrolled($event)" [ngClass]="['split-align--' + splitAlign]">
     <li *ngFor="let row of rows" class="lui-list__item">
         <ng-container *ngFor="let item of row" [ngTemplateOutlet]="itemTemplate || defaultListItem" 

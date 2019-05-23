@@ -48,6 +48,8 @@ export abstract class ListSource<T> {
 
     public expandCollapseItem(item): void {}
 
+    public scrollTo(item): any {}
+
     public acceptListObjectSearch(): void {}
 
     public abortListObjectSearch(): void {}

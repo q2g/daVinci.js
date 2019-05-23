@@ -15,7 +15,6 @@ export class ItemScrollStrategy implements IScrollStrategy {
      * we want to show
      */
     public scroll(offset: Scrollbar.IOffset) {
-        console.log(offset.top);
         this.model.scrollOffset = this.calculateScrollbarOffset(offset);
         return this.getArea(this.model.scrollOffset);
     }
@@ -93,7 +92,6 @@ export class ItemScrollStrategy implements IScrollStrategy {
             top += this.model.itemSize;
             top = top >= this.model.maxScrollOffset.top ? this.model.maxScrollOffset.top : top;
         }
-        console.log("scroll offset top %i", top);
         return top;
     }
 
@@ -107,7 +105,6 @@ export class ItemScrollStrategy implements IScrollStrategy {
         const offsetTop  = this.model.alignment === "vertical" ? this.calculateScrollbarOffsetTop(offset.top) : offset.top;
         const offsetLeft = this.model.alignment === "vertical" ? offset.left : this.calculateScrollbarOffsetLeft(offset.left);
 
-        console.log("offset top %i, scrollbarOffsetTop %i, maxScrollOffsetTop", offset.top, offsetTop, this.model.maxScrollOffset.top);
 
         return {
             left: offsetLeft,
@@ -116,7 +113,6 @@ export class ItemScrollStrategy implements IScrollStrategy {
     }
 
     private calculateScrollbarOffsetTop(offset: number): number {
-        console.log(this.model.viewOffsetTop);
         if (offset < this.model.maxScrollOffset.top && this.model.viewOffsetTop > 0) {
             return this.model.maxScrollOffset.top - this.model.viewOffsetTop;
         }

@@ -43,8 +43,6 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
 
     public rows: IListItem<T>[][] = [];
 
-    public header: any[] = [];
-
     /** @todo put to model */
     private pageSize: number;
 
@@ -241,14 +239,19 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
         this.total = this.pageSize + missingRows;
         this.rows = rows;
 
-        console.log(this.total);
-
-        this.header = this.source.getHeader();
         this.changeDetector.detectChanges();
         this.viewControl.update();
     }
 
     public expandCollapseItem?( item: IListItem<T> ) {
         this.source.expandCollapseItem( item );
+    }
+
+    public scrollTo?(top) {
+        const offset = this.scrollbarViewport.scrolledOffset;
+        this.scrollbarViewport.scrollTo({
+            left: offset.left,
+            top
+        });
     }
 }
