@@ -1,4 +1,4 @@
-import { Component, Input, ElementRef, Output, EventEmitter } from "@angular/core";
+import { Component, Input, Output, EventEmitter, ElementRef } from "@angular/core";
 
 @Component({
     selector: "davinci-icon",
@@ -17,12 +17,13 @@ export class IconComponent {
     isActive = false;
 
     @Input()
-    lable = "";
+    label = "";
 
     @Output()
     click = new EventEmitter<void>();
 
     constructor(
+        private el: ElementRef<any>
     ) {
         this.click = new EventEmitter();
     }

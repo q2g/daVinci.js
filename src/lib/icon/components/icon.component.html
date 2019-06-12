@@ -2,7 +2,7 @@
     [ngClass]="[
         buttonType?'lui-button lui-button--'+buttonType:'lui-fade-button',
         isActive?'':'lui-disabled']"
-    [attr.title]=lable
+    [attr.title]=label
     (click)="onClick($event)"
     type="button">
     <i [ngClass]="['lui-button__icon', 'lui-icon lui-icon--'+icon]"></i>

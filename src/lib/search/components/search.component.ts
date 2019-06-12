@@ -23,7 +23,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 
     private destroy$: Subject<boolean> = new Subject();
 
-    @ViewChild("search")
+    @ViewChild("search", {read: ElementRef, static: true})
     private searchEl: ElementRef<HTMLInputElement>;
 
     constructor(
