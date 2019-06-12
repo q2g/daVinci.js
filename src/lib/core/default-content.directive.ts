@@ -13,9 +13,9 @@ export class DefaultContentDirective implements AfterViewInit {
     hasContent: boolean;
 
     constructor(
-        private element: ElementRef,
         private container: ViewContainerRef,
-        private renderer: Renderer2
+        private renderer: Renderer2,
+        element: ElementRef,
     ) {
         this.node = element.nativeElement;
     }
