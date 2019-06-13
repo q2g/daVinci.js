@@ -36,7 +36,7 @@ export class ListViewComponent<T> implements OnDestroy, OnInit, AfterViewInit {
     @Output()
     public selectItem: EventEmitter<IListItem<T>>;
 
-    @ViewChild( VirtualScrollDirective )
+    @ViewChild(VirtualScrollDirective, {read: VirtualScrollDirective, static: true})
     private scrollbarViewport: VirtualScrollDirective;
 
     public total = 0;

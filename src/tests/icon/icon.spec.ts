@@ -80,7 +80,7 @@ describe("IconComponent", () => {
         });
 
         it("attribute title should contain 'My Title'", () => {
-            iconComponent.lable = "My Title";
+            iconComponent.label = "My Title";
             fixture.detectChanges();
             expect(buttonEl.attributes.title).toBe("My Title");
         });
