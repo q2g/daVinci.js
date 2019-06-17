@@ -5,5 +5,3 @@ node_js:
 install:
   - cd test
   - npm install --dev
-script:
-  - npm test

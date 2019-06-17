@@ -18,7 +18,7 @@
         <ul class="lui-list list-theme-{{vm.theme}}" 
             ng-repeat="list in vm.items track by $index" 
             ng-init="indexsplit = $index" 
-            style="grid-column: {{indexsplit+1}} / {{vm.splitColumn}}; grid-row: 1; width:100%">
+            style="grid-column: auto; grid-row: 1; width: auto;">
 
             <li class="{{item.status | qstatusfilter}}"
                 ng-class="{'horizontal': vm.horizontalMode, 'vertical': !vm.horizontalMode, 'list-element-focussed': vm.hasFocus($index) && vm.showFocused}"
@@ -56,7 +56,7 @@
         <ul class="lui-list list-theme-{{vm.theme}}" 
             ng-repeat="list in vm.items track by $index" 
             ng-init="indexsplit = $index" 
-            style="grid-column: 1; grid-row: {{indexsplit+1}} / {{vm.splitColumn}}; width:100%">
+            style="grid-column: 1; grid-row: {{indexsplit+1}} / {{vm.splitColumn}}; width:100%;">
 
             <li class="{{item.status | qstatusfilter}}"
                 ng-class="{'horizontal': vm.horizontalMode, 'vertical': !vm.horizontalMode, 'list-element-focussed': vm.hasFocus($index) && vm.showFocused}"

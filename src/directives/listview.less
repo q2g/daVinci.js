@@ -32,18 +32,12 @@
             -moz-box-sizing: border-box;
             -webkit-box-sizing: border-box;
             border: 1.5px solid rgba(255, 255, 255, .0);
-            // padding-bottom: 0.5px;
-            // border-bottom: 1px solid #d9d9d9;
-            padding-left: 5px;
-            vertical-align: central;
-            display: -webkit-box;
             -webkit-box-align: center;
             height: 30px;
-            word-wrap: normal;
-            white-space: nowrap;
             overflow: hidden;
-            position: relative;
-            // background-color: @white;
+            display: flex;
+            align-items: center;
+            white-space: nowrap;
             
             span {
                 text-overflow: ellipsis;
@@ -51,15 +45,12 @@
             }
 
             i {
-                position: absolute;
-                right: 10px;
                 font-size: 8px;
-                padding-top: 3px;
+                padding-right: 10px;
             }
 
             &.horizontal {
-                display: -webkit-inline-flex;
-                display: inline-grid;
+                display: inline-flex;
                 padding-left: 0px;
 
                 span {
@@ -67,8 +58,7 @@
                 }
 
                 i {
-                    right: 2px;
-                    padding-top: 11px;
+                    padding-right: 2px;
                 }
             }
 

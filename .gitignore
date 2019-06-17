@@ -2,6 +2,7 @@
 *.map
 *.js
 *.css
+src/**/*.d.ts
 
 ## publish script
 !src/npm/publish.js

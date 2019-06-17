@@ -157,6 +157,54 @@ export function getObjectId(scope: ng.IScope) {
 //#endregion
 
 
+/**
+ * generate uid by template
+ *
+ * template can only contain following characters
+ * x, X and - . Capital X stands for Capital Letters and none captial x stands for none
+ * capital letters or numbers.
+ *
+ * @export
+ * @param {string} [template="xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx"]
+ * @returns
+ */
+export function generateUid(template: string = "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx") {
+
+    const asciiCodesChars   = [97, 122];
+    const asciiCodesCapital = [65, 90];
+    const numberValues      = [0, 9];
+
+    // parse template
+    return template.split(/[^xX]+/).map( (partial: string) => {
+
+        return Array.from(partial).map( (char: string) => {
+
+            let newChar: string | number = "";
+            let fromSource: number[];
+            let isCharCode: boolean = true;
+
+            if ( char === "X" ) {
+                fromSource = asciiCodesCapital;
+            } else {
+                fromSource = Math.round(Math.random() * 2) === 0
+                    ? asciiCodesChars : (isCharCode = false, numberValues);
+            }
+
+            const min = fromSource[0];
+            const max = fromSource[1];
+
+            newChar = Math.floor( Math.random() * ( max - min + 1)) + min;
+
+            if ( isCharCode ) {
+                newChar = String.fromCharCode(newChar);
+            }
+
+            return newChar;
+        }).join("");
+    })
+    .join("-");
+}
+
 //#region Classes
 export abstract class AssistHypercube<T extends EngineAPI.IGenericBaseLayout> {
 
