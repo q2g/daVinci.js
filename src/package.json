@@ -1,6 +1,6 @@
 {
   "name": "davinci.js",
-  "version": "1.5.0",
+  "version": "1.5.1",
   "license": "MIT",
   "description": "Framework for visualisation extensions",
   "repository": {
@@ -15,7 +15,7 @@
     "pkg:publish": "npm run build && node npm/publish"
   },
   "devDependencies": {
-    "@types/angular": "1.6.54",
+    "@types/angular": "1.6.57",
     "@types/jquery": "3.3.31",
     "@types/qlik-engineapi": "12.67.8",
     "q2g-build": "^2.0.6"
