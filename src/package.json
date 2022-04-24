@@ -18,7 +18,7 @@
     "@types/angular": "1.6.57",
     "@types/jquery": "3.3.31",
     "@types/qlik-engineapi": "12.67.8",
-    "q2g-build": "^2.0.6"
+    "q2g-build": "^3.0.0"
   },
   "files": [
     "dist"
